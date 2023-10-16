@@ -1,0 +1,22 @@
+# my personal website
+
+### How to build the boilerplate from scratch (MacOS):
+
+- install https://github.com/nvm-sh/nvm if not already installed
+  - `curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.4/install.sh | bash` or newer version from the website https://github.com/nvm-sh/nvm
+  - install Node.js 20
+    - `nvm install node`
+    - `nvm ls`
+    - `nvm use 20`
+    - `node -v`
+- `npm create vite@latest` # choose react, javascript, name frontend
+- `cd frontend`
+- `npm install`
+- `npm install bootstrap`
+- `npm install react-router-dom`
+- `npm run dev`
+  - http://localhost:5173/
+- `npm run build`
+  - `cd dist`
+  - `php -S localhost:2222` or `python -m http.server 2222`
+  - http://localhost:2222/
