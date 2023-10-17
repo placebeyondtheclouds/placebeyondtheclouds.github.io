@@ -18,5 +18,6 @@
   - http://localhost:5173/
 - `npm run build`
   - `cd dist`
+  - if MacOS ventura: `brew install php`
   - `php -S localhost:2222` or `python -m http.server 2222`
   - http://localhost:2222/
