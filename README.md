@@ -21,3 +21,7 @@
   - if MacOS ventura: `brew install php`
   - `php -S localhost:2222` or `python -m http.server 2222`
   - http://localhost:2222/
+
+### Bootstrap CSS formatting:
+
+- https://getbootstrap.com/docs/5.0/
