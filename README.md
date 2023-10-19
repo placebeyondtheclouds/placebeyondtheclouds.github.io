@@ -3,7 +3,7 @@
 ### How to build the boilerplate from scratch (MacOS):
 
 - install https://github.com/nvm-sh/nvm if not already installed
-  - `curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.4/install.sh | bash` or newer version from the website https://github.com/nvm-sh/nvm
+  - `curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.4/install.sh | bash` or newer version from [the website](https://github.com/nvm-sh/nvm).
   - install Node.js 20
     - `nvm install node`
     - `nvm ls`
@@ -18,7 +18,7 @@
   - http://localhost:5173/
 - `npm run build`
   - `cd dist`
-  - if MacOS ventura: `brew install php`
+  - if MacOS Ventura: `brew install php`
   - `php -S localhost:2222` or `python -m http.server 2222`
   - http://localhost:2222/
 
