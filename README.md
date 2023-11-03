@@ -17,10 +17,13 @@
 - `npm run dev`
   - http://localhost:5173/
 - `npm run build`
+
   - `cd dist`
   - if MacOS Ventura: `brew install php`
   - `php -S localhost:2222` or `python -m http.server 2222`
   - http://localhost:2222/
+
+  The actual code and the router is roughly based off the fronted parts of my other projects like [https://github.com/EL-CL/voiceprint-demo](https://github.com/EL-CL/voiceprint-demo).
 
 ### Bootstrap CSS formatting:
 
