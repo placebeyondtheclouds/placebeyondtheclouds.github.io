@@ -11,6 +11,7 @@
     - `node -v`
 - `npm create vite@latest` # choose react, javascript, name frontend
 - `cd frontend`
+- `rm -rf node_modules`
 - `npm install`
 - `npm install bootstrap`
 - `npm install react-router-dom`
