@@ -24,7 +24,7 @@
   - `php -S localhost:2222` or `python -m http.server 2222`
   - http://localhost:2222/
 
-  The actual code and the router is roughly based off the fronted parts of my other projects like [https://github.com/EL-CL/voiceprint-demo](https://github.com/EL-CL/voiceprint-demo).
+  The actual code and the router is roughly based off the fronted parts of my other projects like [https://github.com/EL-CL/voiceprint-demo](https://github.com/EL-CL/voiceprint-demo). Favicon generator: [https://favicon.io/favicon-generator/](https://favicon.io/favicon-generator/).
 
 ### Bootstrap CSS formatting:
 
