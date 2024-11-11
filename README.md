@@ -1,6 +1,6 @@
 # My personal webpage
 
-Static site generated with Jekyll and hosted on GitHub Pages. Markdown language for the content markup.  The site is built with the [Chirpy theme][https://github.com/cotes2020/jekyll-theme-chirpy/wiki].
+Static site generated with Jekyll and hosted on GitHub Pages. Markdown language for the content markup. Continuous deployment [CD] with GitHub Actions. The site is built with the [Chirpy theme][chirpy].
 
 ## Steps to reproduce (on Linux)
 
