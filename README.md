@@ -1,6 +1,8 @@
 # My personal webpage
 
-## Steps to create a personal webpage (on Linux)
+Static site generated with Jekyll and hosted on GitHub Pages. Markdown language for the content markup.  The site is built with the [Chirpy theme][https://github.com/cotes2020/jekyll-theme-chirpy/wiki].
+
+## Steps to reproduce (on Linux)
 
 - install the dependencies
 ```bash
@@ -27,7 +29,10 @@ gem install jekyll bundler
 - copy favicon files to `assets/img/favicons/
 - push the changes to the repo
 
+## Refetences
 
+- https://technotim.live/posts/jekyll-docs-site/
+- https://github.com/cotes2020/jekyll-theme-chirpy/wiki
 
 ## License
 
