@@ -94,6 +94,7 @@ Set up a multi-GPU server with baremetal Ubuntu 22.04, mdadm RAIDs, backups. Ins
 ### Deep learning audio feature visualization
 
 An improved version of [audio-transformation-visualization](https://github.com/phrasenmaeher/audio-transformation-visualization/) app that visualizes features of an audio file (melspectrogram) with added augmentation, deployed on streamlit cloud service. The changes I made to the app: added features that I use in my deep learning model, added the noise bank from MUSAN to preview noise augmentation result. The visualized array is what would be the input data for the neural network. Data augmentation is supposed to increase robustness of the model, and also reduce overfitting during training, so I believe the visualization of what the NN would get is important. [Streamlit App](https://placebeyondtheclouds-vr-feature-viz-vr-feat-viz-yozs5w.streamlit.app/)
+
 ![Deep learning audio feature visualization](/assets/images/feature_viz.jpg)
 
 ---
@@ -102,6 +103,7 @@ An improved version of [audio-transformation-visualization](https://github.com/p
 ### Data gathering and generating insights
 
 A unique dataset was created by logging real life WiFi APs broadcast in a certain area. Used Python to generate insights from the data, plot WiFi APs on the map, do quantitative analysis of the hardware (including vendor distribution analysis, by cross-linking with another dataset). [GitHub Repository](https://github.com/placebeyondtheclouds/wifi_map/blob/main/wd.ipynb)
+
 ![Data gathering and generating insights](/assets/images/preview3.png)
 
 ---
@@ -110,6 +112,7 @@ A unique dataset was created by logging real life WiFi APs broadcast in a certai
 ### Machine learning
 
 Applied research project as a part of the MA thesis: machine learning model for Mandarin Chinese tones pronunciation evaluation for second language learners.
+
 ![Machine learning](/assets/images/preview1.gif)
 
 ---
@@ -121,4 +124,5 @@ Interactive report on the dataset for the thesis project. It takes some time to 
 
 - Streamlit: [Link](https://share.streamlit.io/placebeyondtheclouds/tone-dataset/main/tone-dataset.py)
   Preview, version 1:
+
   ![Data analysis](/assets/images/preview2.gif)
