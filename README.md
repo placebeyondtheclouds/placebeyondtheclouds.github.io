@@ -26,10 +26,10 @@ gem install jekyll bundler
 - run `bundle` to install the dependencies
 - run `bundle exec jekyll serve` to start the local server
 - add content to `_tabs/` and `_posts/`, put images to `assets/images/`
-- copy favicon files to `assets/img/favicons/
+- copy favicon files to `assets/img/favicons/`
 - push the changes to the repo
 
-## Refetences
+## References
 
 - https://technotim.live/posts/jekyll-docs-site/
 - https://github.com/cotes2020/jekyll-theme-chirpy/wiki
