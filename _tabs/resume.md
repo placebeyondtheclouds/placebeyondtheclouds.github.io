@@ -26,6 +26,10 @@ China
 
 Network and system administration, security audit, data engineering, machine learning, product management, data analytics. Focused on open-source solutions. I like the concept of a data-driven world and getting insights from data, enjoy building complex systems. Love learning new things and adding value to other people's lives.
 
+## Projects:
+
+My [Projects](/projects)
+
 ## Skills:
 
 ### Computer system and network administration:

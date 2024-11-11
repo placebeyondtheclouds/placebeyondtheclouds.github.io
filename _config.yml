@@ -26,10 +26,10 @@ description: >- # used by seo meta and the atom feed
 url: "https://placebeyondtheclouds.github.io"
 
 github:
-  username: github_username # change to your GitHub username
+  username: placebeyondtheclouds # change to your GitHub username
 
 twitter:
-  username: placebeyondtheclouds # change to your Twitter username
+  username: # change to your Twitter username
 
 social:
   # Change to your full name.
@@ -41,8 +41,8 @@ social:
     #- https://twitter.com/username # change to your Twitter homepage
     - https://github.com/placebeyondtheclouds # change to your GitHub homepage
     # Uncomment below to add more social links
-    # - https://www.facebook.com/username
-    # - https://www.linkedin.com/in/username
+    - https://www.facebook.com/sasha.mitkov/
+    - https://www.linkedin.com/in/aleksandrvm
 
 # Site Verification Settings
 webmaster_verifications:
