@@ -17,7 +17,7 @@ Content in Jekyll is easier to maintain because it uses Markdown language for th
 ```bash
 sudo apt install ruby-full build-essential zlib1g-dev git
 ```
-- modify path for RubyGems packages to be installed in the home directory of the user
+- modify the variables for RubyGems packages to be installed in the home directory of the user
 ```bash
 echo '# Install Ruby Gems to ~/gems' >> ~/.bashrc
 echo 'export GEM_HOME="$HOME/gems"' >> ~/.bashrc
