@@ -1,6 +1,22 @@
 # My personal webpage
 
-## Steps to create a personal webpage
+## Steps to create a personal webpage (on Linux)
+
+- install the dependencies
+```bash
+sudo apt install ruby-full build-essential zlib1g-dev git
+```
+- modify path for RubyGems packages to be installed in the home directory of the user
+```bash
+echo '# Install Ruby Gems to ~/gems' >> ~/.bashrc
+echo 'export GEM_HOME="$HOME/gems"' >> ~/.bashrc
+echo 'export PATH="$HOME/gems/bin:$PATH"' >> ~/.bashrc
+source ~/.bashrc
+```
+- install Jekyll and Bundler
+```bash
+gem install jekyll bundler
+```
 
 - create repo from template https://github.com/cotes2020/chirpy-starter , name the repo `username.github.io`, set the pages settings to use GitHub actions
 - clone the repo
