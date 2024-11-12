@@ -4,6 +4,9 @@ Static site generated with Jekyll and hosted on GitHub Pages. Markdown language 
 
 ## Steps to reproduce (on Linux)
 
+> [!CAUTION]
+> Do **NOT** put API keys, passwords, or any other sensitive information in the source code if it's hosted on GitHub Pages.
+
 - install the dependencies
 ```bash
 sudo apt install ruby-full build-essential zlib1g-dev git
@@ -26,6 +29,7 @@ gem install jekyll bundler
 - run `bundle` to install the dependencies
 - run `bundle exec jekyll serve` to start the local server
 - add content to `_tabs/` and `_posts/`, put images to `assets/images/`
+  - formatting posts [https://jekyllrb.com/docs/posts/](https://jekyllrb.com/docs/posts/)
 - copy favicon files to `assets/img/favicons/`
 - push the changes to the repo
 
