@@ -3,7 +3,6 @@ layout: post
 title:  "Website update"
 lang: en
 tags: [en]
-title: 
 ---
 
 Reworked the website from React/Vite to Jekyll with [Chirpy theme](https://github.com/cotes2020/jekyll-theme-chirpy/), mainly following this tutorial [https://technotim.live/posts/jekyll-docs-site/](https://technotim.live/posts/jekyll-docs-site/).

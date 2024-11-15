@@ -29,7 +29,7 @@ gem install jekyll bundler
 - run `bundle` to install the dependencies
 - run `bundle exec jekyll serve` to start the local server
 - add content to `_tabs/` and `_posts/`, put images to `assets/images/`
-  - formatting posts [https://jekyllrb.com/docs/posts/](https://jekyllrb.com/docs/posts/)
+  - formatting posts [1](https://jekyllrb.com/docs/posts/), [2](https://docs.github.com/en/get-started/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax#alerts) , [3](https://www.markdownguide.org/cheat-sheet/)
 - copy favicon files to `assets/img/favicons/`
 - push the changes to the repo
 
