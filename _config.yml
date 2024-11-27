@@ -16,7 +16,7 @@ timezone: Asia/Shanghai
 
 title: Aleksandr Mitkov # the main title
 
-tagline: my blog and resume # it will display as the subtitle
+tagline: my README.md # it will display as the subtitle
 
 description: >- # used by seo meta and the atom feed
   on-premise GPU solutions architect, software engineer
