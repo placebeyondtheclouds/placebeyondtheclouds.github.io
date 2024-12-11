@@ -44,3 +44,8 @@ Run
 JEKYLL_ENV=production bundle exec jekyll b
 ```
 to build the site in `_site` folder. And now it is possible to serve it with NGINX or any other webserver.
+
+
+## references
+
+- https://technotim.live/posts/jekyll-docs-site/
