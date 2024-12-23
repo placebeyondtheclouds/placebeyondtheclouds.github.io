@@ -5,9 +5,17 @@ lang: en
 tags: [en]
 ---
 
+### GPU homelab server
+
+Built a [minimalistic homelab mATX-sized server with NVIDIA GPU, Xeon CPU and REG ECC RAM](https://github.com/placebeyondtheclouds/gpu-home-server). Proxmox VE and GPU-enabled Docker containers. The server is used as a staging environment for Docker containers for GPU-accelerated apps, for running homelab VMs, running inference on models that require 24GB of VRAM, running training/inference code that requires CUDA v.11-12, rendering videos on CPU and GPU, code compilation.
+
+---
+
+
 ### GPU telemetry
 
 Set up a GPU telemetry system for the cluster. Each node has a docker container with [DCGM-Exporter](https://github.com/NVIDIA/dcgm-exporter) that is leveraging NVIDIA Data Center GPU Manager (DCGM) and collects and exposes GPU metrics to Prometheus. Grafana uses this instance of Prometheus as the data source to visualize the GPU metrics. The data is used to monitor GPU compute load, temperature, power consumption, and memory usage.
+
 
 ---
 
@@ -16,6 +24,7 @@ Set up a GPU telemetry system for the cluster. Each node has a docker container 
 
 To achieve even more efficient compute resource utilization within Proxmox Virtual Environment, moved code execution from virtual machines to LXC. NVIDIA GPU and Infiniband adapters are passed to unprivileged containers, while for trusted environments privileged containers with GPU, cephFS through host bind mounts, and FUSE (for flexibility of mounting data sources) are used. This way, while keeping a sufficient degree of isolation for access convenience and security, the compute resources of a server are flexibly shared between research teams, achieving a higher utilization rate of the GPU and compute.
 
+
 ---
 
 
@@ -23,12 +32,14 @@ To achieve even more efficient compute resource utilization within Proxmox Virtu
 
 Set up docker environment in an LXC, added Portainer for easy management. Deployed dockerized Prometheus for metrics collection from CEPH cluster, and Grafana for visualization. The data is used to monitor CEPH performance and to predict future storage needs.
 
+
 ---
 
 
 ### GPU Laptop for Data Science
 
 [Setting up a Lenovo laptop with NVIDIA GPU for Data Science.](https://github.com/placebeyondtheclouds/lenovo-laptop-with-ubuntu-and-libvirt) Ubuntu, LUKS full disk encryption, hibernation to S4, QEMU GPU passthrough to Ubuntu/Windows guests, CUDA/cuDNN in conda environments, Jupyter Lab, VSCode. The laptop is used for deep learning, data analysis, data engineering, and software development.
+
 
 ---
 
@@ -38,6 +49,7 @@ Set up docker environment in an LXC, added Portainer for easy management. Deploy
 [Built a custom IP KVM using Raspberry Pi.](https://github.com/placebeyondtheclouds/pikvm-zero2w-eth)
 
 ![DIY IP KVM](/assets/images/untitled-19_150x200.jpg) 
+
 
 ---
 
