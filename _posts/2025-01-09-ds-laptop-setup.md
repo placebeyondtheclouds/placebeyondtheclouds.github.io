@@ -6,7 +6,7 @@ tags: [en]
 published: true
 ---
 
-My notes on how to set up a lenovo thinkbook gen6 laptop with ubuntu 24.04 as a hypervisor for QEMU/KVM virtualization with GPU passthrough to guests and hibernation.
+My notes from last year (2024) on how I set up a lenovo thinkbook gen6 laptop with ubuntu 24.04 as a hypervisor for QEMU/KVM virtualization with GPU passthrough to guests and hibernation.
 
 ## end result:
 
