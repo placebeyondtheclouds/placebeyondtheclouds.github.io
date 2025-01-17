@@ -38,17 +38,13 @@ The system is like that: **a PMVE host with GPU(s) that is running NVIDIA driver
 
 - run inference tasks on a GPU in an LXC container and game on the same GPU in a Windows VM at the same time
 
-- run training tasks on a GPU in one LXC container and inference tasks on the same GPU in another LXC container  at the same time (adjust batch size accordingly)
-
-- run multiple inference tasks in multiple LXC containers on the same GPU at the same time
-
-- GPU-over-IP:
+- GPU-over-IP within the same hypervisor:
 
   - remote rendering tasks: a windows vm, set the display device to `Vir-GL GPU` or `SPICE` in vm settings for higher resolution, install SPICE guest tools, run an application that requires rendering acceleration using GPU-over-IP with Juice client. Juice server is running in a docker container with nvidia runtime within an LXC on the same host, so network throughput is not an issue. 
 
   - a vm that is connected to an HDMI display through another GPU, running gaming/rendering tasks using GPU-over-IP as above.
 
-  - same as above, but with desktop streaming using Sunshine server and Moonlight client on another device, hardware video decoding.
+  - same as above, but with desktop streaming using Sunshine server and Moonlight client on another device.
 
 
 ## setup overview:
