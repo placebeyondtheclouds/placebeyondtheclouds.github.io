@@ -32,6 +32,10 @@ The system is like that: **a PMVE host with GPU(s) that is running NVIDIA driver
 
 ## usecases:
 
+- multiple research teams running training or inference on the same GPU(s) but in different LXC containers
+
+- a rendering task/game on a laptop without a dedicated GPU is running using GPU-over-IP on the same LAN
+
 - run inference tasks on a GPU in an LXC container and game on the same GPU in a Windows VM at the same time
 
 - run training tasks on a GPU in one LXC container and inference tasks on the same GPU in another LXC container  at the same time (adjust batch size accordingly)
