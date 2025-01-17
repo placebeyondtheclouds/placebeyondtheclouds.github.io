@@ -10,7 +10,7 @@ I put together a very flexible, straightforward and scalable workflow to share G
 
 So here are my notes on how to share a GPU (or multiple GPUs) between LXCs and VMs for computational and rendering tasks on a single host. Without GPU passthrough. Without using outdated GPUs with VDI (Virtual Desktop Infrastructure) NVIDIA GRID aka vGPU, that would require requesting a driver license with an expiration date from NVIDIA. Without SR-IOV. Without need for disabling VDI GRID 60fps frame limiter for running rendering (gaming) tasks. Without any tricks to bypass `code 43` error when NVIDIA driver detects that it's inside a VM. Without the trickery (nothing wrong with that) of changing the registry entry in Windows to make it use a high performance GPU for rendering and another GPU for video output. Without installing NVIDIA drivers in the Windows vm at all.
 
-The system is like that: **a PMVE host with GPU(s) that is running NVIDIA drivers, LXC container(s) with nvidia container toolkit and docker (with a docker container running Juice server), Windows VM(s) with GPU-over-IP rendering through Juice client running tasks on the Juice server, and/or desktop streaming to another machine**. or a computer on the same network with Juice client for GPU-over-IP inference/rendering/training tasks.
+The system is like that: **a PMVE host with GPU(s) that is running NVIDIA drivers, LXC container(s) with nvidia container toolkit and docker (with a docker container running Juice server), Windows VM(s) with GPU-over-IP rendering through Juice client running tasks on the Juice server, and/or desktop streaming to another machine**. or a computer on the same network with Juice client for GPU-over-IP rendering/inference/traning tasks.
 
 ## GPU choices and why I do not use vGPU:
 
@@ -32,11 +32,11 @@ The system is like that: **a PMVE host with GPU(s) that is running NVIDIA driver
 
 ## usecases:
 
-- multiple research teams running training or inference on the same GPU(s) but in different LXC containers
+- multiple research teams running training or inference (over ssh) on the same GPU(s) but in different LXC containers
 
-- a rendering task/game on a laptop without a dedicated GPU is running using GPU-over-IP on the same LAN
+- a rendering task/game on a Windows laptop without a dedicated GPU is running using GPU-over-IP on the same LAN
 
-- run inference tasks on a GPU in an LXC container and game on the same GPU in a Windows VM at the same time
+- run inference tasks on a GPU in an LXC container and game/rendering on the same GPU in a Windows VM at the same time
 
 - GPU-over-IP within the same hypervisor:
 
