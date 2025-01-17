@@ -62,7 +62,7 @@ The system is like that: **a PMVE host with GPU(s) that is running NVIDIA driver
 
 - examples of using GPU-over-IP on a Windows VM:
 
-  - for a headless Windows VM, in the VM settings set the display to SPICE, install SPICE guest tools, install spice-vdagent, [install Juice client and edit juice.cfg](https://github.com/placebeyondtheclouds/my-homelab-services-docker-stack?tab=readme-ov-file#juice-gpu-over-ip). start the vm, cycle settings `enable tablet for pointer` if the pointer is out of sync. run an app that needs a GPU with `juicify` command.
+  - for a headless Windows VM, for use with noVNC viewer in proxmox: in the VM settings set the display to SPICE, install SPICE guest tools, install spice-vdagent. for RDP, enable remote desktop and connect from a Linux (using Remmina), Windows (mstsc) or MacOS (MSRDP) client machine. then [install Juice client and edit juice.cfg](https://github.com/placebeyondtheclouds/my-homelab-services-docker-stack?tab=readme-ov-file#juice-gpu-over-ip). start the vm, cycle settings `enable tablet for pointer` if the pointer is out of sync. run an app that needs a GPU with `juicify` command.
 
   - for using Windows VM with HDMI output, pass through another GPU (can be old and/or slow) to the VM, in the VM settings change display to None. the passed GPU must be isolated from the driver on the host based on GPU ID using `options vfio-pci ids=` in `/etc/modprobe.d/vfio.conf`. pass through a bluetooth controller and pair a keyboard and a mouse, or pass through a usb device directly if using wired controllers. disable sleep after inactivity. start an application with `juicify` command.
 
