@@ -8,9 +8,11 @@ published: true
 
 I put together a very flexible, straightforward and scalable workflow to share GPU compute and VRAM resources between LXCs and VMs.
 
-So here are my notes on how to share a GPU (or multiple GPUs) between LXCs and VMs for computational and rendering tasks on a single host. Without GPU passthrough. Without using outdated GPUs with VDI (Virtual Desktop Infrastructure) NVIDIA GRID aka vGPU, that would require requesting a driver license with an expiration date from NVIDIA. Without SR-IOV. Without need for disabling VDI GRID 60fps frame limiter for running rendering (gaming) tasks. Without any tricks to bypass `code 43` error when NVIDIA driver detects that it's inside a VM. Without the trickery (nothing wrong with that) of changing the registry entry in Windows to make it use a high performance GPU for rendering and another GPU for video output. Without installing NVIDIA drivers in the Windows vm at all.
+So here are my notes on how to share a GPU (or multiple GPUs) between LXCs and VMs for computational and rendering tasks on a single host. Without GPU passthrough. Without using outdated GPUs with VDI (Virtual Desktop Infrastructure) NVIDIA GRID aka vGPU, that would require requesting a driver license (or running the script with a hack) with an expiration date from NVIDIA. Without SR-IOV. Without need for disabling VDI GRID 60fps frame limiter for running rendering (gaming) tasks. Without any tricks to bypass `code 43` error when NVIDIA driver detects that it's inside a VM. Without the trickery (nothing wrong with that) of changing the registry entry in Windows to make it use a high performance GPU for rendering and another GPU for video output. Without installing NVIDIA drivers in the Windows vm at all.
 
-The system is like that: **a PMVE host with GPU(s) that is running NVIDIA drivers, unprivileged LXC container(s) with nvidia container toolkit and docker (with a docker container running Juice server), Windows VM(s) with GPU-over-IP rendering through Juice client running tasks on the Juice server, and/or desktop streaming to another machine**. or a computer on the same network with Juice client for GPU-over-IP rendering/inference/traning tasks.
+## the end result:
+
+**a PMVE host with GPU(s) that is running NVIDIA drivers, unprivileged LXC container(s) with nvidia container toolkit and docker (with a docker container running Juice server), Windows VM(s) with GPU-over-IP rendering on the host GPU(s), and/or desktop streaming to another machine**. or a computer on the same network with Juice client for GPU-over-IP rendering/inference/traning tasks.
 
 ## GPU choices and why I do not use vGPU:
 
@@ -24,15 +26,13 @@ The system is like that: **a PMVE host with GPU(s) that is running NVIDIA driver
 
 ## why I chose this method:
 
-- straightforward deployment, less possibilities for making a mistake
+- straightforward deployment, reproducibility, no hacks, less possibilities for making a mistake
 
-- supports any NVIDIA GPU, from Kepler to the newest Blackwell 2.0
-
-
+- scalability: the same workflow supports any NVIDIA GPU, from Kepler to the newest Blackwell 2.0
 
 ## usecases:
 
-- multiple research teams running training or inference (over ssh) on the same GPU(s) but in different LXC containers
+- multiple research teams running training or inference (over ssh) on the same GPU(s) but in isolated environments of different LXCs
 
 - a rendering task/game on a Windows laptop without a dedicated GPU is running using GPU-over-IP on the same LAN
 
@@ -40,7 +40,7 @@ The system is like that: **a PMVE host with GPU(s) that is running NVIDIA driver
 
 - GPU-over-IP within the same hypervisor:
 
-  - remote rendering tasks: a windows vm, set the display device to `Vir-GL GPU` or `SPICE` in vm settings for higher resolution, install SPICE guest tools, run an application that requires rendering acceleration using GPU-over-IP with Juice client. Juice server is running in a docker container with nvidia runtime within an LXC on the same host, so network throughput is not an issue. 
+  - remote rendering tasks: a headless windows vm, run an application that requires rendering acceleration using GPU-over-IP with Juice client. Juice server is running in a docker container with nvidia runtime within an LXC on the same host, so network throughput is not an issue. 
 
   - a vm that is connected to an HDMI display through another GPU, running gaming/rendering tasks using GPU-over-IP as above.
 
@@ -62,15 +62,15 @@ The system is like that: **a PMVE host with GPU(s) that is running NVIDIA driver
 
 - examples of using GPU-over-IP on a Windows VM:
 
-  - for a headless Windows VM, for use with noVNC viewer in proxmox: in the VM settings set the display to SPICE, install SPICE guest tools, install spice-vdagent. for RDP, enable remote desktop and connect from a Linux (using Remmina), Windows (mstsc) or MacOS (MSRDP) client machine. then [install Juice client and edit juice.cfg](https://github.com/placebeyondtheclouds/my-homelab-services-docker-stack?tab=readme-ov-file#juice-gpu-over-ip). start the vm, cycle settings `enable tablet for pointer` if the pointer is out of sync. run an app that needs a GPU with `juicify` command.
+  - for a headless Windows VM, for use with noVNC viewer in proxmox, install SPICE guest tools, set the display device to `Vir-GL GPU` or `SPICE` in vm settings for higher resolution (cycle settings `enable tablet for pointer` if the mouse pointer is out of sync). For RDP, enable remote desktop and connect from a Linux (using Remmina), Windows (mstsc) or MacOS (MSRDP) client machine. then [install Juice client and edit juice.cfg](https://github.com/placebeyondtheclouds/my-homelab-services-docker-stack?tab=readme-ov-file#juice-gpu-over-ip). start the vm, run an app that needs a GPU with `juicify` command.
 
   - for using Windows VM with HDMI output, pass through another GPU (can be old and/or slow) to the VM, in the VM settings change display to None. the passed GPU must be isolated from the driver on the host based on GPU ID using `options vfio-pci ids=` in `/etc/modprobe.d/vfio.conf`. pass through a bluetooth controller and pair a keyboard and a mouse, or pass through a usb device directly if using wired controllers. disable sleep after inactivity. start an application with `juicify` command.
 
-  - for desktop streaming from Windows VM, same as above, another GPU (again, can be old and/or slow) is needed, but for hardware video encoding this time. install Sunshine server, set it up in the Sunshine webui. start an app that needs rendering acceleration or a game with `juicify` command. on a client device (Windows, Linux, iOS, etc), install Moonlight client and connect to the Moonlight server. press Ctrl+Shift+Alt+Q on Moonlight PC to quit the streaming session. 
+  - for desktop streaming from Windows VM, same as above, another GPU (again, can be old and/or slow) is needed, but only for hardware video encoding this time. A dummy plug must be installed into the HDMI port. install Sunshine server, set it up in the Sunshine webui. start an app that needs rendering acceleration or a game with `juicify` command. on a client device (Windows, Linux, iOS, etc), install Moonlight client and connect to the Moonlight server. press Ctrl+Shift+Alt+Q on Moonlight PC to quit the streaming session. 
 
 
 
-## Windows VM config:
+## Windows VM config in Proxmox:
 
 `cat /etc/pve/qemu-server/106.conf`
 
@@ -133,7 +133,7 @@ vga: none
 vmgenid: b0b899e0-630c-4ede-9eaa-f81fbcd4765f
 ```
 
-## desktop streaming
+## desktop streaming setup
 
 - in the Windows VM: install https://github.com/LizardByte/Sunshine
 
@@ -145,15 +145,16 @@ vmgenid: b0b899e0-630c-4ede-9eaa-f81fbcd4765f
 
 ## benchmark of GPU-over-IP rendering:
 
-- on the Windows VM (using another GPU for HDMI output) with a GPU-over-IP rendering on a NVIDIA P40 GPU in a LXC container on the same host:
+- on the Windows VM (using NVIDIA GT730 for HDMI output) with a GPU-over-IP rendering on a NVIDIA P40 GPU in a LXC container on the same host:
 
   - running Vulkan Cube 
     <br><img src="/assets/images/Screenshot%202025-01-15%20103719.jpg" alt="screenshot" width="50%"><br>
 
-  - running Liftoff 
+  - running Liftoff as an example of a rendering task
     <br><img src="/assets/images/Screenshot%202025-01-15%20105805.jpg" alt="screenshot" width="50%"><br>
     
   - same vm, but streaming desktop using Sunshine server and Moonlight client for Linux. Hardware video encoding with NVIDIA GT730 on the server and software video decoding on the client.
+
     <br><img src="/assets/images/Screenshot%20from%202025-01-17 13-08-16.jpg" alt="screenshot" width="50%">
 
     <br><img src="/assets/images/Screenshot%20from 2025-01-17%2013-11-14.jpg" alt="screenshot" width="50%">
