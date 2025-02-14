@@ -79,17 +79,17 @@ converting GGUF to ollama:
 ```shell
 tee WhiteRabbitNeo-2.5-Qwen-2.5-Coder-7B-Q8_0.modelfile <<EOF
 FROM "./WhiteRabbitNeo-2.5-Qwen-2.5-Coder-7B-Q8_0.gguf"
-SYSTEM """You are an AI that code. Please answer with code, and make sure to format with codeblocks using ```python and ```."""
+SYSTEM """You are an AI that can code. Please answer with code, and make sure to format with codeblocks using ```python and ```."""
 PARAMETER temperature 0.75
 PARAMETER top_k 50
 PARAMETER top_p 1.0
+PARAMETER num_ctx 16384
 TEMPLATE """
 <|im_start|>system
 {{ .System }}<|im_end|>
 <|im_start|>user
 {{ .Prompt }}<|im_end|>
 <|im_start|>assistant
-Sure! Let me provide a complete and a thorough answer to your question, with functional and production ready code.
 {{ .Response }}<|im_end|>
 """
 EOF
