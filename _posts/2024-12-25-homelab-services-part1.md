@@ -2,7 +2,7 @@
 layout: post
 title:  "My GPU homelab services part 1 (local)"
 lang: en
-tags: [en]
+tags: [en, homelab, docker, homepage, jellyfin, hashcat, it-tools]
 published: true
 ---
 

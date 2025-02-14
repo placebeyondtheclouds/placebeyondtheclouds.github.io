@@ -2,7 +2,7 @@
 layout: post
 title:  "My Laptop setup for deep learning"
 lang: en
-tags: [en]
+tags: [en, ubuntu, qemu, kvm, gpu, passthrough, hibernation]
 published: true
 ---
 

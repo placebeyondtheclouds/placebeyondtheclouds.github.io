@@ -2,7 +2,7 @@
 layout: post
 title:  "Share GPU resources between VMs, LXCs and machines on the network"
 lang: en
-tags: [en]
+tags: [en, proxmox, lxc, vm, gpu, juice, moonlight, sunshine]
 published: true
 ---
 

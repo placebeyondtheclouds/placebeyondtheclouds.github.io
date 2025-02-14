@@ -2,7 +2,7 @@
 layout: post
 title:  "GPU home server"
 lang: en
-tags: [en]
+tags: [en, gpu, server, cuda, nvidia, p40]
 published: true
 ---
 
