@@ -6,9 +6,13 @@ tags: [en, ollama, huggingface, gguf, quantization]
 published: true
 ---
 
+## the end result:
+
+- an LLM from Huggingface hub running locally with ollama backend
+
 ## prerequisites:
 
-- an Ubuntu/Debian VM with NVIDIA GPU, conda, git etc
+- an Ubuntu/Debian VM with NVIDIA GPU, conda, git etc. not sure if a GPU is needed for this particular task (it haven't used the GPU during the conversion), but the requirements for the converter include pytorch, which would install different versions depending on if a GPU present in the system or not, I believe it's better to go with CUDA version just in case. never tried it with the CPU-only pytorch
 
 ## steps:
 
@@ -55,6 +59,12 @@ New quant types (recommended):
 ```
 
 use `q4_k_m` for large models and `q8_0` for small models
+
+check if the model is listed in supported models:
+
+```shell
+python llama.cpp/convert_hf_to_gguf.py  --print-supported-models
+```
 
 converting HF to GGUF:
 
