@@ -12,7 +12,7 @@ published: true
 
 ## steps:
 
-create env and download the HF model
+create env and download the HF model. I took [the newest one](https://huggingface.co/WhiteRabbitNeo/WhiteRabbitNeo-2.5-Qwen-2.5-Coder-7B) out of the [WhiteRabbitNeo series](https://www.whiterabbitneo.com/) models as an example.
 
 ```shell
 conda create --name convert_env python=3.10 -y
