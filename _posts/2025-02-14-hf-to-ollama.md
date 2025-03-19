@@ -30,6 +30,8 @@ then
 ```shell
 tee download.py <<EOF
 from huggingface_hub import snapshot_download
+# import os
+# os.environ['HF_ENDPOINT'] = 'https://hf-mirror.com'
 model_id="WhiteRabbitNeo/WhiteRabbitNeo-2.5-Qwen-2.5-Coder-7B"
 snapshot_download(repo_id=model_id, local_dir="wrn-hf",
                   local_dir_use_symlinks=False, revision="main")
@@ -41,7 +43,7 @@ python download.py
 or
 
 ```shell
-export HF_ENDPOINT=https://hf-mirror.com
+#export HF_ENDPOINT=https://hf-mirror.com
 huggingface-cli download --resume-download WhiteRabbitNeo/WhiteRabbitNeo-2.5-Qwen-2.5-Coder-7B --local-dir ./wrn-hf --cache-dir ./wrn-hf/.cache/
 ```
 
