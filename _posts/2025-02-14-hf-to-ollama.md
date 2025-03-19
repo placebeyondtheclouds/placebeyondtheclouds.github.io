@@ -23,7 +23,11 @@ conda create --name convert_env python=3.10 -y
 conda activate convert_env
 pip install huggingface_hub
 mkdir convert && cd convert
+```
 
+then
+
+```shell
 tee download.py <<EOF
 from huggingface_hub import snapshot_download
 model_id="WhiteRabbitNeo/WhiteRabbitNeo-2.5-Qwen-2.5-Coder-7B"
@@ -33,6 +37,14 @@ EOF
 
 python download.py
 ```
+
+or
+
+```shell
+export HF_ENDPOINT=https://hf-mirror.com
+huggingface-cli download --resume-download WhiteRabbitNeo/WhiteRabbitNeo-2.5-Qwen-2.5-Coder-7B --local-dir ./wrn-hf --cache-dir ./wrn-hf/.cache/
+```
+
 
 
 [quantization explained](https://github.com/ggerganov/llama.cpp/pull/1684)
