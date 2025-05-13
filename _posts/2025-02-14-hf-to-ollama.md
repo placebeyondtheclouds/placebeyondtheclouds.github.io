@@ -1,18 +1,18 @@
 ---
 layout: post
-title:  "How to convert Huggingface transformers weights to Ollama model"
+title:  "How to convert Huggingface safetensors to Ollama model"
 lang: en
-tags: [en, ollama, huggingface, gguf, quantization]
+tags: [en, ollama, huggingface, gguf, quantization, safetensors]
 published: true
 ---
 
 ## the end result:
 
-- an LLM from Huggingface hub running locally with ollama backend
+- LLM weights from Huggingface hub running locally with ollama backend
 
 ## prerequisites:
 
-- an Ubuntu/Debian VM with NVIDIA GPU, conda, git etc. not sure if a GPU is needed for this particular task (it haven't used the GPU during the conversion), but the requirements for the converter include pytorch, which would install different versions depending on if a GPU present in the system or not, I believe it's better to go with CUDA version just in case. never tried it with the CPU-only pytorch
+- an Ubuntu/Debian VM with NVIDIA GPU, conda, git etc. not sure if a GPU is needed for this particular task (it didn't use the GPU during the conversion), but the requirements for the converter include pytorch, which would install different versions depending on if a GPU is present in the system or not, and I believe it's better to go with CUDA version just in case. never tried it with the CPU-only pytorch
 
 ## steps:
 
