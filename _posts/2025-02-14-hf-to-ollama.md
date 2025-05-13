@@ -80,7 +80,7 @@ check if the model is listed in supported models:
 python llama.cpp/convert_hf_to_gguf.py  --print-supported-models
 ```
 
-converting HF to GGUF:
+converting Huggingface safetensors format to GGUF:
 
 ```shell
 git clone https://github.com/ggerganov/llama.cpp.git
@@ -98,7 +98,7 @@ ssh $USER@192.168.3.200 rm WhiteRabbitNeo-2.5-Qwen-2.5-Coder-7B-Q8_0.gguf
 DOCKER_HOST="ssh://$USER@192.168.3.200" docker exec -it ollama bash
 ```
 
-converting GGUF to ollama:
+creating Ollama model from GGUF file:
 
 ```shell
 tee WhiteRabbitNeo-2.5-Qwen-2.5-Coder-7B-Q8_0.modelfile <<EOF
