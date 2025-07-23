@@ -64,9 +64,13 @@ My [Projects](/projects)
 - English: advanced
 - Russian: first language
 
+### Certifications: 
+
+- C1D driving license, 轻型民用无人驾驶航空器安全操控理论培训合格证明, HSK5, HSKK, NVIDIA Fundamentals of Accelerated Computing with CUDA Python, MTCNA (expired)
+
 ### More:
 
-Interests: data analysis, data engineering, machine learning, autonomous driving. C1D driving license. Betaflight/ELRS/EdgeTX programming. HackTheBox.
+Interests: autonomous driving. Betaflight/ELRS/EdgeTX programming. HackTheBox.
 
 ## Education:
 
