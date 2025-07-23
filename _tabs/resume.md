@@ -26,26 +26,25 @@ Network and system administration, on-prem, cybersecurity, data engineering, mac
 
 My [Projects](/projects)
 
-## Skills:
+## Skills (most recent experience):
 
 ### Computer system and network administration:
 
 - Setting up and maintaining multi-purpose Linux servers (Ubuntu, Debian)
 - Setting up and maintaining GPU/compute/storage clusters (Proxmox VE, CEPH)
 - GPU-enabled virtualization (LXC, QEMU/KVM)
+- on-prem LLM (n8n, ollama, hf)
 - DevOps (docker, SQL, NGINX)
 - Data management, backup, disaster recovery
 - Cybersecurity, Pentesting
 - wireless and wired networking (including NVIDIA InfiniBand), former MTCNA
-- User training (Windows/MacOS/Linux, software, data management, programming)
-- Creating and updating documentation
+- Helpdesk (Windows/MacOS/Linux, software, data management, programming), Documentation
 - Computer hardware troubleshooting and repair
 - Raspberry Pi projects
 
 ### Data engineering and deep learning:
 
 - Signal processing
-- Text data cleaning and management for research projects purposes
 - Writing code and training deep learning models (Tensorflow, Pytorch)
 - Model performance metrics engineering and analysis, experiment tracking (mlflow)
 - English/Chinese natural language processing, embeddings
