@@ -16,15 +16,11 @@ China
 
 ## Position:
 
-- Data analysis
-- Data engineering
-- Machine learning
-- Cybersecurity
-- Research assistant
+DevOps, Data analysis, Data engineering, Cybersecurity, Research assistant
 
 ## Summary:
 
-Network and system administration, security audit, data engineering, machine learning, product management, data analytics. Focused on open-source solutions. I like the concept of a data-driven world and getting insights from data, enjoy building complex systems. Love learning new things and adding value to other people's lives.
+Network and system administration, on-prem, cybersecurity, data engineering, machine learning, DevOps, data analytics. Focused on open-source solutions. I like the concept of a data-driven world and getting insights from data, enjoy building complex systems. Love learning new things and adding value to other people's lives.
 
 ## Projects:
 
@@ -36,10 +32,11 @@ My [Projects](/projects)
 
 - Setting up and maintaining multi-purpose Linux servers (Ubuntu, Debian)
 - Setting up and maintaining GPU/compute/storage clusters (Proxmox VE, CEPH)
-- Docker
+- GPU-enabled virtualization (LXC, QEMU/KVM)
+- DevOps (docker, SQL, NGINX)
 - Data management, backup, disaster recovery
-- Cybersecurity
-- L1-L2 wireless and wired networking (including NVIDIA InfiniBand), former MTCNA
+- Cybersecurity, Pentesting
+- wireless and wired networking (including NVIDIA InfiniBand), former MTCNA
 - User training (Windows/MacOS/Linux, software, data management, programming)
 - Creating and updating documentation
 - Computer hardware troubleshooting and repair
@@ -51,14 +48,12 @@ My [Projects](/projects)
 - Text data cleaning and management for research projects purposes
 - Writing code and training deep learning models (Tensorflow, Pytorch)
 - Model performance metrics engineering and analysis, experiment tracking (mlflow)
-- English/Chinese natural language processing
-- SQL, tabular data analysis
+- English/Chinese natural language processing, embeddings
 
 ### Programming:
 
-- Python (NLP, DL/ML and scientific frameworks, visualization), Shell script
-- Jupyter, git
-- Entry-level full-stack (JavaScript, React, Python, FastAPI) development and deployment (ONNX, NGINX)
+- Python (NLP, DL/ML and scientific frameworks, visualization), Shell script, Jupyter, git
+- Entry-level full-stack (JavaScript, React, Python, FastAPI) development
 
 ### Training and education:
 
@@ -72,7 +67,7 @@ My [Projects](/projects)
 
 ### More:
 
-Interests: data analysis, data engineering, machine learning, autonomous driving. C1D driving license
+Interests: data analysis, data engineering, machine learning, autonomous driving. C1D driving license. Betaflight/ELRS/EdgeTX programming. HackTheBox.
 
 ## Education:
 
