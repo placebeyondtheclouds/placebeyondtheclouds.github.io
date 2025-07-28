@@ -70,7 +70,7 @@ My [Projects](/projects)
 
 ### More:
 
-Interests: autonomous driving. Betaflight/ELRS/EdgeTX programming. HackTheBox.
+Interests: autonomous driving. Betaflight/ELRS/EdgeTX programming. TryHackMe, HackTheBox.
 
 ## Education:
 
