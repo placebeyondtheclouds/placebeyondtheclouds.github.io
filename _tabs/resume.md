@@ -33,13 +33,13 @@ My [Projects](/projects)
 - Setting up and maintaining multi-purpose Linux servers (Ubuntu, Debian)
 - Setting up and maintaining GPU/compute/storage clusters (Proxmox VE, CEPH)
 - GPU-enabled virtualization (LXC, QEMU/KVM)
-- on-prem LLM (n8n, ollama, hf)
-- DevOps (docker, SQL, NGINX)
+- DevOps (docker, SQL, NGINX), on-prem LLM (n8n, ollama, hf)
 - Data management, backup, disaster recovery
 - Cybersecurity, Pentesting
 - wireless and wired networking (including NVIDIA InfiniBand), former MTCNA
 - Helpdesk (Windows/MacOS/Linux, software, data management, programming), Documentation
 - Computer hardware troubleshooting and repair
+- FPV drone building (from scratch) and piloting, Betaflight/ELRS/EdgeTX programming
 - Raspberry Pi projects
 
 ### Data engineering and deep learning:
@@ -70,7 +70,7 @@ My [Projects](/projects)
 
 ### More:
 
-Interests: autonomous driving. Betaflight/ELRS/EdgeTX programming. TryHackMe, HackTheBox.
+Interests: autonomous driving. TryHackMe, HackTheBox.
 
 ## Education:
 
