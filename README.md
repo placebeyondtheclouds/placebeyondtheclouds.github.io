@@ -5,7 +5,7 @@ Static site generated with Jekyll and hosted on GitHub Pages. Markdown language 
 ## Steps to reproduce (on Linux)
 
 > [!CAUTION]
-> Do **NOT** put API keys, passwords, or any other sensitive information in the source code if it's hosted on GitHub Pages.
+> Do **NOT** put API keys, passwords, or any other sensitive information into the source code if it's hosted on GitHub Pages.
 
 - install the dependencies
 ```bash
@@ -32,6 +32,11 @@ gem install jekyll bundler
   - formatting posts [1](https://jekyllrb.com/docs/posts/), [2](https://docs.github.com/en/get-started/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax#alerts) , [3](https://www.markdownguide.org/cheat-sheet/)
 - copy favicon files to `assets/img/favicons/`
 - push the changes to the repo
+
+## updating the theme
+
+- `bundle update`
+- `gem update bundler`
 
 ## References
 
