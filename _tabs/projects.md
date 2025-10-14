@@ -43,6 +43,14 @@ Set up docker environment in an LXC, added Portainer for easy management. Deploy
 
 ---
 
+### DIY CDROM emulator
+
+[Hardware CDROM emulator for ISO images using a Raspberry Pi Zero W](https://github.com/placebeyondtheclouds/rpi-cdrom-emulator-build)
+
+![DIY CDROM emulator](/assets/images/img021.jpg)
+
+---
+
 
 ### DIY IP KVM
 

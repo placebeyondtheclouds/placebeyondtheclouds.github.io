@@ -28,6 +28,12 @@ My [Projects](/projects)
 
 ## Skills (most recent experience):
 
+## Papers
+
+- Shuai Wang, Yuzhu Liang, Tianheng Wang, Wei Huang, Ke Xu, Aleksandr Mitkov, Shuting Yuan, Jun Ding, Lining Wang, Yongdao Zhou, Quansheng Xia, Qibin Ran, Unraveling the influence of essential climatic factors on the number of tones through an extensive database of languages in China, Journal of Language Evolution, Volume 9, Issue 1-2, January/July 2024, Pages 29–48, https://doi.org/10.1093/jole/lzae009
+- 陆旭,Aleksandr Mitkov,冉启斌.从词向量计算看汉语名词和动词的关系[J].语言教学与研究,2024,(03):57-67.《语言文字学》2024年第10期全文转载。《词汇学理论与应用（十二）》
+- Masters thesis: Using machine learning in an experimental study on the Chinese tones acquisition by Russian students. CNKI:CDMD:2.1022.487181
+
 ### Computer system and network administration:
 
 - Setting up and maintaining multi-purpose Linux servers (Ubuntu, Debian)
