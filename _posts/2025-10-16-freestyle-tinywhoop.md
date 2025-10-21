@@ -30,8 +30,8 @@ UART4:(GPS)
 
 - pad connections to the FC:
 ```
-VTX: 5V(red) - bat+, GND(black) - GND, video(yellow) - VTX, RX(purple) - TX2
-caddx ant nano lite pinout: 5-25V(red) - 5V, GND - GND, VIDEO(yellow) - CAM, OSD GND(cut), OSD signal (green) - through 150R to LED_STRIP pad on the FC.
+VTX: 5V(red) - 5V, GND(black) - GND, video(yellow) - VTX, RX(purple) - TX2
+caddx ant nano lite pinout: 5-25V(red) - 5V, GND - GND, VIDEO(yellow) - CAM, OSD GND(can be disconnected), OSD signal (green) - through 150R to LED_STRIP pad on the FC.
 buzzer: red - BZ+, black - BZ-
 ```
 
