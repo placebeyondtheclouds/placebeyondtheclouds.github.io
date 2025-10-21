@@ -3,12 +3,12 @@ layout: post
 title:  "Re-building 1S 80mm freestyle quad"
 lang: en
 tags: [en, 1s, tinywhoop, quad, fpv, diy, 80mm, analog ]
-published: true
+published: false
 ---
 
-I damaged ESC #2 on the 1S Matrix AIO (Meteor75 Pro), either by running a motor with damaged windings or from a voltage spike in a crash. It's overheating, not giving full power to the motor, and the video feed has white washouts during high throttle. So I'm replacing the AIO with JHEMCU G474ELRS and [HGLRC Zeuz nano 350mw VTX](https://hglrc.freshdesk.com/support/solutions/articles/61000307667-zeus-350mw-vtx). New AIO is 1-2s, 12A ESCs with Bluejay, has a better ELRS antenna (with IPEX/UF.L connector), 4 UARTS, runs at 170 MHz, 8MB blackbox (sadly). 
+I damaged ESC #2 on the 1S Matrix AIO (Meteor75 Pro), either by running a motor with damaged windings or from a voltage spike in a crash. It's overheating, not giving full power to the motor, and the video feed has white washouts during high throttle. _it was another bad motor, not the ESC._ So I'm replacing the AIO with JHEMCU G474ELRS and [HGLRC Zeuz nano 350mw VTX](https://hglrc.freshdesk.com/support/solutions/articles/61000307667-zeus-350mw-vtx). New AIO is 1-2s, 12A ESCs with Bluejay, has a better ELRS antenna (with IPEX/UF.L connector), 4 UARTS, runs at 170 MHz, 8MB blackbox (sadly). 
 Meteor75 frame is scraping the battery and motor screws against the ground, so I am replacing it with a clone of Mobula7 but for 45mm props (80mm base and 47mm ducts instead of 75mm and 43mm). It has 2S battery tray, and with 1S battery being propped by a dense foam material glued to the bottom the whoop will land on the lower part of the frame without the battery or motor screws touching the ground. Another solution to the problem would be keep the meteor75pro frame and printing [the battery bumper](https://www.thingiverse.com/thing:7056235).
-camera - [Caddx Ant Nano Lite](https://caddxfpv.com/products/caddxfpv-ant-lite-4-3-fpvcycle-edition). the motors are 1102 22000kv left from the Meteor75. the props are gemfan 45mm-3. 20AVG battery lead with BT2.0. batteries batches of 高能 100C 550mAh LiHV 1S A30 (new, untested) and 格氏 95C 550mAh 1S LiHV BT2.0 (old, not very good life expectancy).
+camera - [Caddx Ant Nano Lite](https://caddxfpv.com/products/caddxfpv-ant-lite-4-3-fpvcycle-edition). ~~the motors are 1102 22000kv left from the Meteor75~~ changed the motors to noname 1103 15000KV 1-2S (3 screw base, 6mm, same as the betafpv 1102 motors). the props are gemfan 45mm-3. 20AVG battery lead with BT2.0. batteries batches of 高能 100C 550mAh LiHV 1S A30 (new, untested) and 格氏 95C 550mAh 1S LiHV BT2.0 (old, not very good life expectancy).
 
 ## pictures
 
@@ -53,8 +53,6 @@ also start each motor in the ESC configurator and change the direction while in 
 
 - flash the elrs receiver (target `BETAFPV 2.4GHz Lite RX`)
  
-
-
 - calibrate accelerometer
 
 - adjust voltage sensor calibration values
