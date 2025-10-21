@@ -51,16 +51,20 @@ motor timing  15 degrees
 
 also start each motor in the ESC configurator and change the direction while in there to make them _props out_
 
+- flash the elrs receiver (target `BETAFPV 2.4GHz Lite RX`)
+ 
+
+
 - calibrate accelerometer
 
 - adjust voltage sensor calibration values
 
-- [camera control](https://oscarliang.com/fpv-camera-control-fc/). measure the OSD pin voltage
+- (not working, probably needs a 10uF cap between the OSD and GND) [camera control](https://oscarliang.com/fpv-camera-control-fc/). measure the OSD pin voltage.
 ```
 resource
 resource LED_STRIP 1 none
-resource camera_control 1 xxxxx
-set camera_control_ref_voltage = 330
+resource camera_control 1 B02
+set camera_control_ref_voltage = 337
 ```
 
 - load elrs 150Hz rate profile (although some of the values will be changed with the filters tuning later)
