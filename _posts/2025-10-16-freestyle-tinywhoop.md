@@ -114,7 +114,7 @@ set vtx_freq = 5917
 set vcd_video_system = PAL
 ```
 
-- rates and PIDs
+-  PIDs
 ```
 profile 0
 
@@ -162,6 +162,7 @@ set tpa_rate = 80
 set tpa_breakpoint = 1500
 ```
 
+-rates 
 ```
 rateprofile 0
 
