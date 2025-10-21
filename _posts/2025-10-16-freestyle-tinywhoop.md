@@ -66,6 +66,7 @@ set camera_control_ref_voltage = 330
 - load elrs 150Hz rate profile (although some of the values will be changed with the filters tuning later)
 
 - misc
+
 ```
 feature -AIRMODE
 feature TELEMETRY
@@ -80,6 +81,7 @@ set pidsum_limit_yaw = 1000
 ```
 
 - modes
+
 ```
 # aux
 aux 0 0 0 1900 2100 0 0
@@ -95,6 +97,7 @@ aux 9 35 2 1925 2100 0 0
 ```
 
 - vtx table
+
 ```
 vtxtable bands 5
 vtxtable channels 8
@@ -115,6 +118,7 @@ set vcd_video_system = PAL
 ```
 
 -  PIDs
+
 ```
 profile 0
 
