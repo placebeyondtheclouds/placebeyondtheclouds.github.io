@@ -10,7 +10,7 @@ I damaged ESC #2 on the 1S Matrix AIO (Meteor75 Pro), either by running a motor 
 Meteor75 frame is scraping the battery and motor screws against the ground, so I am replacing it with a clone of Mobula7 but for 45mm props (80mm base and 47mm ducts instead of 75mm and 43mm). It has 2S battery tray, and with 1S battery being propped by a dense foam material glued to the bottom the whoop will land on the lower part of the frame without the battery or motor screws touching the ground. Another solution to the problem would be keep the meteor75pro frame and printing [the battery bumper](https://www.thingiverse.com/thing:7056235).
 camera - [Caddx Ant Nano Lite](https://caddxfpv.com/products/caddxfpv-ant-lite-4-3-fpvcycle-edition). ~~the motors are 1102 22000kv left from the Meteor75~~ changed the motors to generic 1103 15000KV 1-2S (3 screw 6mm base, 1.5 shaft, same as the betafpv 1102 motors). the props are gemfan 45mm-3. 20AVG battery lead with BT2.0. batteries batches of 高能 100C 550mAh LiHV 1S A30 (new, untested) and 格氏 95C 550mAh 1S LiHV BT2.0 (old, not very good life expectancy).
 
-## pictures
+## video
 
 
 work in progress
@@ -35,9 +35,8 @@ caddx ant nano lite pinout: 5-25V(red) - 5V, GND - GND, VIDEO(yellow) - CAM, OSD
 buzzer: red - BZ+, black - BZ-
 ```
 
-- apply `P-1025` conformal coating to the FC and VTX boards (the camera is already coated)
 
-- install the components into the frame, secure what needed with zip ties, add `Kafuter K-705` silicon sealant to the places where wires are soldered to FC pads, to the U.FL connectors on FC and VTX
+- install the components into the frame, secure what needed with zip ties
 
 - recompile betaflight v2025, target `JHEG474`, analog, add features: camera control
 
@@ -272,7 +271,9 @@ set osd_pid_profile_name_pos = 374
 set osd_sys_vtx_temp_pos = 407
 set osd_stat_bitmask = 8521444
 ```
+## testing
 
+- _after_ a successful test flight, apply `P-1025` conformal coating to the FC and VTX boards (I already applied it to the camera board), add `Kafuter K-705` silicon sealant to the places where wires are soldered to the FC pads, U.FL connectors on FC and VTX
 
 ## references
 
