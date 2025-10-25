@@ -8,7 +8,7 @@ published: true
 
 I damaged ESC #2 on the 1S Matrix AIO (Meteor75 Pro), either by running a motor with damaged windings or from a voltage spike in a crash. It's overheating, not giving full power to the motor, and the video feed has white washouts during high throttle. So I'm replacing the AIO with JHEMCU G474ELRS and [HGLRC Zeuz nano 350mw VTX](https://hglrc.freshdesk.com/support/solutions/articles/61000307667-zeus-350mw-vtx). New AIO is 1-2s, 12A ESCs with Bluejay, has a better ELRS antenna (with IPEX/UF.L connector), 4 UARTS, runs at 170 MHz, 8MB blackbox (sadly). 
 Meteor75 frame is scraping the battery and motor screws against the ground, so I am replacing it with a clone of Mobula7 but for 45mm props (80mm base and 47mm ducts instead of 75mm and 43mm). It has 2S battery tray, and with 1S battery being propped by a dense foam material glued to the bottom the whoop will land on the lower part of the frame without the battery or motor screws touching the ground. Another solution to the problem would be keep the meteor75pro frame and printing [the battery bumper](https://www.thingiverse.com/thing:7056235).
-camera - [Caddx Ant Nano Lite](https://caddxfpv.com/products/caddxfpv-ant-lite-4-3-fpvcycle-edition). ~~the motors are 1102 22000kv left from the Meteor75~~ changed the motors to noname 1103 15000KV 1-2S (3 screw 6mm base, 1.5 shaft, same as the betafpv 1102 motors). the props are gemfan 45mm-3. 20AVG battery lead with BT2.0. batteries batches of 高能 100C 550mAh LiHV 1S A30 (new, untested) and 格氏 95C 550mAh 1S LiHV BT2.0 (old, not very good life expectancy).
+camera - [Caddx Ant Nano Lite](https://caddxfpv.com/products/caddxfpv-ant-lite-4-3-fpvcycle-edition). ~~the motors are 1102 22000kv left from the Meteor75~~ changed the motors to generic 1103 15000KV 1-2S (3 screw 6mm base, 1.5 shaft, same as the betafpv 1102 motors). the props are gemfan 45mm-3. 20AVG battery lead with BT2.0. batteries batches of 高能 100C 550mAh LiHV 1S A30 (new, untested) and 格氏 95C 550mAh 1S LiHV BT2.0 (old, not very good life expectancy).
 
 ## pictures
 
@@ -59,15 +59,18 @@ motor timing  15 degrees
 set yaw_motors_reversed = ON
 ```
 
-- (not working, probably needs a 10uF cap between the OSD and GND) [camera control](https://oscarliang.com/fpv-camera-control-fc/). measure the OSD pin voltage.
+## restore my settings
+
+- load elrs 150Hz rate profile (although some of the values will be changed with the filters tuning later)
+
+- (not working, probably needs a 10uF cap between the OSD and GND on the camera side) [camera control](https://oscarliang.com/fpv-camera-control-fc/). measure the OSD pin voltage.
+
 ```
 resource
 resource LED_STRIP 1 none
 resource camera_control 1 B02
 set camera_control_ref_voltage = 337
 ```
-
-- load elrs 150Hz rate profile (although some of the values will be changed with the filters tuning later)
 
 - misc
 
@@ -84,7 +87,7 @@ set failsafe_procedure = DROP
 set pidsum_limit_yaw = 1000
 ```
 
-- modes
+- modes (for my radio setup)
 
 ```
 # aux
@@ -97,7 +100,8 @@ aux 5 11 1 1400 1600 0 0
 aux 6 13 4 1900 2100 0 0
 aux 7 26 5 1900 2100 0 0
 aux 8 28 1 900 1100 0 0
-aux 9 35 2 1925 2100 0 0
+aux 9 32 6 1850 2100 0 0
+aux 10 35 2 1925 2100 0 0
 ```
 
 - vtx table
@@ -121,7 +125,7 @@ set vtx_freq = 5917
 set vcd_video_system = PAL
 ```
 
--  PIDs
+- PIDs
 
 ```
 profile 0
@@ -170,7 +174,8 @@ set tpa_rate = 80
 set tpa_breakpoint = 1500
 ```
 
--rates 
+- rates 
+
 ```
 rateprofile 0
 
@@ -185,6 +190,7 @@ set yaw_srate = 90
 ```
 
 - filters:
+
 ```
 set gyro_lpf1_static_hz = 0
 set gyro_lpf2_static_hz = 1000
@@ -199,6 +205,7 @@ set rpm_filter_min_hz = 140
 ```
 
 - motors (important) and battery:
+
 ```
 set dshot_bidir = ON
 set dshot_bitbang = AUTO
@@ -214,6 +221,7 @@ set small_angle = 180
 ```
 
 - OSD. if BF is set to NTSC and the camera outputs PAL, the osd elements will not be visible
+
 ```
 set report_cell_voltage = ON
 set osd_rssi_dbm_alarm = -90
@@ -265,9 +273,11 @@ set osd_sys_vtx_temp_pos = 407
 set osd_stat_bitmask = 8521444
 ```
 
+
 ## references
 
 - https://oscarliang.com
 - https://www.youtube.com/@ChrisRosser
 - https://www.youtube.com/@JoshuaBardwell
 - https://www.youtube.com/@MediocreNerd
+- https://speedybee.zendesk.com/hc/en-us/articles/18769825525531-Experiencing-a-Runaway-takeoff-During-Drone-s-First-Flight
