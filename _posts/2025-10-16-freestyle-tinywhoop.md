@@ -35,12 +35,11 @@ caddx ant nano lite pinout: 5-25V(red) - 5V, GND - GND, VIDEO(yellow) - CAM, OSD
 buzzer: red - BZ+, black - BZ-
 ```
 
-
 - install the components into the frame, secure what needed with zip ties
 
-- recompile betaflight v2025, target `JHEG474`, analog, add features: camera control
+- recompile betaflight v2025, target `JHEG474`, analog, add features: camera control. restore the original backup
 
-- reflash bluejay, target `Z-H-30`, PWM 48kHz (it runaways on 96kHz for some reason), adjust the direction of the motors (props out)
+- reflash bluejay, target `Z-H-30`, PWM 48kHz (I get runaways on 96kHz for some reason), adjust the direction of the motors (props out)
 ```
 startup sliders 1100 and 1200
 rampup x3
@@ -48,6 +47,8 @@ motor timing  15 degrees
 ```
 
 - flash the elrs receiver (target `BETAFPV 2.4GHz Lite RX`)
+
+- connect to the FC using elrs wifi. in BF configurator options enable manual connection, connect to the RX wifi, then use port `tcp://10.0.0.1`
  
 - calibrate accelerometer
 
@@ -103,9 +104,10 @@ aux 9 32 6 1850 2100 0 0
 aux 10 35 2 1925 2100 0 0
 ```
 
-- vtx table
+- ~~ vtx table~~
 
 ```
+vtxtable
 vtxtable bands 5
 vtxtable channels 8
 vtxtable band 1 BOSCAM_A A CUSTOM 5865 5845 5825 5805 5785 5765 5745 5725
@@ -123,6 +125,22 @@ set vtx_low_power_disarm = UNTIL_FIRST_ARM
 set vtx_freq = 5917
 set vcd_video_system = PAL
 ```
+
+- official [vtx table for HGLRC Zeus nano 350mw](https://www.rotorama.cz/cms/assets/docs/d0c22322f24f3bf72e2e66bab648f238/13272-1/zeus-nano-350mw-vtx.json)
+
+```
+vtxtable bands 5
+vtxtable channels 8
+vtxtable band 1 BOSCAM_A A CUSTOM  5865 5845 5825 5805 5785 5765 5745 5725
+vtxtable band 2 BOSCAM_B B CUSTOM  5733 5752 5771 5790 5809 5828 5847 5866
+vtxtable band 3 FATSHARK F CUSTOM  5740 5760 5780 5800 5820 5840 5860 5880
+vtxtable band 4 RACEBAND R CUSTOM  5658 5695 5732 5769 5806 5843 5880 5917
+vtxtable band 5 IMD6     I CUSTOM  5362 5399 5436 5473 5510 5547 5584 5621
+vtxtable powerlevels 4
+vtxtable powervalues 25 100 200 400
+vtxtable powerlabels 25 100 200 350
+```
+
 
 - PIDs
 
@@ -279,6 +297,7 @@ set osd_stat_bitmask = 8521444
 
 - https://oscarliang.com
 - https://www.youtube.com/@ChrisRosser
+  - https://www.youtube.com/watch?v=EhYKeZfSQIw
 - https://www.youtube.com/@JoshuaBardwell
 - https://www.youtube.com/@MediocreNerd
 - https://speedybee.zendesk.com/hc/en-us/articles/18769825525531-Experiencing-a-Runaway-takeoff-During-Drone-s-First-Flight
