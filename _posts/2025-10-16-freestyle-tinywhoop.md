@@ -8,7 +8,7 @@ published: true
 
 I damaged ESC #2 on the 1S Matrix AIO (Meteor75 Pro), either by running a motor with damaged windings or from a voltage spike in a crash. It's overheating, not giving full power to the motor, and the video feed has white washouts during high throttle. So I'm replacing the AIO with JHEMCU G474ELRS and [HGLRC Zeuz nano 350mw VTX](https://hglrc.freshdesk.com/support/solutions/articles/61000307667-zeus-350mw-vtx). New AIO is 1-2s, 12A ESCs with Bluejay, has a better ELRS antenna (with IPEX/UF.L connector), 4 UARTS, runs at 170 MHz, 8MB blackbox (sadly). 
 Meteor75 frame is scraping the battery and motor screws against the ground, so I am replacing it with a clone of Mobula7 but for 45mm props (80mm base and 47mm ducts instead of 75mm and 43mm). It has 2S battery tray, and with 1S battery being propped by a dense foam material glued to the bottom the whoop will land on the lower part of the frame without the battery or motor screws touching the ground. Another solution to the problem would be keep the meteor75pro frame and printing [the battery bumper](https://www.thingiverse.com/thing:7056235).
-camera - [Caddx Ant Nano Lite](https://caddxfpv.com/products/caddxfpv-ant-lite-4-3-fpvcycle-edition). ~~the motors are 1102 22000kv left from the Meteor75~~ changed the motors to generic 1103 15000KV 1-2S (3 screw 6mm base, 1.5 shaft, same as the betafpv 1102 motors). the props are gemfan 45mm-3. 20AVG battery lead with BT2.0. batteries batches of 高能 100C 550mAh LiHV 1S A30 (new, untested) and 格氏 95C 550mAh 1S LiHV BT2.0 (old, not very good life expectancy).
+camera - [Caddx Ant Nano Lite](https://caddxfpv.com/products/caddxfpv-ant-lite-4-3-fpvcycle-edition). the motors are 1102 22000kv left from the Meteor75. the props are gemfan 45mm-3. 20AVG battery lead with BT2.0. batteries batches of 高能 100C 550mAh LiHV 1S A30 (new, untested) and 格氏 95C 550mAh 1S LiHV BT2.0 (old, not very good life expectancy).
 
 ## video
 
@@ -18,7 +18,7 @@ work in progress
 
 ## the process
 
-- connect the FC, check that it is working, backup the config (`dump`, `diff all showdefaults`)
+- connect the FC, check that it is working, backup the config (`dump`, `diff all showdefaults` and save the outputs)
 
 - UARTs:
 ```
@@ -31,28 +31,34 @@ UART4:(GPS)
 - pad connections to the FC:
 ```
 VTX: 5V(red) - 5V, GND(black) - GND, video(yellow) - VTX, RX(purple) - TX2
-caddx ant nano lite pinout: 5-25V(red) - 5V, GND - GND, VIDEO(yellow) - CAM, OSD GND(can be disconnected), OSD signal (green) - through 150R to LED_STRIP pad on the FC.
+caddx ant nano lite pinout: 5-25V(red) - 5V, GND - GND, VIDEO(yellow) - CAM, OSD GND(can be disconnected), OSD signal (green) - through 150R to LED_STRIP pad on the FC. add 10uf cap (106 10uf 50v) between OSD signal and GND on the camera side.
 buzzer: red - BZ+, black - BZ-
 ```
 
 - install the components into the frame, secure what needed with zip ties
 
-- recompile betaflight v2025, target `JHEG474`, analog, add features: camera control. restore the original backup
+- flash betaflight v2025.12, target `JHEG474`, analog OSD, add features: camera control. restore the original backup
 
 - reflash bluejay, target `Z-H-30`, PWM 48kHz (I get runaways on 96kHz for some reason), adjust the direction of the motors (props out)
 ```
-startup sliders 1100 and 1200
+startup sliders to the max
 rampup x3
 motor timing  15 degrees
+ESC power rating 2S+
+temperature protection 140
+beacon delay 1 min
 ```
 
 - flash the elrs receiver (target `BETAFPV 2.4GHz Lite RX`)
 
-- connect to the FC using elrs wifi. in BF configurator options enable manual connection, connect to the RX wifi, then use port `tcp://10.0.0.1`
+- (optional) connect to the FC using elrs wifi. in BF configurator options enable manual connection, connect to the RX wifi, then use port `tcp://10.0.0.1`
  
 - calibrate accelerometer
 
-- adjust voltage sensor calibration values
+- adjust current sensor calibration values
+```
+set ibata_scale = 598
+```
 
 - in motors tab, turn on _motor direction is reversed_. it makes the mixer to expect that _some_ of the motors are reversed
 ```
@@ -69,7 +75,7 @@ set yaw_motors_reversed = ON
 resource
 resource LED_STRIP 1 none
 resource camera_control 1 B02
-set camera_control_ref_voltage = 337
+set camera_control_ref_voltage = 326
 ```
 
 - misc
@@ -104,7 +110,9 @@ aux 9 32 6 1850 2100 0 0
 aux 10 35 2 1925 2100 0 0
 ```
 
-- ~~ vtx table~~
+
+
+- corrected vtx table for HGLRC Zeus nano 350mw
 
 ```
 vtxtable
@@ -118,29 +126,44 @@ vtxtable band 5 RACEBAND R CUSTOM 5658 5695 5732 5769 5806 5843 5880 5917
 vtxtable powerlevels 4
 vtxtable powervalues 25 100 200 400
 vtxtable powerlabels 25 100 200 350
-set vtx_band = 5
+```
+
+- official [vtx table for HGLRC Zeus nano 350mw](https://www.rotorama.cz/cms/assets/docs/d0c22322f24f3bf72e2e66bab648f238/13272-1/zeus-nano-350mw-vtx.json). [review.](https://www.multirotorguide.com/reviews/review-hglrc-zeus-vtx-nano/)
+
+
+- vtx table for 棕熊 6 band 400mw vtx. I edited it using [this](https://www.team-blacksheep.com/media/files/vtx-table-for-betaflight.txt) as an example. it uses smartaudio 2.1 protocol, so the power values will be in dBm. BF CLI has the command `vtx_info` to show the power levels that the VTX supports
+
+```
+# vtx_info
+# level 23 dBm, power 200 mW
+# level 26 dBm, power 400 mW
+# level 0 dBm, power 1 mW
+```
+
+```
+vtxtable bands 6
+vtxtable channels 8
+vtxtable band 1 BOSCAM_A A FACTORY 5865 5845 5825 5805 5785 5765 5745 5725
+vtxtable band 2 BOSCAM_B B FACTORY 5733 5752 5771 5790 5809 5828 5847 5866
+vtxtable band 3 BOSCAM_E E FACTORY 5705 5685 5665 5645 5885 5905 5925 5945
+vtxtable band 4 FATSHARK F FACTORY 5740 5760 5780 5800 5820 5840 5860 5880
+vtxtable band 5 RACE_LOW L FACTORY 5362 5399 5436 5473 5510 5547 5584 5621
+vtxtable band 6 RACEBAND R FACTORY 5658 5695 5732 5769 5806 5843 5880 5917
+vtxtable powerlevels 4
+vtxtable powervalues 14 20 23 26
+vtxtable powerlabels 25 100 200 400
+```
+
+- vtx settings
+
+```
+set vtx_band = 6
 set vtx_channel = 8
 set vtx_power = 1
 set vtx_low_power_disarm = UNTIL_FIRST_ARM
 set vtx_freq = 5917
 set vcd_video_system = PAL
 ```
-
-- official [vtx table for HGLRC Zeus nano 350mw](https://www.rotorama.cz/cms/assets/docs/d0c22322f24f3bf72e2e66bab648f238/13272-1/zeus-nano-350mw-vtx.json)
-
-```
-vtxtable bands 5
-vtxtable channels 8
-vtxtable band 1 BOSCAM_A A CUSTOM  5865 5845 5825 5805 5785 5765 5745 5725
-vtxtable band 2 BOSCAM_B B CUSTOM  5733 5752 5771 5790 5809 5828 5847 5866
-vtxtable band 3 FATSHARK F CUSTOM  5740 5760 5780 5800 5820 5840 5860 5880
-vtxtable band 4 RACEBAND R CUSTOM  5658 5695 5732 5769 5806 5843 5880 5917
-vtxtable band 5 IMD6     I CUSTOM  5362 5399 5436 5473 5510 5547 5584 5621
-vtxtable powerlevels 4
-vtxtable powervalues 25 100 200 400
-vtxtable powerlabels 25 100 200 350
-```
-
 
 - PIDs
 
