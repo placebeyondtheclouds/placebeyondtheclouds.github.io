@@ -125,7 +125,7 @@ vtxtable powerlabels 25 100 200 350
 - official [vtx table for HGLRC Zeus nano 350mw](https://www.rotorama.cz/cms/assets/docs/d0c22322f24f3bf72e2e66bab648f238/13272-1/zeus-nano-350mw-vtx.json). [review.](https://www.multirotorguide.com/reviews/review-hglrc-zeus-vtx-nano/)
 
 
-- 棕熊 6 band 400mw vtx. it uses smartaudio 2.1 protocol, so the power values will be in dBm. BF CLI has the command `vtx_info` to show the power levels that the VTX supports
+- ZENCHANSI 棕熊 007 400mw vtx. it uses smartaudio 2.1 protocol, so the power values will be in dBm. BF CLI has the command `vtx_info` to show the power levels that the VTX supports
 
 ```
 # vtx_info
@@ -133,7 +133,9 @@ vtxtable powerlabels 25 100 200 350
 # level 26 dBm, power 400 mW
 # level 0 dBm, power 1 mW
 ```
-- the official vtxtable for 棕熊 6 band 400mw vtx from their tech support (weird but it is 5 bands only):
+
+the official vtxtable which their tech support sent to me (weird, the listing says it's 6 band 48 channels, but the table has 5 bands only):
+
 ```
 vtxtable bands 5
 vtxtable channels 8
