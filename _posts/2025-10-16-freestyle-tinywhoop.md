@@ -115,7 +115,7 @@ vtxtable
 vtxtable bands 5
 vtxtable channels 8
 vtxtable band 1 BOSCAM_A A CUSTOM 5865 5845 5825 5805 5785 5765 5745 5725
-vtxtable band 2 BOSCAM_B B CUSTOM 5733 5752 5771 5790 5809 5828 5847 5866
+vtxtable band 2 BOSCAM_B B CUSTOM 5733 5752 5771 5790 5809 5828 5843 5866
 vtxtable band 3 BOSCAM_E E CUSTOM 5705 5685 5665 5645 5885 5905 5925 5945
 vtxtable band 4 FATSHARK F CUSTOM 5740 5760 5780 5800 5820 5840 5860 5880
 vtxtable band 5 RACEBAND R CUSTOM 5658 5695 5732 5769 5806 5843 5880 5917
@@ -142,10 +142,10 @@ this is the table that I made based off the pictures in the listing, the TBS web
 vtxtable bands 6
 vtxtable channels 8
 vtxtable band 1 BOSCAM_A A FACTORY 5865 5845 5825 5805 5785 5765 5745 5725
-vtxtable band 2 BOSCAM_B B FACTORY 5733 5752 5771 5790 5809 5828 5847 5866
+vtxtable band 2 BOSCAM_B B FACTORY 5733 5752 5771 5790 5809 5828 5843 5866
 vtxtable band 3 BOSCAM_E E FACTORY 5705 5685 5665 5645 5885 5905 5925 5945
 vtxtable band 4 FATSHARK F FACTORY 5740 5760 5780 5800 5820 5840 5860 5880
-vtxtable band 5 RACE_LOW L FACTORY 5362 5399 5436 5473 5510 5547 5584 5621
+vtxtable band 5 RACE_LOW L FACTORY 5362 5399 5436 5473 5510 5543 5584 5621
 vtxtable band 6 RACEBAND R FACTORY 5658 5695 5732 5769 5806 5843 5880 5917
 vtxtable powerlevels 3
 vtxtable powervalues 14 23 26
@@ -159,7 +159,7 @@ the following official vtxtable which their tech support sent to me is **incorre
 vtxtable bands 5
 vtxtable channels 8
 vtxtable band 1 BOSCAM_A A FACTORY 5865 5845 5825 5805 5785 5765 5745 5725
-vtxtable band 2 BOSCAM_B B FACTORY 5733 5752 5771 5790 5809 5828 5847 5866
+vtxtable band 2 BOSCAM_B B FACTORY 5733 5752 5771 5790 5809 5828 5843 5866
 vtxtable band 3 BOSCAM_E C FACTORY 5705 5685 5665 5645 5885 5905 5925 5945
 vtxtable band 4 FATSHARK D FACTORY 5740 5760 5780 5800 5820 5840 5860 5880
 vtxtable band 5 RACEBAND E FACTORY 5658 5695 5732 5769 5806 5843 5880 5917
@@ -176,6 +176,15 @@ set vtx_channel = 8
 set vtx_power = 1
 set vtx_low_power_disarm = UNTIL_FIRST_ARM
 set vcd_video_system = PAL
+```
+
+- vtx power on a pot (BF:aux4, radio:ch8). 
+`<index> <aux_channel> <vtx_band> <vtx_channel> <vtx_power> <start_range> <end_range>`
+```
+vtx 0 3 0 0 1 999 1300
+vtx 1 3 0 0 2 1300 1600
+vtx 2 3 0 0 3 1600 2000
+
 ```
 
 - PIDs
@@ -431,3 +440,4 @@ blackbox_high_resolution = OFF
 - https://www.youtube.com/@MediocreNerd
 - https://speedybee.zendesk.com/hc/en-us/articles/18769825525531-Experiencing-a-Runaway-takeoff-During-Drone-s-First-Flight
 - https://www.team-blacksheep.com/media/files/vtx-table-for-betaflight.txt
+- https://www.betaflight.com/docs/wiki/guides/current/VTX-CLI-Settings
