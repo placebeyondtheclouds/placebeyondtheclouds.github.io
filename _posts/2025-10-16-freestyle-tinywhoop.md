@@ -7,8 +7,8 @@ published: true
 ---
 
 I damaged ESC #2 on the 1S Matrix AIO (Meteor75 Pro), either by running a motor with damaged windings or from a voltage spike in a crash. It's overheating, not giving full power to the motor, and the video feed has white washouts during high throttle. So I'm replacing the AIO with JHEMCU G474ELRS and [HGLRC Zeuz nano 350mw VTX](https://hglrc.freshdesk.com/support/solutions/articles/61000307667-zeus-350mw-vtx). New AIO is 1-2s, 12A ESCs with Bluejay, has a better ELRS antenna (with IPEX/UF.L connector), 4 UARTS, runs at 170 MHz, 8MB blackbox (sadly). 
-Meteor75 frame is scraping the battery and motor screws against the ground, so I am replacing it with a clone of Mobula7 but for 45mm props (80mm base and 47mm ducts instead of 75mm and 43mm). It has 2S battery tray, and with 1S battery being propped by a dense foam material (bad idea) glued to the bottom the whoop will land on the lower part of the frame without the battery or motor screws touching the ground. Another solution to the problem would be keep the meteor75pro frame and printing [the battery bumper](https://www.thingiverse.com/thing:7056235).
-camera - [Caddx Ant Nano Lite](https://caddxfpv.com/products/caddxfpv-ant-lite-4-3-fpvcycle-edition). the motors are 1102 22000kv left from the Meteor75. the props are gemfan 45mm-3. 20AVG battery lead with BT2.0. batteries batches of 高能 100C 550mAh LiHV 1S A30 (new, untested) and 格氏 95C 550mAh 1S LiHV BT2.0 (old, not very good life expectancy).
+Meteor75 frame is scraping the battery and motor screws against the ground, so I am replacing it with a clone of Mobula7 but for 45mm props (80mm base and 47mm ducts instead of 75mm and 43mm). It has 2S battery tray, and with 1S battery ~~being propped by a dense foam material (bad idea) glued to the bottom~~ the whoop will land on the lower part of the frame without the battery or motor screws touching the ground. Another solution to the problem would be keep the meteor75pro frame and printing [the battery bumper](https://www.thingiverse.com/thing:7056235).
+camera - [Caddx Ant Nano Lite](https://caddxfpv.com/products/caddxfpv-ant-lite-4-3-fpvcycle-edition). the motors are 1102 22000kv left from the Meteor75. the props are gemfan 45mm-3. 20AVG battery lead with BT2.0. batteries batches of 高能 100C 550mAh LiHV 1S A30 and 格氏 95C 550mAh 1S LiHV BT2.0.
 
 ## video
 
@@ -125,7 +125,7 @@ vtxtable powerlabels 25 100 200 350
 - official [vtx table for HGLRC Zeus nano 350mw](https://www.rotorama.cz/cms/assets/docs/d0c22322f24f3bf72e2e66bab648f238/13272-1/zeus-nano-350mw-vtx.json). [review.](https://www.multirotorguide.com/reviews/review-hglrc-zeus-vtx-nano/)
 
 
-- vtx table for 棕熊 6 band 400mw vtx. I edited it using [this](https://www.team-blacksheep.com/media/files/vtx-table-for-betaflight.txt) as an example. it uses smartaudio 2.1 protocol, so the power values will be in dBm. BF CLI has the command `vtx_info` to show the power levels that the VTX supports
+- 棕熊 6 band 400mw vtx. it uses smartaudio 2.1 protocol, so the power values will be in dBm. BF CLI has the command `vtx_info` to show the power levels that the VTX supports
 
 ```
 # vtx_info
@@ -133,29 +133,27 @@ vtxtable powerlabels 25 100 200 350
 # level 26 dBm, power 400 mW
 # level 0 dBm, power 1 mW
 ```
-
+- the official vtxtable for 棕熊 6 band 400mw vtx from their tech support (weird but it is 5 bands only):
 ```
-vtxtable bands 6
+vtxtable bands 5
 vtxtable channels 8
 vtxtable band 1 BOSCAM_A A FACTORY 5865 5845 5825 5805 5785 5765 5745 5725
 vtxtable band 2 BOSCAM_B B FACTORY 5733 5752 5771 5790 5809 5828 5847 5866
-vtxtable band 3 BOSCAM_E E FACTORY 5705 5685 5665 5645 5885 5905 5925 5945
-vtxtable band 4 FATSHARK F FACTORY 5740 5760 5780 5800 5820 5840 5860 5880
-vtxtable band 5 RACE_LOW L FACTORY 5362 5399 5436 5473 5510 5547 5584 5621
-vtxtable band 6 RACEBAND R FACTORY 5658 5695 5732 5769 5806 5843 5880 5917
-vtxtable powerlevels 4
-vtxtable powervalues 14 20 23 26
-vtxtable powerlabels 25 100 200 400
+vtxtable band 3 BOSCAM_E C FACTORY 5705 5685 5665 5645 5885 5905 5925 5945
+vtxtable band 4 FATSHARK D FACTORY 5740 5760 5780 5800 5820 5840 5860 5880
+vtxtable band 5 RACEBAND E FACTORY 5658 5695 5732 5769 5806 5843 5880 5917
+vtxtable powerlevels 3
+vtxtable powervalues 14 23 26
+vtxtable powerlabels 25 200 400
 ```
 
 - vtx settings
 
 ```
-set vtx_band = 6
+set vtx_band = 5
 set vtx_channel = 8
 set vtx_power = 1
 set vtx_low_power_disarm = UNTIL_FIRST_ARM
-set vtx_freq = 5917
 set vcd_video_system = PAL
 ```
 
@@ -375,6 +373,30 @@ set osd_aux_scale = 200
 set osd_aux_symbol = 65
 set osd_craftname_msgs = OFF
 ```
+
+- blackbox for filter tuning
+
+```
+blackbox_sample_rate = 1/2
+blackbox_device = SPIFLASH
+blackbox_disable_pids = OFF
+blackbox_disable_rc = ON
+blackbox_disable_setpoint = ON
+blackbox_disable_bat = ON
+blackbox_disable_alt = ON
+blackbox_disable_rssi = ON
+blackbox_disable_gyro = OFF
+blackbox_disable_gyrounfilt = OFF
+blackbox_disable_acc = ON
+blackbox_disable_attitude = ON
+blackbox_disable_debug = OFF
+blackbox_disable_motors = OFF
+blackbox_disable_rpm = OFF
+blackbox_disable_gps = ON
+blackbox_mode = NORMAL
+blackbox_high_resolution = OFF
+```
+
 ## testing
 
 - _after_ a successful test flight, apply `P-1025` conformal coating to the FC and VTX boards (I already applied it to the camera board), add `Kafuter K-705` silicon sealant to the places where wires are soldered to the FC pads, U.FL connectors on FC and VTX
@@ -387,3 +409,4 @@ set osd_craftname_msgs = OFF
 - https://www.youtube.com/@JoshuaBardwell
 - https://www.youtube.com/@MediocreNerd
 - https://speedybee.zendesk.com/hc/en-us/articles/18769825525531-Experiencing-a-Runaway-takeoff-During-Drone-s-First-Flight
+- https://www.team-blacksheep.com/media/files/vtx-table-for-betaflight.txt
