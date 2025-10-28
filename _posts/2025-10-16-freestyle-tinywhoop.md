@@ -178,7 +178,7 @@ set vtx_low_power_disarm = UNTIL_FIRST_ARM
 set vcd_video_system = PAL
 ```
 
-- vtx power on a pot (BF:aux4, radio:ch8). 
+- vtx power on a pot (BF:aux4, radio:ch8). 0 means no change
 `<index> <aux_channel> <vtx_band> <vtx_channel> <vtx_power> <start_range> <end_range>`
 ```
 vtx 0 3 0 0 1 999 1300
@@ -411,7 +411,7 @@ blackbox_sample_rate = 1/2
 blackbox_device = SPIFLASH
 blackbox_disable_pids = OFF
 blackbox_disable_rc = ON
-blackbox_disable_setpoint = ON
+blackbox_disable_setpoint = OFF
 blackbox_disable_bat = ON
 blackbox_disable_alt = ON
 blackbox_disable_rssi = ON
