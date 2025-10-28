@@ -37,6 +37,8 @@ buzzer: red - BZ+, black - BZ-
 
 - install the components into the frame, secure what needed with zip ties
 
+- Caddx Ant Nano Lite camera settings (using OSD menu board): AE mode to BLC=3, brightness=35, contrast auto, saturation manual=20
+
 - flash betaflight v2025.12, target `JHEG474`, analog OSD, add features: camera control. restore the original backup
 
 - reflash bluejay, target `Z-H-30`, PWM 48kHz (I get runaways on 96kHz for some reason), adjust the direction of the motors (props out)
@@ -122,7 +124,7 @@ vtxtable powervalues 25 100 200 400
 vtxtable powerlabels 25 100 200 350
 ```
 
-- official [vtx table for HGLRC Zeus nano 350mw](https://www.rotorama.cz/cms/assets/docs/d0c22322f24f3bf72e2e66bab648f238/13272-1/zeus-nano-350mw-vtx.json). [review.](https://www.multirotorguide.com/reviews/review-hglrc-zeus-vtx-nano/)
+official [vtx table for HGLRC Zeus nano 350mw](https://www.rotorama.cz/cms/assets/docs/d0c22322f24f3bf72e2e66bab648f238/13272-1/zeus-nano-350mw-vtx.json). [review.](https://www.multirotorguide.com/reviews/review-hglrc-zeus-vtx-nano/)
 
 
 - ZENCHANSI 棕熊 007 400mw vtx. it uses smartaudio 2.1 protocol, so the power values will be in dBm. BF CLI has the command `vtx_info` to show the power levels that the VTX supports
@@ -134,7 +136,24 @@ vtxtable powerlabels 25 100 200 350
 # level 0 dBm, power 1 mW
 ```
 
-the official vtxtable which their tech support sent to me (weird, the listing says it's 6 band 48 channels, but the table has 5 bands only):
+this is the table that I made based off the pictures in the listing, the TBS webpage and the output of `vtx_info`. 
+
+```
+vtxtable bands 6
+vtxtable channels 8
+vtxtable band 1 BOSCAM_A A FACTORY 5865 5845 5825 5805 5785 5765 5745 5725
+vtxtable band 2 BOSCAM_B B FACTORY 5733 5752 5771 5790 5809 5828 5847 5866
+vtxtable band 3 BOSCAM_E E FACTORY 5705 5685 5665 5645 5885 5905 5925 5945
+vtxtable band 4 FATSHARK F FACTORY 5740 5760 5780 5800 5820 5840 5860 5880
+vtxtable band 5 RACE_LOW L FACTORY 5362 5399 5436 5473 5510 5547 5584 5621
+vtxtable band 6 RACEBAND R FACTORY 5658 5695 5732 5769 5806 5843 5880 5917
+vtxtable powerlevels 3
+vtxtable powervalues 14 23 26
+vtxtable powerlabels 25 200 400
+```
+
+
+the following official vtxtable which their tech support sent to me is **incorrect**:
 
 ```
 vtxtable bands 5
@@ -152,7 +171,7 @@ vtxtable powerlabels 25 200 400
 - vtx settings
 
 ```
-set vtx_band = 5
+set vtx_band = 6
 set vtx_channel = 8
 set vtx_power = 1
 set vtx_low_power_disarm = UNTIL_FIRST_ARM
