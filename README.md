@@ -43,6 +43,8 @@ gem install jekyll bundler
 - https://technotim.live/posts/jekyll-docs-site/
 - https://github.com/cotes2020/jekyll-theme-chirpy/wiki
 - https://lbhoe.dev/posts/chirpy-favicon-customization-issues/
+- https://chirpy.cotes.page/posts/customize-the-favicon/
+- https://realfavicongenerator.net/
 
 ## License
 
