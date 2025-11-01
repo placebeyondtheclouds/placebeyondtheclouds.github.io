@@ -59,7 +59,7 @@ beacon delay 1 min
 
 - [adjust](https://oscarliang.com/current-sensor-calibration/) current sensor calibration values
 ```
-set ibata_scale = 598
+set ibata_scale = 487
 ```
 
 - in motors tab, turn on _motor direction is reversed_. it makes the mixer to expect that _some_ of the motors are reversed
@@ -178,8 +178,8 @@ set vtx_low_power_disarm = UNTIL_FIRST_ARM
 set vcd_video_system = PAL
 ```
 
-- vtx power on a pot (BF:aux4, radio:ch8). 0 means no change
-`<index> <aux_channel> <vtx_band> <vtx_channel> <vtx_power> <start_range> <end_range>`
+- in-flight VTX power switching on a pot, used S2 (BF:aux4, radio:ch8). 0 means no change `<index> <aux_channel> <vtx_band> <vtx_channel> <vtx_power> <start_range> <end_range>`.
+
 ```
 vtx 0 3 0 0 1 999 1300
 vtx 1 3 0 0 2 1300 1600
@@ -192,7 +192,6 @@ vtx 2 3 0 0 3 1600 2000
 ```
 profile 0
 
-# profile 0
 set profile_name = working
 set dterm_lpf1_dyn_min_hz = 82
 set dterm_lpf1_dyn_max_hz = 165
@@ -241,7 +240,6 @@ set tpa_breakpoint = 1500
 ```
 rateprofile 0
 
-# rateprofile 0
 set rateprofile_name = sasha
 set roll_rc_rate = 16
 set pitch_rc_rate = 16
@@ -404,6 +402,12 @@ set osd_aux_symbol = 65
 set osd_craftname_msgs = OFF
 ```
 
+- in-flight OSD profile switching on a pot. I use S1, set it to CH11 (AUX7 in BF)
+
+```
+adjrange 0 0 6 900 2100 29 6 0 0
+```
+
 - blackbox for filter tuning
 
 ```
@@ -429,7 +433,7 @@ blackbox_high_resolution = OFF
 
 ## testing
 
-- _after_ a successful test flight, apply `P-1025` conformal coating to the FC and VTX boards (I already applied it to the camera board), add `Kafuter K-705` silicon sealant to the places where wires are soldered to the FC pads, U.FL connectors on FC and VTX
+- _after_ successful test flights, apply `P-1025` conformal coating to the FC and VTX boards (I already applied it to the camera board), add `Kafuter K-705` silicon sealant to the places where wires are soldered to the FC pads, U.FL connectors on FC and VTX. apply blue `Loctite-243` onto last threads of the motor screws.
 
 ## references
 
