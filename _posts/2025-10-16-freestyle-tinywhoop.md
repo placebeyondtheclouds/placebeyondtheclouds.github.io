@@ -178,7 +178,7 @@ set vtx_low_power_disarm = UNTIL_FIRST_ARM
 set vcd_video_system = PAL
 ```
 
-- in-flight VTX power switching on a pot, used S2 (BF:aux4, radio:ch8). 0 means no change `<index> <aux_channel> <vtx_band> <vtx_channel> <vtx_power> <start_range> <end_range>`.
+- in-flight VTX power switching on a pot, used S2 (BF:aux4, radio:ch8). 0 means no change. `<index> <aux_channel> <vtx_band> <vtx_channel> <vtx_power> <start_range> <end_range>`.
 
 ```
 vtx 0 3 0 0 1 999 1300
