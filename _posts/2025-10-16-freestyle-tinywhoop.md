@@ -206,8 +206,10 @@ set crash_setpoint_threshold = 500
 set crash_recovery_rate = 150
 set crash_recovery = ON
 set iterm_relax_type = GYRO
-set throttle_boost = 0
+set iterm_windup = 85
 set pidsum_limit = 1000
+set pidsum_limit_yaw = 1000
+set throttle_boost = 0
 set p_pitch = 87
 set i_pitch = 157
 set d_pitch = 44
@@ -223,8 +225,11 @@ set d_max_roll = 52
 set d_max_pitch = 60
 set d_max_advance = 0
 set auto_profile_cell_count = 1
-set motor_output_limit = 95
+set launch_control_mode = NORMAL
 set thrust_linear = 20
+set feedforward_averaging = OFF
+set feedforward_smooth_factor = 30
+set feedforward_jitter_factor = 9
 set dyn_idle_min_rpm = 75
 set simplified_master_multiplier = 120
 set simplified_d_gain = 110
@@ -234,6 +239,8 @@ set simplified_pitch_pi_gain = 120
 set simplified_dterm_filter_multiplier = 110
 set tpa_rate = 80
 set tpa_breakpoint = 1500
+
+set motor_output_limit = 100
 ```
 
 - rates 
@@ -256,13 +263,14 @@ set yaw_srate = 90
 set gyro_lpf1_static_hz = 0
 set gyro_lpf2_static_hz = 1000
 set dyn_notch_q = 500
-set dyn_notch_min_hz = 160
+set dyn_notch_min_hz = 119
 set dyn_notch_max_hz = 370
 set gyro_lpf1_dyn_min_hz = 0
 set rc_smoothing_auto_factor = 25
 set rc_smoothing_auto_factor_throttle = 25
 set rpm_filter_weights = 100,20,20
-set rpm_filter_min_hz = 140
+set rpm_filter_min_hz = 119
+set rpm_filter_fade_range_hz = 0
 ```
 
 - motors (important) and battery:
