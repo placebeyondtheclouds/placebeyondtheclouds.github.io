@@ -7,18 +7,19 @@ published: true
 ---
 
 I damaged ESC #2 on the 1S Matrix AIO (Meteor75 Pro), either by running a motor with damaged windings or from a voltage spike in a crash. It's overheating, not giving full power to the motor, and the video feed has white washouts during high throttle. So I'm replacing the AIO with JHEMCU G474ELRS and [HGLRC Zeuz nano 350mw VTX](https://hglrc.freshdesk.com/support/solutions/articles/61000307667-zeus-350mw-vtx). New AIO is 1-2s, 12A ESCs with Bluejay, has a better ELRS antenna (with IPEX/UF.L connector), 4 UARTS, runs at 170 MHz, 8MB blackbox (sadly). 
-Meteor75 frame is scraping the battery and motor screws against the ground, so I am replacing it with a clone of Mobula7 but for 45mm props (80mm base and 47mm ducts instead of 75mm and 43mm). It has 2S battery tray, and with 1S battery ~~being propped by a dense foam material (bad idea) glued to the bottom~~ the whoop will land on the lower part of the frame without the battery or motor screws touching the ground. Another solution to the problem would be keep the meteor75pro frame and printing [the battery bumper](https://www.thingiverse.com/thing:7056235).
-camera - [Caddx Ant Nano Lite](https://caddxfpv.com/products/caddxfpv-ant-lite-4-3-fpvcycle-edition). the motors are 1102 22000kv left from the Meteor75. the props are gemfan 45mm-3. 20AVG battery lead with BT2.0. batteries batches of 高能 100C 550mAh LiHV 1S A30 and 格氏 95C 550mAh 1S LiHV BT2.0.
+Meteor75 frame is scraping the battery and motor screws against the ground, so I am replacing it with a clone of Mobula7 but for 45mm props (80mm base and 47mm ducts instead of 75mm and 43mm). It has 2S battery tray, and with 1S battery the whoop will land on the lower part of the frame without the battery or motor screws touching the ground. Another solution to the problem would be keep the meteor75pro frame and printing [the battery bumper](https://www.thingiverse.com/thing:7056235).
+The battery is mounted using rubber bands with zip ties, occupying the lower part of the 2S holder and pressing the 1S battery to the frame.
+camera - [Caddx Ant Nano Lite](https://caddxfpv.com/products/caddxfpv-ant-lite-4-3-fpvcycle-edition). [the canopy](https://www.thingiverse.com/thing:6201941) is 3D printed. the motors are 1102 22000kv left from the Meteor75. the props are gemfan 45mm-3. 20AVG battery lead with BT2.0. batteries: batches of 高能 100C 550mAh LiHV 1S A30 and 格氏 95C 550mAh 1S LiHV BT2.0.
 
 ## video
 
 
-work in progress
+<iframe width="560" height="315" src="https://www.youtube.com/embed/jWGDsLVeMyI" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 
 
 ## the process
 
-- connect the FC, check that it is working, backup the config (`dump`, `diff all showdefaults` and save the outputs)
+- connect the FC, check that it is working, backup the config (`dump`, `diff all showdefaults` and save the outputs into separate files)
 
 - UARTs:
 ```
@@ -80,7 +81,7 @@ resource camera_control 1 B02
 set camera_control_ref_voltage = 326
 ```
 
-- misc
+- misc. the `beacon` settings saved me once, the buzzer wire got disconnected in a crash but I didn't notice. later the quad dived into a deep bush and I could find it only thanks to the faint beeping sound from the motors.
 
 ```
 feature -AIRMODE
@@ -127,7 +128,7 @@ vtxtable powerlabels 25 100 200 350
 official [vtx table for HGLRC Zeus nano 350mw](https://www.rotorama.cz/cms/assets/docs/d0c22322f24f3bf72e2e66bab648f238/13272-1/zeus-nano-350mw-vtx.json). [review.](https://www.multirotorguide.com/reviews/review-hglrc-zeus-vtx-nano/)
 
 
-- ZENCHANSI 棕熊 007 400mw vtx. it uses smartaudio 2.1 protocol, so the power values will be in dBm. BF CLI has the command `vtx_info` to show the power levels that the VTX supports
+- ZENCHANSI 棕熊 W007 400mw vtx. it uses smartaudio 2.1 protocol, so the power values will be in dBm. BF CLI has the command `vtx_info` to show the power levels that the VTX supports
 
 ```
 # vtx_info
