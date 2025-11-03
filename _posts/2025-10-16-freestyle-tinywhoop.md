@@ -78,7 +78,7 @@ beacon delay 1 min
 set ibata_scale = 487
 ```
 
-- in motors tab, turn on _motor direction is reversed_. it makes the mixer to expect that _some_ of the motors are reversed
+- in motors tab, turn on _motor direction is reversed_. it makes the mixer to expect that motors 1 and 2 are reversed (spinning clockwise)
 ```
 set yaw_motors_reversed = ON
 ```
