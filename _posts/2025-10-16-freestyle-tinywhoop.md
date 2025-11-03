@@ -6,12 +6,16 @@ tags: [en, 1s, tinywhoop, quad, fpv, diy, 80mm, analog ]
 published: true
 ---
 
-I damaged ESC #2 on the 1S Matrix AIO (Meteor75 Pro), either by running a motor with damaged windings or from a voltage spike in a crash. It's overheating, not giving full power to the motor, and the video feed has white washouts during high throttle. So I'm replacing the AIO with JHEMCU G474ELRS and [HGLRC Zeuz nano 350mw VTX](https://hglrc.freshdesk.com/support/solutions/articles/61000307667-zeus-350mw-vtx). New AIO is 1-2s, 12A ESCs with Bluejay, has a better ELRS antenna (with IPEX/UF.L connector), 4 UARTS, runs at 170 MHz, 8MB blackbox (sadly). Update: ELRS receiver died after a week or so.
+I damaged ESC #2 on the 1S Matrix AIO (Meteor75 Pro), either by running a motor with damaged windings or from a voltage spike in a crash. It's overheating, not giving full power to the motor, and the video feed has white washouts during high throttle. So I'm replacing the AIO with JHEMCU G474ELRS and [HGLRC Zeuz nano 350mw VTX](https://hglrc.freshdesk.com/support/solutions/articles/61000307667-zeus-350mw-vtx). New AIO is 1-2s, 12A ESCs with Bluejay, has a better ELRS antenna (with IPEX/UF.L connector), 4 UARTS, runs at 170 MHz, 8MB blackbox (sadly). Update: the ELRS receiver on the AIO died after a week or so.
 Meteor75 frame is scraping the battery and motor screws against the ground, so I am replacing it with a clone of Mobula7 but for 45mm props (80mm base and 47mm ducts instead of 75mm and 43mm). It has 2S battery tray, and with 1S battery the whoop will land on the lower part of the frame without the battery or motor screws touching the ground. Another solution to the problem would be keep the meteor75pro frame and printing [the battery bumper](https://www.thingiverse.com/thing:7056235).
 The battery is mounted using rubber bands with zip ties, occupying the lower part of the 2S holder and pressing the 1S battery to the frame.
 camera - [Caddx Ant Nano Lite](https://caddxfpv.com/products/caddxfpv-ant-lite-4-3-fpvcycle-edition). [the canopy](https://www.thingiverse.com/thing:6201941) is 3D printed. the motors are 1102 22000kv left from the Meteor75. the props are gemfan 45mm-3. 20AVG battery lead with BT2.0. batteries: batches of 高能 100C 550mAh LiHV 1S A30 and 格氏 95C 550mAh 1S LiHV BT2.0.
 
 
+## video
+
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/jWGDsLVeMyI" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 
 ## the process
 
@@ -439,6 +443,10 @@ blackbox_high_resolution = OFF
 ## testing
 
 - _after_ successful test flights, apply `P-1025` conformal coating to the FC and VTX boards (I already applied it to the camera board), add `Kafuter K-705` silicon sealant to the places where wires are soldered to the FC pads, U.FL connectors on FC and VTX. apply blue `Loctite-243` onto last threads of the motor screws.
+
+## Update on the AIO's RX failure
+
+after a week or so flying, the RSSI suddenly got way too low, like there is no antenna connected. the flight before it was normal, I changed the battery for a fresh one and RSSI was low. I removed the ELRS antenna's IPEX connector from the AIO board and soldered the antenna directly, but it didn't help. reflashing also did nothing. I don't know if it's a result of a crash or a faulty AIO board. now I need to disable the integrated RX by shorting the two pads located between the battery's negative pad and the ELRS WiFi antenna, then connect an external RX to the UART3 pads located between battery's positive pad and motor 3 pads, the pad closer to the edge of the board being the R3 pad.
 
 ## references
 
