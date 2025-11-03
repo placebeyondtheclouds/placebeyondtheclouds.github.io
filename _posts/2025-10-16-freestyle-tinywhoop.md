@@ -12,10 +12,6 @@ The battery is mounted using rubber bands with zip ties, occupying the lower par
 camera - [Caddx Ant Nano Lite](https://caddxfpv.com/products/caddxfpv-ant-lite-4-3-fpvcycle-edition). [the canopy](https://www.thingiverse.com/thing:6201941) is 3D printed. the motors are 1102 22000kv left from the Meteor75. the props are gemfan 45mm-3. 20AVG battery lead with BT2.0. batteries: batches of 高能 100C 550mAh LiHV 1S A30 and 格氏 95C 550mAh 1S LiHV BT2.0.
 
 
-## video
-
-
-<iframe width="560" height="315" src="https://www.youtube.com/embed/jWGDsLVeMyI" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 
 ## the process
 
