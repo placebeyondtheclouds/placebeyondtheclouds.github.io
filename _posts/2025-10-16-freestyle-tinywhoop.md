@@ -30,6 +30,7 @@ Camera - [Caddx Ant Nano Lite](https://caddxfpv.com/products/caddxfpv-ant-lite-4
 | - | - |
 | ![9](/assets/images/rebuild09.jpg) | ![10](/assets/images/rebuild10.jpg) |
 | - | - |
+| ![11](/assets/images/rebuild11.jpg) | ![12](/assets/images/rebuild12.jpg) |
 
 
 ## the process
