@@ -12,7 +12,7 @@ Meteor75 frame is scraping the battery and motor screws against the ground, so I
 
 The battery is mounted using rubber bands with zip ties, occupying the lower part of the 2S holder and pressing the 1S battery to the frame.
 
-Camera - [Caddx Ant Nano Lite](https://caddxfpv.com/products/caddxfpv-ant-lite-4-3-fpvcycle-edition). [the canopy](https://www.thingiverse.com/thing:6201941) is 3D printed. the motors are 1102 22000kv left from the Meteor75. the props are gemfan 45mm-3. 20AVG battery lead with BT2.0. batteries: batches of 高能 100C 550mAh LiHV 1S A30 and 格氏 95C 550mAh 1S LiHV BT2.0.
+Camera - [Caddx Ant Nano Lite](https://caddxfpv.com/products/caddxfpv-ant-lite-4-3-fpvcycle-edition). [the canopy](https://www.thingiverse.com/thing:6201941) is 3D printed. the motors are 1102 22000kv left from the Meteor75. the props are gemfan 45mm-3 (1.5mm shaft). 20AVG battery lead with BT2.0. batteries: batches of 高能 100C 550mAh LiHV 1S A30 and 格氏 95C 550mAh 1S LiHV BT2.0.
 
 **Highlights of this build's configuration**: 1s, PAL analog, OSD profile change on a pot, VTX power change on a pot, turtle mode without arming, full weather protection, battry crash protection, RHCP antenna for VTX, whip-style antenna for RX, buzzer, 220uf 16v cap, tuned filters.
 
@@ -39,10 +39,10 @@ Camera - [Caddx Ant Nano Lite](https://caddxfpv.com/products/caddxfpv-ant-lite-4
 
 - UARTs:
 ```
-UART1:SBUS
-UART2:VTX
-UART3:onboard ELRS
-UART4:(GPS)
+UART1: SBUS
+UART2: VTX
+UART3: onboard ELRS (died)
+UART4: external ELRS RX
 ```
 
 - pad connections to the FC:
@@ -462,7 +462,7 @@ blackbox_high_resolution = OFF
 
 ## Update on the AIO's RX failure
 
-after a week or so flying, the RSSI suddenly got way too low, like there is no antenna connected. the flight before it was normal, I changed the battery for a fresh one and RSSI was low. I removed the ELRS antenna's IPEX connector from the AIO board and soldered the antenna directly, but it didn't help. reflashing also did nothing. I don't know if it's a result of a crash or a faulty AIO board. now I need to disable the integrated RX by shorting the two pads located between the battery's negative pad and the ELRS WiFi antenna, then connect an external RX to the UART3 pads located between battery's positive pad and motor 3 pads, the pad closer to the edge of the board being the R3 pad.
+after a week or so flying, the RSSI suddenly got way too low, like there is no antenna connected. the flight before it was normal, I changed the battery for a fresh one and RSSI was low. I removed the ELRS antenna's IPEX connector from the AIO board and soldered the antenna directly, but it didn't help. reflashing also did nothing. I don't know if it's a result of a crash or a faulty AIO board. now I need to disable the integrated RX by shorting the two pads located between the battery's negative pad and the ELRS WiFi antenna, then connect an external RX to the UART3 pads located between battery's positive pad and motor 3 pads, the pad closer to the edge of the board being the R3 pad. Update: turns out these tiny pads are very fragile and one came off of the board after I tried to solder the wire to it. So I had to use UART4 to connect the new RX. No GPS for this build will be possible now.
 
 ## references
 
