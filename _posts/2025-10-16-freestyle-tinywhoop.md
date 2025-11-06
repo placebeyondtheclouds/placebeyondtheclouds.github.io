@@ -462,7 +462,30 @@ blackbox_high_resolution = OFF
 
 ## Update on the AIO's RX failure
 
-after a week or so flying, the RSSI suddenly got way too low, like there is no antenna connected. the flight before it was normal, I changed the battery for a fresh one and RSSI was low. I removed the ELRS antenna's IPEX connector from the AIO board and soldered the antenna directly, but it didn't help. reflashing also did nothing. I don't know if it's a result of a crash or a faulty AIO board. now I need to disable the integrated RX by shorting the two pads located between the battery's negative pad and the ELRS WiFi antenna, then connect an external RX to the UART3 pads located between battery's positive pad and motor 3 pads, the pad closer to the edge of the board being the R3 pad. Update: turns out these tiny pads are very fragile and one came off of the board after I tried to solder the wire to it. So I had to use UART4 to connect the new RX. No GPS for this build will be possible now.
+after a week or so flying, the RSSI suddenly got way too low, like there is no antenna connected. the flight before it was normal, I changed the battery for a fresh one and RSSI was low. I removed the ELRS antenna's IPEX connector from the AIO board and soldered the antenna directly, but it didn't help. reflashing also did nothing. I don't know if it's a result of a crash or a faulty AIO board. now I need to disable the integrated RX by shorting the two pads located between the battery's negative pad and the ELRS WiFi antenna, then connect an external RX to the UART3 pads located between battery's positive pad and motor 3 pads, the pad closer to the edge of the board being the R3 pad. Update: turns out these tiny pads are very fragile and one came off of the board after I tried to solder the wire to it. So I had to use UART4 to connect the new RX. No GPS for this build will be possible, except for if I remap the resources of SCL and SDA pads to UART3 RX and TX, or use soft serial. like this:
+
+the original mapping:
+```
+resource SERIAL_TX 3 B10
+resource SERIAL_RX 3 B11
+resource I2C_SCL 1 A15
+resource I2C_SDA 1 B07
+```
+
+new mapping:
+```
+resource I2C_SCL 1 none
+resource I2C_SDA 1 none
+resource SERIAL_TX 3 A15
+resource SERIAL_RX 3 B07
+```
+
+
+The new RX was:
+```
+BETAFPV 2.4GHz Nano RX
+Firmware Rev. 3.5.3 (40555e) ISM2G4
+```
 
 ## references
 
