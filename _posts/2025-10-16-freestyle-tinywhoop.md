@@ -125,7 +125,7 @@ aux 7 35 2 1925 2100 0 0
 
 
 
-- corrected vtx table for HGLRC Zeus nano 350mw
+- ~~corrected vtx table for HGLRC Zeus nano 350mw~~ there is something wrong with this table. *work in progress*
 
 ```
 vtxtable
@@ -433,6 +433,8 @@ set osd_craftname_msgs = OFF
 adjrange 0 0 6 900 2100 29 6 0 0
 ```
 
+- send radio's RTC data to the flight controller to have correct time in blackbox files and on the OSD: go to special functions, add `ON Lua bfbkgd On` and turn the checkmark on
+
 - blackbox for filter tuning
 
 ```
@@ -486,6 +488,8 @@ The new RX was:
 BETAFPV 2.4GHz Nano RX
 Firmware Rev. 3.5.3 (40555e) ISM2G4
 ```
+
+
 
 ## references
 
