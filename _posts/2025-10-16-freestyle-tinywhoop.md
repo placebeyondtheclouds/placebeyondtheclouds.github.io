@@ -12,7 +12,7 @@ Meteor75 frame is scraping the battery and motor screws against the ground, so I
 
 The battery is mounted using rubber bands with zip ties, occupying the lower part of the 2S holder and pressing the 1S battery to the frame.
 
-Camera - [Caddx Ant Nano Lite](https://caddxfpv.com/products/caddxfpv-ant-lite-4-3-fpvcycle-edition). [the canopy](https://www.thingiverse.com/thing:6201941) is 3D printed. the motors are 1102 22000kv left from the Meteor75. the props are gemfan 45mm-3 (1.5mm shaft). 20AVG battery lead with BT2.0. batteries: batches of 高能 100C 550mAh LiHV 1S A30 and 格氏 95C 550mAh 1S LiHV BT2.0.
+Camera - [Caddx Ant](https://caddxfpv.com/collections/caddxfpv-tiny-camera/products/caddx-ant-analog-camera) with f/1.2 lens or [Caddx Ant Lite](https://caddxfpv.com/products/caddxfpv-ant-lite-4-3-fpvcycle-edition) with f/2.5 lens. [the canopy for the Ant Lite](https://www.thingiverse.com/thing:6201941) is 3D printed, needs to be modified for the regular Ant edition. the motors are 1102 22000kv left from the Meteor75. the props are gemfan 45mm-3 (1.5mm shaft). 20AVG battery lead with BT2.0. batteries: batches of 高能 100C 550mAh LiHV 1S A30 and 格氏 95C 550mAh 1S LiHV BT2.0.
 
 **Highlights of this build's configuration**: 1s, PAL analog, OSD profile change on a pot, VTX power change on a pot, turtle mode without arming, full weather protection, battry crash protection, RHCP antenna for VTX, whip-style antenna for RX, buzzer, 220uf 16v cap, tuned filters.
 
@@ -88,13 +88,13 @@ set yaw_motors_reversed = ON
 
 - load elrs 150Hz rate profile (although some of the values will be changed with the filters tuning later)
 
-- (not working) [camera control](https://oscarliang.com/fpv-camera-control-fc/). measure the OSD pin voltage.
+- (not working) [camera control](https://oscarliang.com/fpv-camera-control-fc/). measure the OSD pin voltage. set mode `camera control 1` to a channel. enable led_strip feature. flip the channel, activate using `throttle=0, yaw=100`
 
 ```
 resource
 resource LED_STRIP 1 none
 resource camera_control 1 B02
-set camera_control_ref_voltage = 326
+set camera_control_ref_voltage = 330
 ```
 
 - misc. the `beacon` settings saved me once, the buzzer wire got disconnected in a crash but I didn't notice. later the quad dived into a deep bush and I could find it only thanks to the faint beeping sound from the motors.
