@@ -6,15 +6,31 @@ tags: [en, 1s, tinywhoop, quad, fpv, diy, 80mm, analog ]
 published: true
 ---
 
-I damaged ESC #2 on the 1S Matrix AIO (Meteor75 Pro), either by running a motor with damaged windings or from a voltage spike in a crash. It's overheating, not giving full power to the motor, and the video feed has white washouts during high throttle. So I'm replacing the AIO with JHEMCU G474ELRS and [HGLRC Zeuz nano 350mw VTX](https://hglrc.freshdesk.com/support/solutions/articles/61000307667-zeus-350mw-vtx). New AIO is 1-2s, 12A ESCs with Bluejay, has a better ELRS antenna (with IPEX/UF.L connector), 4 UARTS, runs at 170 MHz, 8MB blackbox (sadly). Update: the ELRS receiver on the AIO died after a week or so. Update: using another VTX (ZENCHANSI 棕熊 W007 400mw) until I solve the problem with the Zeus nano VTX table (very low output power on all frequences).
+I damaged ESC #2 on the 1S Matrix AIO (Meteor75 Pro), either by running a motor with damaged windings or from a voltage spike in a crash. It's overheating, not giving full power to the motor, and the video feed has white washouts during high throttle. So I'm replacing the AIO with JHEMCU G474ELRS and HGLRC Zeuz nano 350mw VTX. Update: the ELRS receiver on the AIO died after a week or so. Update: using another VTX (ZENCHANSI 棕熊 W007 400mw) until I solve the problem with the Zeus nano VTX table (very low output power on all frequences).
 
 Meteor75 frame is scraping the battery and motor screws against the ground, so I am replacing it with a clone of Mobula7 but for 45mm props (80mm base and 47mm ducts instead of 75mm and 43mm). It has 2S battery tray, and with 1S battery the whoop will land on the lower part of the frame without the battery or motor screws touching the ground. Another solution to the problem would be keep the meteor75pro frame and printing [the battery bumper](https://www.thingiverse.com/thing:7056235). At first, I tried to pad the battery with foam, but it didn't help much.
 
 The battery is mounted using rubber bands with zip ties, occupying the lower part of the 2S holder and pressing the 1S battery to the frame.
 
-Camera - [Caddx Ant](https://caddxfpv.com/collections/caddxfpv-tiny-camera/products/caddx-ant-analog-camera) with f/1.2 lens or [Caddx Ant Lite](https://caddxfpv.com/products/caddxfpv-ant-lite-4-3-fpvcycle-edition) with f/2.5 lens. [the canopy for the Ant Lite](https://www.thingiverse.com/thing:6201941) is 3D printed, needs to be modified for the regular Ant edition. the motors are 1102 22000kv left from the Meteor75. the props are gemfan 45mm-3 (1.5mm shaft). 20AVG battery lead with BT2.0. batteries: batches of 高能 100C 550mAh LiHV 1S A30 and 格氏 95C 550mAh 1S LiHV BT2.0.
+Camera - [Caddx Ant](https://caddxfpv.com/collections/caddxfpv-tiny-camera/products/caddx-ant-analog-camera) with f/1.2 lens or [Caddx Ant Lite](https://caddxfpv.com/products/caddxfpv-ant-lite-4-3-fpvcycle-edition) with f/2.5 lens. [the canopy for the Ant Lite](https://www.thingiverse.com/thing:6201941) is 3D printed, needs to be modified for the regular Ant edition. the motors are 1102 22000kv left from the Meteor75. the props are 乾丰 (gemfan) 45mm-3 (1.5mm shaft). 20AVG battery lead. 
+
+batteries: batches of 高能 100C 550mAh LiHV 1S A30 and 格氏 95C 550mAh 1S LiHV (resoldered A30).
 
 **Highlights of this build's configuration**: 1s, PAL analog, OSD profile change on a pot, VTX power change on a pot, turtle mode without arming, full weather protection, battry crash protection, RHCP antenna for VTX, whip-style antenna for RX, buzzer, 220uf 16v cap, tuned filters.
+
+## components
+
+- JHEMCU G474ELRS - 1-2s, 4 UARTS, 12A bluejay, STM32G474: 170MHz core 512KB flash 128KB RAM, 8MB blackbox, BETAFPV 2.4GHz Lite RX (serial) IPEX gen1
+- [HGLRC Zeuz nano 350mw VTX](https://hglrc.freshdesk.com/support/solutions/articles/61000307667-zeus-350mw-vtx)
+- RHCP antenna
+- Caddx Ant lite (f/2.5 lens). Update: swapped to Caddx Ant (f/1.2 lens), not in the pictures
+- Mobula7 frame (80mm clone) - 45mm props, 80mm base, 47mm ducts
+- betafpv 1102 22000kv motors (left from Meteor75 Pro)
+- 乾丰 (gemfan) 45mm-3 props (1.5mm shaft)
+- 220uF 16v capacitor
+- 20AWG wires for the battery lead, A30 connector
+- added: cyclone EP1 ELRS 2.4ghz nano rx (IPEX gen1), whip antenna 
+
 
 ## pictures
 
@@ -35,26 +51,44 @@ Camera - [Caddx Ant](https://caddxfpv.com/collections/caddxfpv-tiny-camera/produ
 
 ## the process
 
+- wiring diagrams for the FC are here [here](https://jhemcu.work:6/sharing/3c1SjKuS9)
 - connect the FC, check that it is working, backup the config (`dump`, `diff all showdefaults` and save the outputs into separate files)
 
 - UARTs:
 ```
 UART1: SBUS
 UART2: VTX
-UART3: onboard ELRS (died)
+UART3: onboard ELRS (died), the pads are too tiny to work with
 UART4: external ELRS RX
 ```
 
-- pad connections to the FC:
-```
-VTX: 5V(red) - 5V, GND(black) - GND, video(yellow) - VTX, RX(purple) - TX2
-caddx ant nano lite pinout: 5-25V(red) - 5V, GND - GND, VIDEO(yellow) - CAM, OSD GND(can be disconnected), OSD signal (green) - through 150R to LED_STRIP pad on the FC. add 10uf cap (106 10uf 50v) between OSD signal and GND on the camera side.
-buzzer: red - BZ+, black - BZ-
-```
+- wiring:
+
+
+| VTX pads | FC pads | wire color |
+|----------|---------|------------|
+| 5V       | 5V      | red        |
+| GND      | GND     | black      |
+| video   | VTX     | yellow     |
+| RX       | TX2     | purple     |
+
+| Caddx Ant | FC pads         | wire color |
+|-----------|-----------------|------------|
+| 5-25V     | 5V              | red        |
+| GND       | GND             | black      |
+| VIDEO     | CAM             | yellow     |
+
+
+| ELRS RX | FC pads | wire color |
+|---------|---------|------------|
+| 5V     | 5V      | red        |
+| GND     | GND     | black      |
+| TX      | RX4     | yellow      |
+| RX      | TX4     | white      |
 
 - install the components into the frame, secure what needed with zip ties
 
-- Caddx Ant Nano Lite camera settings (using OSD menu board): AE mode to BLC=3, brightness=35, contrast auto, saturation manual=20
+- Caddx Ant camera settings (using OSD menu board): AE mode to BLC=3, brightness=35, contrast auto, saturation manual=20
 
 - flash betaflight v2025.12, target `JHEG474`, analog OSD, add features: camera control. restore the original backup
 
@@ -83,6 +117,19 @@ set ibata_scale = 487
 ```
 set yaw_motors_reversed = ON
 ```
+
+## radio setup
+
+- ADC Filter OFF
+- send radio's RTC data to the flight controller to have correct time in blackbox files and on the OSD: go to special functions, add `ON Lua bfbkgd On` and turn the checkmark on
+- ch5 inverted - arm
+- ch6 inverted, SA - air / acro / angle + blackbox
+- ch7 - turtle mode
+- ch8 (aux4), S2 - VTX power switching
+- ch9 - buzzer
+- ch10 - 
+- CH11 (AUX7), S1 - OSD profile switching
+
 
 ## restore my settings
 
@@ -198,9 +245,9 @@ set vcd_video_system = PAL
 - in-flight VTX power switching on a pot, used S2 (BF:aux4, radio:ch8). 0 means no change. `<index> <aux_channel> <vtx_band> <vtx_channel> <vtx_power> <start_range> <end_range>`.
 
 ```
-vtx 0 3 0 0 1 999 1300
+vtx 0 3 0 0 1 950 1300
 vtx 1 3 0 0 2 1300 1600
-vtx 2 3 0 0 3 1600 2000
+vtx 2 3 0 0 3 1600 2050
 
 ```
 
@@ -433,7 +480,7 @@ set osd_craftname_msgs = OFF
 adjrange 0 0 6 900 2100 29 6 0 0
 ```
 
-- send radio's RTC data to the flight controller to have correct time in blackbox files and on the OSD: go to special functions, add `ON Lua bfbkgd On` and turn the checkmark on
+
 
 - blackbox for filter tuning
 
@@ -483,7 +530,7 @@ resource SERIAL_RX 3 B07
 ```
 
 
-The new RX was:
+The new RX is:
 ```
 BETAFPV 2.4GHz Nano RX
 Firmware Rev. 3.5.3 (40555e) ISM2G4
