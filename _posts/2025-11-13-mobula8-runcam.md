@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "4K analog 2inch"
+title:  "4K analog 2-inch 2S"
 lang: en
 tags: [en, 2s, cinewhoop, quad, fpv, diy, 85mm, analog, 4k]
 published: false
@@ -8,20 +8,21 @@ published: false
 
 ## Mobula8 frame with Runcam Thumb 2
 
-Here's how I built a 2S cinewhoop. I decided to build it on a fast modern MCU from [ArteryTek](https://oscarliang.com/at32-flight-controllers/). the runcam camera will act as both the fpv camera and the 4K cine camera. having a live `preview` in the goggles is super convenient for dialing in the manual exposure settings and framing. also, OSD profile change on a pot, VTX power change on a pot, turtle mode without arming, full weather protection, RHCP antenna for VTX, whip-style antenna for RX, cap.
+Here's how I built a 2S cinewhoop. I decided to build it on a fast modern MCU from [ArteryTek](https://oscarliang.com/at32-flight-controllers/). the runcam camera will act as both the fpv camera and the 4K cine camera. having a live `preview` in the goggles is super convenient for dialing in the manual exposure settings and framing. also: OSD profile change on a pot, VTX power level adjustment on a pot, turtle mode without arming, full weather protection, RHCP antenna for VTX, whip-style antenna for RX, low esr capacitor.
 
 ## parts list
 
 - [mobula8 2inch frame](https://www.happymodel.cn/index.php/2023/04/28/mobula8-frame-85mm-brushless-whoop-frame/)
 - props 乾丰 (gemfan) 2023 2inch 3-blade (1.5mm shaft)
 - [runcam thumb 2](https://shop.runcam.com/runcam-thumb-2/), IMX586 sensor, gyro, UART control, type C connector
-- 3 M1.4x7 screws (with coarse thread for plastic) for [runcam thumb 2 original 3D printed mount](https://www.thingiverse.com/thing:6807624), need to make additional holes at 25mm or use zip ties. there is [a better mount for a whoop](https://www.thingiverse.com/thing:5271084). also, there is [another mount to use with FPV camera](https://www.thingiverse.com/thing:6090638) that would lift the runcam higher above the frame. [the shell](https://www.thingiverse.com/thing:6830398) is a bit large but makes the setup more crash-resistant.
+- 3 M1.4x7 screws (with coarse thread for plastic) for [runcam thumb 2 original 3D printed mount](https://www.thingiverse.com/thing:6807624), need to make additional holes at 25mm or use zip ties. there is [a better mount for a whoop](https://www.thingiverse.com/thing:5271084). also, there is [another mount to use with FPV camera](https://www.thingiverse.com/thing:6090638) that would lift the runcam higher above the frame. [the shell](https://www.thingiverse.com/thing:6830398) is a bit large but makes the setup more crash-resistant. in the end I went with [this mount](https://www.thingiverse.com/thing:5271084).
 - generic 1103 15000KV 2S (3 hole base with 6mm distance, same as the betafpv 1102 motors) or better motors like `DarwinFPV bling 1103 8000KV`, `Happymodel EX1103 11000KV`, `sparkhobby xspeed 1103 8500KV`
 - 12 M1.4x4 machine screws for the motors
 - JHEMCU [GHF435AIO](https://www.jhemcu.com/e_productshow/?84-JHEMCU-GHF435AIO-2-4S-20A-w-Built-in-24G-ELRSIPEXSMD-84.html) V2 - 25mm mount, 2-4s, 4 UARTS, 20A Bluejay DSHOT600 ESCs, ArteryTek AT32F435: 288MHz core 1MB flash 384KB RAM, BETAFPV 2.4GHz Lite RX (serial) IPEX gen1, 16MB blackbox, ICM-42688 IMU, AT7656E OSD
 - [Happymodel 5.8G Crown LDS antenna RHCP](https://www.happymodel.cn/index.php/2025/08/07/happymodel-5-8g-crown-lds-antenna-rhcp-lhcp-for-micro-fpv-whoops/), 3.5dBi, 5500-6000MHz, IPEX gen1
 - two A30 female connectors (because I will use pairs of 1S batteries with A30 connectors)
 - heatshrink, 2mm zip ties, 18AWG wires for the battery lead, 22AWG wires for the capacitor
+- batteries: pairs of 高能 100C 550mAh LiHV 1S A30
 
 ## pictures
 
@@ -32,7 +33,6 @@ Here's how I built a 2S cinewhoop. I decided to build it on a fast modern MCU fr
 ## wiring and assembly
 
 - wiring diagrams for the FC are here [here](https://jhemcu.work:6/sharing/3c1SjKuS9). 
-- internal ELRS RX is on UART1
 
 | wire color | GHF435AIO pad | Runcam Thumb 2 (type C pin) | 
 |------------|---------------|----------------|
