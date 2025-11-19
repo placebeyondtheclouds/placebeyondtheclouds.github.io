@@ -3,6 +3,7 @@ layout: post
 title:  "Re-building 1S 80mm freestyle quad"
 lang: en
 tags: [en, 1s, tinywhoop, quad, fpv, diy, 80mm, analog ]
+category: tutorial
 published: true
 ---
 

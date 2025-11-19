@@ -3,6 +3,7 @@ layout: post
 title:  "4K analog 2-inch 2S"
 lang: en
 tags: [en, 2s, cinewhoop, quad, fpv, diy, 85mm, analog, 4k]
+category: tutorial
 published: false
 ---
 
@@ -66,7 +67,7 @@ UART5: VTX
 - ch5 inverted, SB - arm
 - ch6 inverted, SA - air / acro / angle + blackbox
 - ch7 - turtle mode
-- ch8 (aux4 is 3 in vtx CLI command), S2 - VTX power switching
+- ch8 (aux4 is 3 in vtx CLI command), S2 - VTX power control
 - ch9 - buzzer
 - ch10, SW6 toggle - runcam button
 - CH11 (AUX7 in adjustments), S1 - OSD profile switching
@@ -74,6 +75,7 @@ UART5: VTX
 
 ## ESCs configuration
 
+- screenshot the original configuration
 - reflash bluejay, target `G-H-30`, PWM 48kHz
 ```
 startup sliders to the max
