@@ -78,14 +78,20 @@ UART5: VTX (IRC Tramp)
 
 - screenshot the original configuration
 - reflash bluejay, target `G-H-30`, PWM 48kHz
+
 ```
-startup sliders to the max
+startup boost min 1050, max 1100
 rampup x3
 motor timing  15 degrees
+beep strength 80
+beacon strength 80
 ESC power rating 2S+
-temperature protection 140
+force EDT arm ON
+temperature protection Disabled (because it relies on EDT and the EDT is not working correctly here!)
 beacon delay 1 min
 ```
+
+[settings explanation](https://github.com/bird-sanctuary/bluejay/wiki/Setup)
 
 ## RX
 
@@ -106,8 +112,8 @@ beacon delay 1 min
 ```
 # serial
 serial VCP 1 115200 57600 0 115200
-serial UART1 64 115200 57600 0 115200
-serial UART2 0 115200 57600 0 115200
+serial UART1 0 115200 57600 0 115200
+serial UART2 64 115200 57600 0 115200
 serial UART3 16384 115200 57600 0 115200
 serial UART5 8192 115200 57600 0 115200
 ```
@@ -236,16 +242,16 @@ set pitch_srate = 90
 set yaw_srate = 90
 ```
 
-- filters, gyro low pass 2 can be disabled because the PID loop rate is equal to the gyro rate (8KHz), there is no antialiasing needed. adjust for this build:
+- filters, gyro low pass 2 can be disabled because the PID loop rate is equal to the gyro rate (8KHz), there is no antialiasing needed. also set these parameters to be profile-independent. to do: adjust for this build:
 
 ```
 #set rpm_filter_weights = 100,20,20
 #set rpm_filter_min_hz = 119
 #set rpm_filter_fade_range_hz = 0
+set simplified_gyro_filter = ON
 set gyro_lpf1_static_hz = 0
 set gyro_lpf2_static_hz = 0
 set gyro_lpf1_dyn_min_hz = 0
-
 ```
 
 - motors (important) and battery:
@@ -262,7 +268,18 @@ set vbat_min_cell_voltage = 320
 set vbat_warning_cell_voltage = 340
 set beeper_dshot_beacon_tone = 3
 set small_angle = 180
+set dshot_edt = ON
 ```
+
+**props off**, check that [Extended DSHOT Telemetry](https://github.com/bird-sanctuary/bluejay/wiki/Setup#extended-dshot-telemetry---edt) is working:
+
+```
+dshotprog 255 13
+motor 255 1060
+dshot_telemetry_info
+```
+
+can enable temperature protection in the ESCs if the temperature readings are sane (there were none in my case)
 
 - OSD. if BF is set to NTSC and the camera outputs PAL, the osd elements will not be visible
 
@@ -435,3 +452,4 @@ save
 - https://jhemcu.work:6/sharing/3c1SjKuS9
 - https://store-m8o52p.mybigcommerce.com/product_images/img_runcam_thumb2/runcam_thumb2_manual_en.pdf
 - https://flying-rabbit-fpv.com/2020/11/07/creating-a-betaflight-target/
+- https://github.com/bird-sanctuary/bluejay/wiki/Setup
