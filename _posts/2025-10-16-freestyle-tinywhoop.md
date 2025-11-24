@@ -15,18 +15,18 @@ The battery is mounted using rubber bands with zip ties, occupying the lower par
 
 Camera - [Caddx Ant](https://caddxfpv.com/collections/caddxfpv-tiny-camera/products/caddx-ant-analog-camera) with f/1.2 lens or [Caddx Ant Lite](https://caddxfpv.com/products/caddxfpv-ant-lite-4-3-fpvcycle-edition) with f/2.5 lens. [the canopy for the Ant Lite](https://www.thingiverse.com/thing:6201941) is 3D printed, needs to be modified for the regular Ant edition. the motors are 1102 22000kv left from the Meteor75. the props are 乾丰 (gemfan) 45mm-3 (1.5mm shaft). 20AVG battery lead. 
 
-batteries: batches of 高能 100C 550mAh LiHV 1S A30 and 格氏 95C 550mAh 1S LiHV (resoldered A30).
+batteries: batches of 高能 (GNB) 100C 550mAh LiHV 1S A30 and 格氏 (Tattu) 95C 550mAh 1S LiHV (resoldered A30).
 
 **Highlights of this build's configuration**: 1s, PAL analog, OSD profile change on a pot, VTX power change on a pot, turtle mode without arming, full weather protection, battry crash protection, RHCP antenna for VTX, whip-style antenna for RX, buzzer, 220uf 16v cap, tuned filters.
 
 ## components
 
-- JHEMCU G474ELRS - 1-2s, 4 UARTS, 12A bluejay, STM32G474: 170MHz core 512KB flash 128KB RAM, 8MB blackbox, BETAFPV 2.4GHz Lite RX (serial) IPEX gen1
-- [HGLRC Zeuz nano 350mw VTX](https://hglrc.freshdesk.com/support/solutions/articles/61000307667-zeus-350mw-vtx)
-- RHCP antenna
-- Caddx Ant lite (f/2.5 lens). Update: swapped to Caddx Ant (f/1.2 lens), not in the pictures
+- 津航电子 (JHEMCU) G474ELRS - 1-2s, 4 UARTS, 12A bluejay, STM32G474: 170MHz core 512KB flash 128KB RAM, 8MB blackbox, BETAFPV 2.4GHz Lite RX (serial) IPEX gen1
+- 衢州市云端智能科技 (Happymodel) [5.8G Crown LDS antenna RHCP](https://www.happymodel.cn/index.php/2025/08/07/happymodel-5-8g-crown-lds-antenna-rhcp-lhcp-for-micro-fpv-whoops/), [3.5dBi, 5500-6000MHz](https://www.happymodel.cn/wp-content/uploads/2025/08/5.8G-Crown-antenna-RHCP-testing-data.xls.pdf), IPEX gen1
+- 卡德克斯技术 (Caddx) Ant lite (f/2.5 lens). Update: swapped to Caddx Ant (f/1.2 lens), not in the pictures
 - Mobula7 frame (80mm clone) - 45mm props, 80mm base, 47mm ducts
-- betafpv 1102 22000kv motors (left from Meteor75 Pro)
+- ZENCHANSI 棕熊 W007 400mw vtx
+- 哈鸣科技 (BETAFPV) 1102 22000kv motors (left from Meteor75 Pro)
 - 乾丰 (gemfan) 45mm-3 props (1.5mm shaft)
 - 220uF 16v capacitor
 - 20AWG wires for the battery lead, A30 connector
@@ -114,7 +114,7 @@ beacon delay 1 min
 set ibata_scale = 487
 ```
 
-- in motors tab, turn on _motor direction is reversed_. it makes the mixer to expect that motors 1 and 2 are reversed (spinning clockwise)
+- in motors tab, turn on _motor direction is reversed_ for the props out configuration. it makes the mixer to expect that motors 1 and 2 are reversed (spinning clockwise)
 ```
 set yaw_motors_reversed = ON
 ```
@@ -172,24 +172,6 @@ aux 7 35 2 1925 2100 0 0
 ```
 
 
-
-- ~~corrected vtx table for HGLRC Zeus nano 350mw~~ there is something wrong with this table. *work in progress*
-
-```
-vtxtable
-vtxtable bands 5
-vtxtable channels 8
-vtxtable band 1 BOSCAM_A A CUSTOM 5865 5845 5825 5805 5785 5765 5745 5725
-vtxtable band 2 BOSCAM_B B CUSTOM 5733 5752 5771 5790 5809 5828 5843 5866
-vtxtable band 3 BOSCAM_E E CUSTOM 5705 5685 5665 5645 5885 5905 5925 5945
-vtxtable band 4 FATSHARK F CUSTOM 5740 5760 5780 5800 5820 5840 5860 5880
-vtxtable band 5 RACEBAND R CUSTOM 5658 5695 5732 5769 5806 5843 5880 5917
-vtxtable powerlevels 4
-vtxtable powervalues 25 100 200 400
-vtxtable powerlabels 25 100 200 350
-```
-
-official [vtx table for HGLRC Zeus nano 350mw](https://www.rotorama.cz/cms/assets/docs/d0c22322f24f3bf72e2e66bab648f238/13272-1/zeus-nano-350mw-vtx.json). [review.](https://www.multirotorguide.com/reviews/review-hglrc-zeus-vtx-nano/)
 
 
 - ZENCHANSI 棕熊 W007 400mw vtx. it uses smartaudio 2.1 protocol, so the power values will be in dBm. BF CLI has the command `vtx_info` to show the power levels that the VTX supports

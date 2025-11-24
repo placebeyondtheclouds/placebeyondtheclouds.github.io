@@ -1,29 +1,29 @@
 ---
 layout: post
-title:  "4K analog 2-inch 2S"
+title:  "4K analog 2-inch 2S cinewhoop build start to finish"
 lang: en
 tags: [en, 2s, cinewhoop, quad, fpv, diy, 85mm, analog, 4k]
 category: tutorial
 published: false
 ---
 
-## Mobula8 frame with Runcam Thumb 2
 
-Here's how I built a 2S cinewhoop. I decided to build it on a fast modern MCU from [ArteryTek](https://oscarliang.com/at32-flight-controllers/). the runcam camera will act as both the fpv camera and the 4K cine camera. having a live `preview` in the goggles is super convenient for dialing in the manual exposure settings and framing. also: OSD profile change on a pot, VTX power level adjustment on a pot, turtle mode without arming, full weather protection, RHCP antenna for VTX, whip-style antenna for RX, low esr capacitor.
+Here's how I built a cinewhoop using Mobula8 frame and Runcam Thumb 2. I decided to build it on a fast modern MCU from [ArteryTek](https://oscarliang.com/at32-flight-controllers/). the runcam camera will act as both the fpv camera and the 4K cine camera. having a live `preview` in the goggles is super convenient for dialing in the manual exposure settings and framing. also: OSD profile change on a pot, VTX power level adjustment on a pot, turtle mode without arming, full weather protection, RHCP antenna for VTX, whip-style antenna for RX, low esr capacitor.
 
 ## parts list
 
-- [mobula8 2inch frame](https://www.happymodel.cn/index.php/2023/04/28/mobula8-frame-85mm-brushless-whoop-frame/)
+- ‌衢州市云端智能科技 (Happymodel) [mobula8 2inch frame](https://www.happymodel.cn/index.php/2023/04/28/mobula8-frame-85mm-brushless-whoop-frame/)
 - props 乾丰 (gemfan) 2023 2inch 3-blade (1.5mm shaft)
 - [runcam thumb 2](https://shop.runcam.com/runcam-thumb-2/), IMX586 sensor, gyro, UART control, type C connector
-- 3 M1.4x7 screws (with coarse thread for plastic) for [runcam thumb 2 original 3D printed mount](https://www.thingiverse.com/thing:6807624), need to make additional holes at 25mm or use zip ties. there is [a better mount for a whoop](https://www.thingiverse.com/thing:5271084). also, there is [another mount to use with FPV camera](https://www.thingiverse.com/thing:6090638) that would lift the runcam higher above the frame. [the shell](https://www.thingiverse.com/thing:6830398) is a bit large but makes the setup more crash-resistant. in the end I went with [this mount](https://www.thingiverse.com/thing:5271084).
-- generic 1103 15000KV 2S (3 hole base with 6mm distance, same as the betafpv 1102 motors) or better motors like `DarwinFPV bling 1103 8000KV`, `Happymodel EX1103 11000KV`, `sparkhobby xspeed 1103 8500KV`
+- 3 M1.4x7 screws (with coarse thread for plastic) for [runcam thumb 2 original 3D printed mount](https://www.thingiverse.com/thing:6807624), need to make additional holes at 25mm or use zip ties. there is [a better mount for a whoop](https://www.thingiverse.com/thing:5271084). also, there is [another mount to use with FPV camera](https://www.thingiverse.com/thing:6090638) that would lift the runcam higher above the frame. [the shell](https://www.thingiverse.com/thing:6830398) is a bit large but makes the setup more crash-resistant. in the end I went with [this mount](https://www.thingiverse.com/thing:5271084), although it turned out it's for another smaller camera, and I had to cut it and secure with zip ties.
+- generic 1103 15000KV 2S (3 hole M1.4 base with 6mm distance, same as the betafpv 1102 motors) or better, more expensive motors like `DarwinFPV bling 1103 8000KV`, `Happymodel EX1103 11000KV`, `sparkhobby xspeed 1103 8500KV`
 - 12 M1.4x4 machine screws for the motors
-- JHEMCU [GHF435AIO](https://www.jhemcu.com/e_productshow/?84-JHEMCU-GHF435AIO-2-4S-20A-w-Built-in-24G-ELRSIPEXSMD-84.html) V2 - 25mm mount, 2-4s, 4 UARTS, 20A Bluejay DSHOT600 ESCs, ArteryTek AT32F435: 288MHz core 1MB flash 384KB RAM, BETAFPV 2.4GHz Lite RX (serial) IPEX gen1, 16MB blackbox, ICM-42688 IMU, AT7656E OSD
-- [Happymodel 5.8G Crown LDS antenna RHCP](https://www.happymodel.cn/index.php/2025/08/07/happymodel-5-8g-crown-lds-antenna-rhcp-lhcp-for-micro-fpv-whoops/), 3.5dBi, 5500-6000MHz, IPEX gen1
-- two A30 female connectors (because I will use pairs of 1S batteries with A30 connectors)
-- heatshrink, 2mm zip ties, 18AWG wires for the battery lead, 22AWG wires for the capacitor
-- batteries: pairs of 高能 100C 550mAh LiHV 1S A30
+- 津航电子 (JHEMCU) [GHF435AIO](https://www.jhemcu.com/e_productshow/?84-JHEMCU-GHF435AIO-2-4S-20A-w-Built-in-24G-ELRSIPEXSMD-84.html) V2 - 25mm mount, 2-4s, 4 UARTS, 20A Bluejay DSHOT600 ESCs, ArteryTek AT32F435: 288MHz core 1MB flash 384KB RAM, BETAFPV 2.4GHz Lite RX (serial) IPEX gen1, 16MB blackbox, ICM-42688 IMU, AT7656E OSD
+- 衢州市云端智能科技 (Happymodel) [5.8G Crown LDS antenna RHCP](https://www.happymodel.cn/index.php/2025/08/07/happymodel-5-8g-crown-lds-antenna-rhcp-lhcp-for-micro-fpv-whoops/), [3.5dBi, 5500-6000MHz](https://www.happymodel.cn/wp-content/uploads/2025/08/5.8G-Crown-antenna-RHCP-testing-data.xls.pdf), IPEX gen1
+- 化骨龙航模 (HGLRC) [Zeuz nano 350mw VTX](https://hglrc.freshdesk.com/support/solutions/articles/61000307667-zeus-350mw-vtx)
+- two A30 female connectors (because I will use pairs of 1S batteries with A30 connectors, connected in series)
+- heatshrink, 2mm zip ties, 18AWG wires for the battery lead
+- batteries: pairs of 高能 (GNB) 100C 550mAh LiHV 1S A30 in series
 
 ## pictures
 
@@ -57,7 +57,7 @@ Here's how I built a 2S cinewhoop. I decided to build it on a fast modern MCU fr
 UART1: SBUS
 UART2: onboard ELRS
 UART3: runcam
-UART5: VTX
+UART5: VTX (IRC Tramp)
 ```
 
 ## radio setup
@@ -74,6 +74,7 @@ UART5: VTX
 - add special functions with playtrk `vtx` to SW6
 
 ## ESCs configuration
+- [ESC Configurator](https://esc-configurator.com/) or [run it locally]({% post_url 2025-11-23-bf-local %})
 
 - screenshot the original configuration
 - reflash bluejay, target `G-H-30`, PWM 48kHz
@@ -92,35 +93,32 @@ beacon delay 1 min
 
 ## FC Betaflight configuration
 
-- [connect the FC](https://app.betaflight.com/), check that it is working, save the output of `dump` and `diff all showdefaults` to separate files
+- [connect the FC](https://app.betaflight.com/). can also [run it locally]({% post_url 2025-11-23-bf-local %})
+- check that it is working, save the output of `dump` and `diff all showdefaults` to separate files
 - `status`: GYRO=ICM42688P, ACC=ICM42688P, BARO=DPS310
 - find out the firmware target: `JHEF435`. 
-- flash betaflight v2025.12, analog OSD, add features: camera control. restore the original backup
-  
-  - (didn't make it to work)it is possible to build the firmware locally, without giving the information to the betaflight build server.
-    - ```
-    cd ~
-    git clone https://github.com/betaflight/docker-betaflight-build.git
-    git clone https://github.com/betaflight/betaflight.git
-    cd betaflight && git checkout 2025.12-maintenance && git pull
-    docker run --rm -it -v `pwd`:/opt/betaflight $(docker build -q ~/docker-betaflight-build/) bash
-    make configs
-    make arm_sdk_install
-    make JHEF435
-    ``` 
-
-  </details>
-
+- build and flash betaflight v2025.12, analog OSD, add features: camera control.
+  - [can be built locally]({% post_url 2025-11-23-bf-local %}). local build command: `make JHEF435 EXTRA_FLAGS="-DUSE_ACRO_TRAINER -DUSE_CAMERA_CONTROL -DUSE_GPS -DUSE_GPS_PLUS_CODES -DUSE_LED_STRIP -DUSE_OSD_SD -DUSE_TELEMETRY -DUSE_TELEMETRY_CRSF " DEBUG=DBG -j`
 - calibrate the accelerometer. fly in angle mode and use [the stick commands](https://oscarliang.com/stick-commands/) to adjust trim: disarm, throttle up with yaw in the center and use the right stick to add roll or pitch trim iteratively with test flights until the quad hovers level.
 - load elrs 150Hz rate profile
-- set the UART3 protocol to `runcam`
+- UARTS:
+
+```
+# serial
+serial VCP 1 115200 57600 0 115200
+serial UART1 64 115200 57600 0 115200
+serial UART2 0 115200 57600 0 115200
+serial UART3 16384 115200 57600 0 115200
+serial UART5 8192 115200 57600 0 115200
+```
+
 - add mode `camera power` to aux6
 - [adjust](https://oscarliang.com/current-sensor-calibration/) current sensor calibration values
 ```
-get ibata_scale
+set ibata_scale = 400
 ```
 
-- adjust motors direction
+- tell the mixer that we are using props out
 ```
 set yaw_motors_reversed = ON
 ```
@@ -132,9 +130,10 @@ feature OSD
 beacon RX_LOST
 beacon RX_SET
 set pidsum_limit_yaw = 1000
+set pid_process_denom = 1
 ```
 
-- but `set baro_hardware = DPS310` to skip auto detection
+- `set baro_hardware = DPS310` to skip auto detection
 
 - modes (for my radio setup). IDs are [here](https://github.com/betaflight/betaflight/blob/master/src/main/msp/msp_box.c)
 
@@ -150,7 +149,8 @@ aux 6 33 5 1900 2100 0 0
 aux 7 35 2 1925 2100 0 0
 ```
 
--  HGLRC Zeus nano 350mw [vtxtable](https://www.rotorama.cz/cms/assets/docs/d0c22322f24f3bf72e2e66bab648f238/13272-1/zeus-nano-350mw-vtx.json)
+
+-  HGLRC Zeus nano 350mw [vtxtable](https://www.rotorama.cz/cms/assets/docs/d0c22322f24f3bf72e2e66bab648f238/13272-1/zeus-nano-350mw-vtx.json). [review.](https://www.multirotorguide.com/reviews/review-hglrc-zeus-vtx-nano/)
 
 ```
 vtxtable bands 5
@@ -165,7 +165,7 @@ vtxtable powervalues 25 100 200 400
 vtxtable powerlabels 25 100 200 350
 ```
 
-- vtx settings
+- vtx settings (power on the VTX for the settings to have effect)
 
 ```
 set vtx_band = 4
@@ -236,13 +236,16 @@ set pitch_srate = 90
 set yaw_srate = 90
 ```
 
-- filters (adjust for this build):
+- filters, gyro low pass 2 can be disabled because the PID loop rate is equal to the gyro rate (8KHz), there is no antialiasing needed. adjust for this build:
 
 ```
-#.
-bset rpm_filter_weights = 100,20,20
+#set rpm_filter_weights = 100,20,20
 #set rpm_filter_min_hz = 119
 #set rpm_filter_fade_range_hz = 0
+set gyro_lpf1_static_hz = 0
+set gyro_lpf2_static_hz = 0
+set gyro_lpf1_dyn_min_hz = 0
+
 ```
 
 - motors (important) and battery:
@@ -391,34 +394,44 @@ adjrange 0 0 6 900 2100 29 6 0 0
 
 
 
-- blackbox for filter tuning
+- blackbox for filter tuning (2kHz)
 
 ```
-blackbox_sample_rate = 1/2
-blackbox_disable_pids = OFF
-blackbox_disable_rc = ON
-blackbox_disable_setpoint = OFF
-blackbox_disable_bat = ON
-blackbox_disable_alt = ON
-blackbox_disable_rssi = ON
-blackbox_disable_gyro = OFF
-blackbox_disable_gyrounfilt = OFF
-blackbox_disable_acc = ON
-blackbox_disable_attitude = ON
-blackbox_disable_debug = OFF
-blackbox_disable_motors = OFF
-blackbox_disable_rpm = OFF
-blackbox_disable_gps = ON
-blackbox_mode = NORMAL
-blackbox_high_resolution = OFF
+set blackbox_sample_rate = 1/4
+
+set blackbox_disable_gps = ON
+set blackbox_disable_servos = ON
+set blackbox_disable_attitude = ON
+set blackbox_disable_acc = ON
+set blackbox_disable_bat = ON
+set blackbox_disable_alt = ON
+set blackbox_disable_rssi = ON
+
+set blackbox_disable_pids = OFF
+set blackbox_disable_rc = OFF
+set blackbox_disable_setpoint = OFF
+set blackbox_disable_gyro = OFF
+set blackbox_disable_gyrounfilt = OFF
+set blackbox_disable_debug = OFF
+set blackbox_disable_motors = OFF
+set blackbox_disable_rpm = OFF
+
+set blackbox_mode = NORMAL
+set blackbox_high_resolution = OFF
+set debug_mode = GYRO_RAW
+```
+
+```
+save
 ```
 
 ## runcam configuration 
 
-- QR code: set the camera to power on automatically when it receives power, but manual start of recording. set to use gyro, no geometry correction, 4:3 4K 30FPS, PAL, daylight white balance, shutter 1/60, ISO manual, saturation 3, contrast 1, sharpness 1
+- QR code: set the camera to power on automatically when it receives power, but manual start of recording. set to use gyro, no geometry correction, 4:3 4K 30FPS, PAL, daylight white balance, shutter 1/60, ISO manual, saturation 3, contrast 1, sharpness 1. use ISO and ND filters to adjust exposure.
 - [gyroflow best practices for older cameras, does not directly apply to thumb2](https://docs.gyroflow.xyz/app/getting-started/supported-cameras/runcam)
 - [lens profile](https://github.com/gyroflow/lens_profiles/blob/main/RunCam/Runcam_Thumb2_4by3.json)
 
 ## references
 - https://jhemcu.work:6/sharing/3c1SjKuS9
 - https://store-m8o52p.mybigcommerce.com/product_images/img_runcam_thumb2/runcam_thumb2_manual_en.pdf
+- https://flying-rabbit-fpv.com/2020/11/07/creating-a-betaflight-target/
