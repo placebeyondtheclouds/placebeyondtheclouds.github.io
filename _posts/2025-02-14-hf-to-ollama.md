@@ -41,11 +41,10 @@ EOF
 python download.py
 ```
 
-or
+or (`huggingface_hub` package version 1.1.5)
 
 ```shell
-#export HF_ENDPOINT=https://hf-mirror.com
-huggingface-cli download --resume-download WhiteRabbitNeo/WhiteRabbitNeo-2.5-Qwen-2.5-Coder-7B --local-dir ./wrn-hf --cache-dir ./wrn-hf/.cache/
+HF_ENDPOINT=https://hf-mirror.com hf download WhiteRabbitNeo/WhiteRabbitNeo-2.5-Qwen-2.5-Coder-7B --local-dir ./wrn-hf --cache-dir ./wrn-hf/.cache/ --repo-type model --revision main
 ```
 
 
