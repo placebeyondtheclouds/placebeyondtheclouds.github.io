@@ -4,7 +4,7 @@ title:  "4K analog 2-inch 2S cinewhoop build start to finish"
 lang: en
 tags: [en, 2s, cinewhoop, quad, fpv, diy, 85mm, analog, 4k]
 category: tutorial
-published: false
+published: true
 ---
 
 
@@ -104,7 +104,7 @@ beacon delay 1 min
 - `status`: GYRO=ICM42688P, ACC=ICM42688P, BARO=DPS310
 - find out the firmware target: `JHEF435`. 
 - build and flash betaflight v2025.12, analog OSD, add features: camera control.
-  - [can be built locally]({% post_url 2025-11-23-bf-local %}). local build command: `make JHEF435 EXTRA_FLAGS="-DUSE_ACRO_TRAINER -DUSE_CAMERA_CONTROL -DUSE_GPS -DUSE_GPS_PLUS_CODES -DUSE_LED_STRIP -DUSE_OSD_SD -DUSE_TELEMETRY -DUSE_TELEMETRY_CRSF " DEBUG=DBG -j`
+  - [can be built locally]({% post_url 2025-11-23-bf-local %}). local build command: `make JHEF435 EXTRA_FLAGS=" -D'RELEASE_NAME=2025.12.0-RC2' -DUSE_ACRO_TRAINER -DUSE_CAMERA_CONTROL -DUSE_GPS -DUSE_GPS_PLUS_CODES -DUSE_LED_STRIP -DUSE_OSD_SD -DUSE_TELEMETRY -DUSE_TELEMETRY_CRSF" -j`
 - calibrate the accelerometer. fly in angle mode and use [the stick commands](https://oscarliang.com/stick-commands/) to adjust trim: disarm, throttle up with yaw in the center and use the right stick to add roll or pitch trim iteratively with test flights until the quad hovers level.
 - load elrs 150Hz rate profile
 - UARTS:
@@ -171,7 +171,7 @@ vtxtable powervalues 25 100 200 400
 vtxtable powerlabels 25 100 200 350
 ```
 
-- vtx settings (power on the VTX for the settings to have effect)
+- vtx settings
 
 ```
 set vtx_band = 4
@@ -190,12 +190,14 @@ vtx 2 3 0 0 3 1500 1749
 vtx 3 3 0 0 4 1750 2100
 ```
 
+I use Failsafe settings `rxfail 7 s 1000` to set AUX4 to the lowest value when there is no control link, so the VTX will fall back on lowest power level if the link is lost.
+
 - PIDs (before tuning)
 
 ```
 profile 1
 
-set profile_name = testing
+set profile_name = default
 set vbat_sag_compensation = 100
 set anti_gravity_gain = 40
 set crash_dthreshold = 80
@@ -212,7 +214,11 @@ set motor_output_limit = 100
 
 profile 0
 
-set profile_name = working
+set profile_name = m.mult
+set dterm_lpf1_dyn_min_hz = 82
+set dterm_lpf1_dyn_max_hz = 165
+set dterm_lpf1_static_hz = 82
+set dterm_lpf2_static_hz = 165
 set vbat_sag_compensation = 100
 set anti_gravity_gain = 40
 set crash_dthreshold = 80
@@ -220,13 +226,41 @@ set crash_gthreshold = 600
 set crash_setpoint_threshold = 500
 set crash_recovery_rate = 150
 set crash_recovery = ON
+set iterm_relax_type = GYRO
+set iterm_windup = 85
 set pidsum_limit = 1000
 set pidsum_limit_yaw = 1000
-set auto_profile_cell_count = 2
+set throttle_boost = 0
+set p_pitch = 73
+set i_pitch = 131
+set d_pitch = 63
+set f_pitch = 194
+set p_roll = 58
+set i_roll = 104
+set d_roll = 46
+set f_roll = 156
+set p_yaw = 58
+set i_yaw = 104
+set f_yaw = 156
+set d_max_roll = 46
+set d_max_pitch = 63
+set d_max_advance = 0
+set auto_profile_cell_count = 1
+set launch_control_mode = NORMAL
 set thrust_linear = 20
+set feedforward_averaging = OFF
+set feedforward_smooth_factor = 30
+set feedforward_jitter_factor = 9
 set dyn_idle_min_rpm = 75
-set motor_output_limit = 100
+set simplified_master_multiplier = 130
+set simplified_d_gain = 120
+set simplified_d_max_gain = 0
+set simplified_pitch_d_gain = 120
+set simplified_pitch_pi_gain = 120
+set simplified_dterm_filter_multiplier = 110
 ```
+
+and [use master multiplier](https://www.youtube.com/watch?v=u74tDug6lpc) to adjust overall aggressiveness (sluggish, unpredictable <==> twitchy, motor heat, motor noise).
 
 - rates 
 

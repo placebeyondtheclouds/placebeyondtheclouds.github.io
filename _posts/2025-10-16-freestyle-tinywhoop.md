@@ -234,6 +234,8 @@ vtx 2 3 0 0 3 1600 2050
 
 ```
 
+I use Failsafe settings `rxfail 7 s 1000` to set AUX4 to the lowest value when there is no control link, so the VTX will fall back on lowest power level if the link is lost.
+
 - PIDs
 
 ```
