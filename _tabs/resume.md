@@ -9,6 +9,7 @@ tags: [en]
 
 - [LinkedIn](https://linkedin.com/in/aleksandrvm)
 - [Github](https://github.com/placebeyondtheclouds)
+- [Youtube channel](http://www.youtube.com/@movedToChinaForStudies)
 
 ## Location:
 
@@ -24,7 +25,10 @@ Network and system administration, on-prem, cybersecurity, data engineering, mac
 
 ## Projects:
 
-My [Projects](/projects)
+#### On-premise GPU cluster
+Designed and built on-premise multi-node multi-GPU hyper-converged cluster, including surrounding infrastructure, cybersecurity and helpdesk. 10GbE fiber optics in LACP bonds and 200G Nvidia InfiniBand. Proxmox VE, CEPH with RBD erasure coding pools, FreeIPA central authentication, LXC containers, Docker. The cluster is used for training deep learning models, and also for other tasks such as data engineering and data analysis. HCI was chosen to lower the total cost of ownership, and to increase flexibility and scalability. Increased flexibility of resource allocation allows more efficient hardware utilization.
+
+My other [Projects](/projects)
 
 ## Skills (most recent experience):
 
