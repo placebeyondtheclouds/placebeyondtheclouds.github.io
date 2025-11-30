@@ -10,6 +10,8 @@ tags: [en]
 - [LinkedIn](https://linkedin.com/in/aleksandrvm)
 - [Github](https://github.com/placebeyondtheclouds)
 - [Youtube channel](http://www.youtube.com/@movedToChinaForStudies)
+- [ResearchGate](https://www.researchgate.net/profile/Aleksandr-Mitkov)
+- [ORCiD](https://orcid.org/0009-0001-6007-3178)
 
 ## Location:
 
