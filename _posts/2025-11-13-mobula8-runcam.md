@@ -4,7 +4,7 @@ title:  "4K analog 2-inch 2S cinewhoop build start to finish"
 lang: en
 tags: [en, 2s, cinewhoop, quad, fpv, diy, 85mm, analog, 4k]
 category: tutorial
-published: false
+published: true
 ---
 
 
@@ -86,7 +86,7 @@ motor timing  15 degrees
 beep strength 80
 beacon strength 80
 ESC power rating 2S+
-force EDT arm ON
+force EDT arm OFF
 temperature protection Disabled (because it relies on EDT and the EDT is not working correctly here!)
 beacon delay 1 min
 ```
