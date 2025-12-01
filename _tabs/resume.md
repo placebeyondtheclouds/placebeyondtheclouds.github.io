@@ -5,7 +5,7 @@ lang: en
 tags: [en]
 ---
 
-## Contacts:
+## Socials:
 
 - [LinkedIn](https://linkedin.com/in/aleksandrvm)
 - [Github](https://github.com/placebeyondtheclouds)
