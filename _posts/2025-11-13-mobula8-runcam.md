@@ -20,13 +20,14 @@ Here's how I built a cinewhoop using Mobula8 frame and Runcam Thumb 2 (codename 
 - ~~it seems like the Runcam camera reads (sometimes?) date and time from the flight controller~~ no, it takes the time from the QR code
 - tried to use 3S with `set motor_output_limit = 60`, burned those the 1103 15000KV motors right after takeoff.
 - replaced the motors with **Happymodel EX1103 11000KV 2S**, at `set motor_output_limit = 80` there is no more voltage sag, the problem was with the generic motors not suitable for a quad this heavy (or them being close to 1S rather than 2S) and drawing too much current. the current dropped from 4.5A@34% to 3A@41%. probably can set the limit to 100, although not really needed because it gives me enough thrust even at 80%. `set motor_output_limit = 90` also works without FC restarts.
-- got a motor desync at 15 degrees timing
+- got motor desync event at 15 degrees timing, moved ESCs back to 22.5 degrees
 - flight time at 96kHz PWM, 22.5 degrees motor timing, 90% motor limit, outside temperature around 0 degrees celsius, two LiHV 550mah 100C A30 batteries in series: around 2 minutes down to 3.3v
 
 ## todo
 
-[x] tune filters
-[ ] tune PIDs
+- [x] tune filters
+- [ ] tune PIDs
+- [ ] adjust the current sensor calibration value
 
 ## video
 
@@ -136,8 +137,8 @@ UART5: VTX (IRC Tramp)
 - ch6 inverted, SA - air / acro / angle + blackbox
 - ch7 - turtle mode
 - ch8 (aux4 is 3 in vtx CLI command), S2 - VTX power control
-- ch9 - SW5 toggle - switch cameras
-- ch10, SW6 toggle - runcam button
+- ch9 - SW5 toggle - switch between the cameras
+- ch10, SW6 toggle - Runcam button
 - CH11 (AUX7 in adjustments), S1 - OSD profile switching
 - add special functions with playtrk `vtx` to SW6
 
@@ -186,7 +187,7 @@ serial UART3 16384 115200 57600 0 115200
 serial UART5 8192 115200 57600 0 115200
 ```
 
-- [adjust](https://oscarliang.com/current-sensor-calibration/) current sensor calibration values
+- need to [adjust](https://oscarliang.com/current-sensor-calibration/) the current sensor calibration value later
 
 ```
 set ibata_scale = 400
@@ -395,7 +396,7 @@ set vbat_warning_cell_voltage = 340
 set beeper_dshot_beacon_tone = 3
 set small_angle = 180
 set dshot_edt = ON
-set force_battery_cell_count = 0
+set force_battery_cell_count = 2
 ```
 
 **props off**, check that [Extended DSHOT Telemetry](https://github.com/bird-sanctuary/bluejay/wiki/Setup#extended-dshot-telemetry---edt) is working:
