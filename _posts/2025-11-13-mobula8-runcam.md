@@ -54,7 +54,9 @@ Here's how I built a cinewhoop using Mobula8 frame and Runcam Thumb 2 (codename 
 | - | - | - |
 | ![22](/assets/images/not-mobula8-22.jpg) | ![23](/assets/images/not-mobula8-23.jpg) |![24](/assets/images/not-mobula8-24.jpg) |
 | - | - | - |
-| ![25](/assets/images/not-mobula8-25.jpg) | ![27](/assets/images/not-mobula8-27.jpg) |![28](/assets/images/not-mobula8-28.jpg) |
+| ![25](/assets/images/not-mobula8-25.jpg) |  ![34](/assets/images/not-mobula8-34.jpg) |![35](/assets/images/not-mobula8-35.jpg) |
+| - | - | - |
+| - | ![27](/assets/images/not-mobula8-27.jpg) |![28](/assets/images/not-mobula8-28.jpg) |
 | - | - | - |
 | ![29](/assets/images/not-mobula8-29.png) |   ![30](/assets/images/not-mobula8-30.png) | ![31](/assets/images/not-mobula8-31.png) |
 | - | - | - |
