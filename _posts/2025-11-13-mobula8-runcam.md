@@ -277,6 +277,7 @@ vtx 3 3 0 0 4 1750 2100
 ```
 
 the radio reporting current VTX power level with audio messages can be set up like this: 
+
 |-|-|
 | ![29](/assets/images/not-mobula8-29.png)  | ![30](/assets/images/not-mobula8-30.png) |
 
