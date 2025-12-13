@@ -8,7 +8,7 @@ published: true
 ---
 
 
-Here's how I built a cinewhoop using Mobula8 frame and Runcam Thumb 2 (codename `not mobula8`). I decided to build it on a fast modern MCU from [ArteryTek](https://oscarliang.com/at32-flight-controllers/). the Runcam camera will act as ~~both the fpv camera and~~ the 4K cine camera. having a live `preview` in the goggles is super convenient for dialing in Runcam's manual exposure settings. also: OSD profile change on a pot, VTX power level adjustment on a pot, turtle mode without arming, RHCP antenna for VTX, whip-style antenna for RX, low esr capacitor.
+Here's how I built a cinewhoop using Mobula8 frame and Runcam Thumb 2 (codename `not mobula8`). I decided to build it on a FC with fast modern MCU from [ArteryTek](https://oscarliang.com/at32-flight-controllers/) and new industry standard gyro [ICM42688P](https://invensense.tdk.com/wp-content/uploads/2022/12/DS-000347-ICM-42688-P-v1.7.pdf). the Runcam camera will act as ~~both the fpv camera and~~ the 4K cine camera. having a live `preview` in the goggles is super convenient for dialing in Runcam's manual exposure settings. highlights of the build: live switching between the cameras, Runcam camera control from the radio, OSD profile change on a pot, VTX power level adjustment on a pot, turtle mode without arming, RHCP antenna for VTX, whip-style antenna for RX, low esr capacitor.
 
 ## results and updates
 
@@ -69,8 +69,8 @@ Here's how I built a cinewhoop using Mobula8 frame and Runcam Thumb 2 (codename 
 - 3 M1.4x5 or M1.4x7 screws (with coarse thread for plastic). there is [a mount to use with FPV camera](https://www.thingiverse.com/thing:6090638) that would lift the runcam higher above the frame. I used `Removable_V2_BlueJay_Canopy_with_Thumb_Pro.stl` from that thing and the top part of [the original Runcam Thumb 2 mount](https://www.thingiverse.com/thing:6807624). 
 - ~~generic 1103 15000KV 2S (3 hole M1.4 base with 6mm distance, same as the betafpv 1102 motors) or better, more expensive motors like `DarwinFPV bling 1103 8000KV`, `Happymodel EX1103 11000KV`, `sparkhobby xspeed 1103 8500KV`~~
 - ‌衢州市云端智能科技 (Happymodel) [EX1103 11000KV 2S](https://www.happymodel.cn/index.php/2022/09/05/bassline-spare-part-ex1103-kv11000-brushless-motor/) motors
-- 8 M2x8 machine screws for the props (optional)
-- 12 M1.4x4 machine screws for the motors
+- ~~8 M2x6 machine screws for the props~~ (optional)
+- ~~12 M1.4x4 machine screws for the motors~~ (came with the motors)
 - 津航电子 (JHEMCU) [GHF435AIO](https://www.jhemcu.com/e_productshow/?84-JHEMCU-GHF435AIO-2-4S-20A-w-Built-in-24G-ELRSIPEXSMD-84.html) V2 - 25mm mount, 2-4s, 4 UARTS, 20A Bluejay DSHOT600 ESCs, ArteryTek AT32F435: 288MHz core 1MB flash 384KB RAM, BETAFPV 2.4GHz Lite RX (serial) IPEX gen1, 16MB blackbox, ICM-42688 IMU, AT7656E OSD
 - 衢州市云端智能科技 (Happymodel) [5.8G Crown LDS antenna RHCP](https://www.happymodel.cn/index.php/2025/08/07/happymodel-5-8g-crown-lds-antenna-rhcp-lhcp-for-micro-fpv-whoops/), [3.5dBi, 5500-6000MHz](https://www.happymodel.cn/wp-content/uploads/2025/08/5.8G-Crown-antenna-RHCP-testing-data.xls.pdf), IPEX gen1
 - 化骨龙航模 (HGLRC) [Zeuz nano 350mw VTX](https://hglrc.freshdesk.com/support/solutions/articles/61000307667-zeus-350mw-vtx)
@@ -121,11 +121,11 @@ Here's how I built a cinewhoop using Mobula8 frame and Runcam Thumb 2 (codename 
 
 - use rosin-free flux paste and 63% tin soldering thread (melts at around 183 degrees), clean the board with isopropyl alcohol after soldering. apply `P-1025` conformal coating to the FC and VTX boards. add `Kafuter K-705` silicon sealant to the places where wires are soldered to the FC pads, U.FL connectors on FC and VTX. apply blue `Loctite-243` onto last threads of the motor screws.
 
-- UARTs:
+- UARTs configuration:
 ```
 UART1: SBUS
 UART2: onboard ELRS
-UART3: runcam
+UART3: Runcam
 UART5: VTX (IRC Tramp)
 ```
 
