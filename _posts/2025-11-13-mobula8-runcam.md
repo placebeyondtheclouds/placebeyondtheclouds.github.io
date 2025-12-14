@@ -286,7 +286,7 @@ the radio reporting current VTX power level with audio messages can be set up li
 | - | - | - |
 | ![29](/assets/images/not-mobula8-29.bmp) |   ![30](/assets/images/not-mobula8-30.bmp) | ![34](/assets/images/not-mobula8-34.bmp) |
 
-- PIDs (before tuning). `auto_profile_cell_count` can be used to automatically switch profiles based on the current cell count. [dynamic idle values](https://oscarliang.com/how-to-enable-and-configure-betaflight-dynamic-idle/) is based on the prop size/pitch
+- PIDs [dynamic idle value](https://oscarliang.com/how-to-enable-and-configure-betaflight-dynamic-idle/) is based on the prop size/pitch
 
 ```
 profile 0
@@ -417,7 +417,7 @@ set simplified_pitch_d_gain = 120
 set simplified_pitch_pi_gain = 120
 set simplified_dterm_filter_multiplier = 110
 
-profile 1
+profile 2
 ```
 
 and [use master multiplier](https://www.youtube.com/watch?v=u74tDug6lpc) to adjust overall aggressiveness (sluggish, unpredictable <==> twitchy, motor heat, motor noise).
