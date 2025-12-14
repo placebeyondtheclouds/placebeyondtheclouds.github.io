@@ -56,9 +56,9 @@ Here's how I built a cinewhoop using Mobula8 frame and Runcam Thumb 2 (codename 
 | - | - | - |
 | ![25](/assets/images/not-mobula8-25.jpg) |  ![34](/assets/images/not-mobula8-34.jpg) |![35](/assets/images/not-mobula8-35.jpg) |
 | - | - | - |
-| ![31](/assets/images/not-mobula8-31.bmp)   | ![27](/assets/images/not-mobula8-27.jpg) |![28](/assets/images/not-mobula8-28.jpg) |
+| ![31](/assets/images/not-mobula8-31.png)   | ![27](/assets/images/not-mobula8-27.jpg) |![28](/assets/images/not-mobula8-28.jpg) |
 | - | - | - |
-| ![29](/assets/images/not-mobula8-29.bmp) |   ![30](/assets/images/not-mobula8-30.bmp) | ![34](/assets/images/not-mobula8-34.bmp) |
+| ![29](/assets/images/not-mobula8-29.png) |   ![30](/assets/images/not-mobula8-30.png) | ![34](/assets/images/not-mobula8-34.png) |
 | - | - | - |
 | ![32](/assets/images/not-mobula8-32.png) |   ![33](/assets/images/not-mobula8-33.png) | - |
 
@@ -284,7 +284,7 @@ vtx 3 3 0 0 4 1750 2100
 the radio reporting current VTX power level with audio messages can be set up like this: 
 
 | - | - | - |
-| ![29](/assets/images/not-mobula8-29.bmp) |   ![30](/assets/images/not-mobula8-30.bmp) | ![34](/assets/images/not-mobula8-34.bmp) |
+| ![29](/assets/images/not-mobula8-29.png) |   ![30](/assets/images/not-mobula8-30.png) | ![34](/assets/images/not-mobula8-34.png) |
 
 - PIDs [dynamic idle value](https://oscarliang.com/how-to-enable-and-configure-betaflight-dynamic-idle/) is based on the prop size/pitch
 
