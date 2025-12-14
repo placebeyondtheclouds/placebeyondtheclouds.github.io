@@ -289,9 +289,14 @@ the radio reporting current VTX power level with audio messages can be set up li
 - PIDs (before tuning). `auto_profile_cell_count` can be used to automatically switch profiles based on the current cell count. [dynamic idle values](https://oscarliang.com/how-to-enable-and-configure-betaflight-dynamic-idle/) is based on the prop size/pitch
 
 ```
-profile 1
+profile 0
 
+# profile 0
 set profile_name = default
+set dterm_lpf1_dyn_min_hz = 82
+set dterm_lpf1_dyn_max_hz = 165
+set dterm_lpf1_static_hz = 82
+set dterm_lpf2_static_hz = 165
 set vbat_sag_compensation = 100
 set anti_gravity_gain = 40
 set crash_dthreshold = 80
@@ -299,15 +304,24 @@ set crash_gthreshold = 600
 set crash_setpoint_threshold = 500
 set crash_recovery_rate = 150
 set crash_recovery = ON
+set iterm_relax_type = GYRO
+set iterm_windup = 85
 set pidsum_limit = 1000
 set pidsum_limit_yaw = 1000
-set auto_profile_cell_count = 0
-set thrust_linear = 20
-set dyn_idle_min_rpm = 60
+set throttle_boost = 0
+set d_max_advance = 0
 set motor_output_limit = 90
+set launch_control_mode = NORMAL
+set thrust_linear = 20
+set feedforward_averaging = OFF
+set feedforward_smooth_factor = 30
+set feedforward_jitter_factor = 9
+set dyn_idle_min_rpm = 60
+set simplified_dterm_filter_multiplier = 110
 
-profile 0
+profile 1
 
+# profile 1
 set profile_name = m.mult
 set dterm_lpf1_dyn_min_hz = 82
 set dterm_lpf1_dyn_max_hz = 165
@@ -325,36 +339,85 @@ set iterm_windup = 85
 set pidsum_limit = 1000
 set pidsum_limit_yaw = 1000
 set throttle_boost = 0
-set p_pitch = 73
-set i_pitch = 131
-set d_pitch = 63
-set f_pitch = 194
-set p_roll = 58
-set i_roll = 104
-set d_roll = 46
-set f_roll = 156
-set p_yaw = 58
-set i_yaw = 104
-set f_yaw = 156
-set d_max_roll = 46
-set d_max_pitch = 63
+set p_pitch = 70
+set i_pitch = 125
+set d_pitch = 61
+set f_pitch = 187
+set p_roll = 56
+set i_roll = 100
+set d_roll = 44
+set f_roll = 150
+set p_yaw = 56
+set i_yaw = 100
+set f_yaw = 150
+set d_max_roll = 44
+set d_max_pitch = 61
 set d_max_advance = 0
-set auto_profile_cell_count = 0
+set motor_output_limit = 90
 set launch_control_mode = NORMAL
 set thrust_linear = 20
 set feedforward_averaging = OFF
 set feedforward_smooth_factor = 30
 set feedforward_jitter_factor = 9
 set dyn_idle_min_rpm = 60
-set motor_output_limit = 90
-set simplified_master_multiplier = 120
+set simplified_master_multiplier = 125
 set simplified_d_gain = 120
 set simplified_d_max_gain = 0
 set simplified_pitch_d_gain = 120
 set simplified_pitch_pi_gain = 120
 set simplified_dterm_filter_multiplier = 110
 
-profile 0
+
+profile 2
+
+# profile 2
+set profile_name = test
+set dterm_lpf1_dyn_min_hz = 82
+set dterm_lpf1_dyn_max_hz = 165
+set dterm_lpf1_static_hz = 82
+set dterm_lpf2_static_hz = 165
+set vbat_sag_compensation = 100
+set anti_gravity_gain = 40
+set crash_dthreshold = 80
+set crash_gthreshold = 600
+set crash_setpoint_threshold = 500
+set crash_recovery_rate = 150
+set crash_recovery = ON
+set iterm_relax_type = GYRO
+set iterm_windup = 85
+set pidsum_limit = 1000
+set pidsum_limit_yaw = 1000
+set throttle_boost = 0
+set p_pitch = 62
+set i_pitch = 110
+set d_pitch = 53
+set f_pitch = 164
+set p_roll = 49
+set i_roll = 88
+set d_roll = 39
+set f_roll = 132
+set p_yaw = 49
+set i_yaw = 88
+set f_yaw = 132
+set d_max_roll = 43
+set d_max_pitch = 59
+set d_max_advance = 0
+set motor_output_limit = 90
+set auto_profile_cell_count = -1
+set launch_control_mode = NORMAL
+set thrust_linear = 20
+set feedforward_averaging = OFF
+set feedforward_smooth_factor = 30
+set feedforward_jitter_factor = 9
+set dyn_idle_min_rpm = 60
+set simplified_master_multiplier = 110
+set simplified_d_gain = 120
+set simplified_d_max_gain = 30
+set simplified_pitch_d_gain = 120
+set simplified_pitch_pi_gain = 120
+set simplified_dterm_filter_multiplier = 110
+
+profile 1
 ```
 
 and [use master multiplier](https://www.youtube.com/watch?v=u74tDug6lpc) to adjust overall aggressiveness (sluggish, unpredictable <==> twitchy, motor heat, motor noise).
