@@ -56,9 +56,9 @@ Here's how I built a cinewhoop using Mobula8 frame and Runcam Thumb 2 (codename 
 | - | - | - |
 | ![25](/assets/images/not-mobula8-25.jpg) |  ![34](/assets/images/not-mobula8-34.jpg) |![35](/assets/images/not-mobula8-35.jpg) |
 | - | - | - |
-| - | ![27](/assets/images/not-mobula8-27.jpg) |![28](/assets/images/not-mobula8-28.jpg) |
+| ![31](/assets/images/not-mobula8-31.bmp)   | ![27](/assets/images/not-mobula8-27.jpg) |![28](/assets/images/not-mobula8-28.jpg) |
 | - | - | - |
-| ![29](/assets/images/not-mobula8-29.png) |   ![30](/assets/images/not-mobula8-30.png) | ![31](/assets/images/not-mobula8-31.png) |
+| ![29](/assets/images/not-mobula8-29.bmp) |   ![30](/assets/images/not-mobula8-30.bmp) | ![34](/assets/images/not-mobula8-34.bmp) |
 | - | - | - |
 | ![32](/assets/images/not-mobula8-32.png) |   ![33](/assets/images/not-mobula8-33.png) | - |
 
@@ -130,6 +130,9 @@ UART2: onboard ELRS
 UART3: Runcam
 UART5: VTX (IRC Tramp)
 ```
+
+- Caddx Ant camera settings (using OSD menu board): AE mode to BLC=3, brightness=35, contrast auto, saturation manual=20
+
 
 ## radio setup
 
@@ -279,11 +282,9 @@ vtx 3 3 0 0 4 1750 2100
 ```
 
 the radio reporting current VTX power level with audio messages can be set up like this: 
+|-|-|-|
+| ![29](/assets/images/not-mobula8-29.bmp)  | ![30](/assets/images/not-mobula8-30.bmp) | ![34](/assets/images/not-mobula8-34.bmp) |
 
-|-|-|
-| ![29](/assets/images/not-mobula8-29.png)  | ![30](/assets/images/not-mobula8-30.png) |
-
-I use Failsafe settings `rxfail 7 s 1000` to set AUX4 to the lowest value when there is no control link, so the VTX will fall back on lowest power level if the link is lost.
 
 - PIDs (before tuning). `auto_profile_cell_count` can be used to automatically switch profiles based on the current cell count. [dynamic idle values](https://oscarliang.com/how-to-enable-and-configure-betaflight-dynamic-idle/) is based on the prop size/pitch
 

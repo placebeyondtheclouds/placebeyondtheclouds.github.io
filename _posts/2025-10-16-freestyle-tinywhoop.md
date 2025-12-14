@@ -97,9 +97,9 @@ UART4: external ELRS RX
 ```
 startup sliders to the max
 rampup x3
-motor timing  15 degrees
+motor timing  22.5 degrees
 ESC power rating 2S+
-temperature protection 140
+temperature protection Disabled
 beacon delay 1 min
 ```
 
@@ -228,13 +228,12 @@ set vcd_video_system = PAL
 - in-flight VTX power switching on a pot, used S2 (BF:aux4, radio:ch8). 0 means no change. `<index> <aux_channel> <vtx_band> <vtx_channel> <vtx_power> <start_range> <end_range>`.
 
 ```
-vtx 0 3 0 0 1 950 1300
+vtx 0 3 0 0 1 900 1300
 vtx 1 3 0 0 2 1300 1600
-vtx 2 3 0 0 3 1600 2050
+vtx 2 3 0 0 3 1600 2100
 
 ```
 
-I use Failsafe settings `rxfail 7 s 1000` to set AUX4 to the lowest value when there is no control link, so the VTX will fall back on lowest power level if the link is lost.
 
 - PIDs
 
