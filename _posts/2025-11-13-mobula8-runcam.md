@@ -8,7 +8,7 @@ published: true
 ---
 
 
-Here's how I built a cinewhoop using Mobula8 frame and Runcam Thumb 2 (codename `not mobula8`). I decided to build it on a FC with fast modern MCU from [ArteryTek](https://oscarliang.com/at32-flight-controllers/) and new industry standard gyro [ICM42688P](https://invensense.tdk.com/wp-content/uploads/2022/12/DS-000347-ICM-42688-P-v1.7.pdf). the Runcam camera will act as ~~both the fpv camera and~~ the 4K cine camera. having a live `preview` in the goggles is super convenient for dialing in Runcam's manual exposure settings. highlights of the build: live switching between the cameras, Runcam camera control from the radio, OSD profile change on a pot, VTX power level adjustment on a pot, turtle mode without arming, RHCP antenna for VTX, whip-style antenna for RX, low esr capacitor.
+Here's how I built a cinewhoop using Mobula8 frame and Runcam Thumb 2 (codename `not mobula8`). I decided to build it on a FC with fast modern MCU from [ArteryTek](https://oscarliang.com/at32-flight-controllers/) and new industry standard gyro [ICM42688P](https://invensense.tdk.com/wp-content/uploads/2022/12/DS-000347-ICM-42688-P-v1.7.pdf). the Runcam camera will act as ~~both the fpv camera and~~ the 4K cine camera. having a live `preview` in the goggles is super convenient for dialing in Runcam's manual exposure settings. highlights of the build: live switching between the cameras, Runcam camera control from the radio, VTX power level adjustment on a pot, turtle mode without arming, RHCP antenna for VTX, whip-style antenna for RX, low esr capacitor.
 
 ## results and updates
 
@@ -139,12 +139,13 @@ UART5: VTX (IRC Tramp)
 - ADC Filter OFF
 - send radio's RTC data to the flight controller to have correct time in blackbox files and on the OSD: go to special functions, add `ON Lua bfbkgd On` and turn the checkmark on
 - ch5 inverted, SB - arm
-- ch6 inverted, SA - air / acro / angle + blackbox
+- ch6 inverted, SA - air / acro / angle 
 - ch7 - turtle mode
 - ch8 (aux4 is 3 in vtx CLI command), S2 - VTX power control
 - ch9 - SW5 toggle - switch between the cameras
 - ch10, SW6 toggle - Runcam button
-- CH11 (AUX7 in adjustments), S1 - OSD profile switching
+- CH11 SW3 toggle (aux7) blackbox erase
+- CH12 SW2 2pos (aux8) blackbox
 - add special functions with playtrk `vtx` to SW6
 
 ## ESCs configuration
@@ -225,10 +226,11 @@ set pid_process_denom = 1
 aux 0 0 0 1900 2100 0 0
 aux 1 0 2 1900 2100 0 0
 aux 2 1 1 1900 2100 0 0
-aux 3 26 1 1900 2100 0 0
+aux 3 26 7 1900 2100 0 0
 aux 4 28 1 900 1100 0 0
-aux 5 33 5 1900 2100 0 0
-aux 6 35 2 1925 2100 0 0
+aux 5 31 6 1900 2100 0 0
+aux 6 33 5 1900 2100 0 0
+aux 7 35 2 1925 2100 0 0
 ```
 
 
@@ -596,14 +598,7 @@ set osd_aux_symbol = 65
 set osd_craftname_msgs = OFF
 ```
 
-- in-flight OSD profile switching on a pot. I use S1, set it to CH11 (AUX7 in BF)
-
-```
-adjrange 0 0 6 900 2100 29 6 0 0
-```
-
-
-- blackbox for filter tuning (2kHz)
+- blackbox for filter tuning (2kHz). for PID tuning it will be `set blackbox_sample_rate = 1/2` (4kHz)
 
 ```
 set blackbox_sample_rate = 1/4
