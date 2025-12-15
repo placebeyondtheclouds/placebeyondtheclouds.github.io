@@ -25,7 +25,8 @@ batteries: batches of 高能 (GNB) 100C 550mAh LiHV 1S A30 and 格氏 (Tattu) 95
 - 衢州市云端智能科技 (Happymodel) [5.8G Crown LDS antenna RHCP](https://www.happymodel.cn/index.php/2025/08/07/happymodel-5-8g-crown-lds-antenna-rhcp-lhcp-for-micro-fpv-whoops/), [3.5dBi, 5500-6000MHz](https://www.happymodel.cn/wp-content/uploads/2025/08/5.8G-Crown-antenna-RHCP-testing-data.xls.pdf), IPEX gen1
 - 卡德克斯技术 (Caddx) Ant lite (f/2.5 lens). Update: swapped to Caddx Ant (f/1.2 lens), not in the pictures
 - Mobula7 frame (80mm clone) - 45mm props, 80mm base, 47mm ducts
-- ZENCHANSI 棕熊 W007 400mw vtx
+- ~~ZENCHANSI 棕熊 W007 400mw vtx~~
+- 化骨龙航模 (HGLRC) [Zeuz nano 350mw VTX](https://hglrc.freshdesk.com/support/solutions/articles/61000307667-zeus-350mw-vtx)
 - 哈鸣科技 (BETAFPV) 1102 22000kv motors (left from Meteor75 Pro)
 - 乾丰 (gemfan) 45mm-3 props (1.5mm shaft)
 - 220uF 16v capacitor
@@ -58,7 +59,7 @@ batteries: batches of 高能 (GNB) 100C 550mAh LiHV 1S A30 and 格氏 (Tattu) 95
 - UARTs:
 ```
 UART1: SBUS
-UART2: VTX
+UART2: VTX (IRC Tramp)
 UART3: onboard ELRS (died), the pads are too tiny to work with
 UART4: external ELRS RX
 ```
@@ -124,17 +125,27 @@ set yaw_motors_reversed = ON
 - ADC Filter OFF
 - send radio's RTC data to the flight controller to have correct time in blackbox files and on the OSD: go to special functions, add `ON Lua bfbkgd On` and turn the checkmark on
 - ch5 inverted - arm
-- ch6 inverted, SA - air / acro / angle + blackbox
+- ch6 inverted, SA - air / acro / angle
 - ch7 - turtle mode
 - ch8 (aux4), S2 - VTX power switching
 - ch9 - buzzer
-- ch10 - 
+- ch10 - SW2 2pos - aux6 blackbox
 - CH11 (AUX7), S1 - OSD profile switching
-
+- ch12 - SW3 toggle - aux8 blackbox erase
 
 ## restore my settings
 
 - load elrs 150Hz rate profile (although some of the values will be changed with the filters tuning later)
+
+- UARTs:
+
+```
+serial VCP 1 115200 57600 0 115200
+serial UART1 0 115200 57600 0 115200
+serial UART2 8192 115200 57600 0 115200
+serial UART3 0 115200 57600 0 115200
+serial UART4 64 115200 57600 0 115200
+```
 
 - (not working) [camera control](https://oscarliang.com/fpv-camera-control-fc/). measure the OSD pin voltage. set mode `camera control 1` to a channel. enable led_strip feature. flip the channel, activate using `throttle=0, yaw=100`
 
@@ -167,14 +178,18 @@ aux 2 1 1 1900 2100 0 0
 aux 3 13 4 1900 2100 0 0
 aux 4 26 5 1900 2100 0 0
 aux 5 28 1 900 1100 0 0
-aux 6 32 6 1850 2100 0 0
+aux 6 31 7 1900 2100 0 0
 aux 7 35 2 1925 2100 0 0
 ```
 
 
 
+- ZENCHANSI 棕熊 W007 400mw vtx. 
 
-- ZENCHANSI 棕熊 W007 400mw vtx. it uses smartaudio 2.1 protocol, so the power values will be in dBm. BF CLI has the command `vtx_info` to show the power levels that the VTX supports
+> not using
+{: .prompt-warning }
+
+it uses smartaudio 2.1 protocol, so the power values will be in dBm. BF CLI has the command `vtx_info` to show the power levels that the VTX supports
 
 ```
 # vtx_info
@@ -215,25 +230,7 @@ vtxtable powervalues 14 23 26
 vtxtable powerlabels 25 200 400
 ```
 
-- vtx settings
-
-```
-set vtx_band = 6
-set vtx_channel = 8
-set vtx_power = 1
-set vtx_low_power_disarm = UNTIL_FIRST_ARM
-set vcd_video_system = PAL
-```
-
-- in-flight VTX power switching on a pot, used S2 (BF:aux4, radio:ch8). 0 means no change. `<index> <aux_channel> <vtx_band> <vtx_channel> <vtx_power> <start_range> <end_range>`.
-
-```
-vtx 0 3 0 0 1 900 1300
-vtx 1 3 0 0 2 1300 1600
-vtx 2 3 0 0 3 1600 2100
-
-```
-
+-  VTX setup is **exactly** the same as with [this quad]({% post_url 2025-11-13-mobula8-runcam %}) 
 
 - PIDs
 
