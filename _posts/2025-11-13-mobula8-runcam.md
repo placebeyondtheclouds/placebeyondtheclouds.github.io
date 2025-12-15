@@ -288,7 +288,7 @@ the radio reporting current VTX power level with audio messages can be set up li
 | - | - | - |
 | ![29](/assets/images/not-mobula8-29.png) |   ![30](/assets/images/not-mobula8-30.png) | ![34](/assets/images/not-mobula8-34.png) |
 
-- PIDs [dynamic idle value](https://oscarliang.com/how-to-enable-and-configure-betaflight-dynamic-idle/) is based on the prop size/pitch
+- PIDs. dynamic idle value is based on the prop size/pitch, [here](https://oscarliang.com/how-to-enable-and-configure-betaflight-dynamic-idle/) and [here](https://youtu.be/1oYoVE4xu1U?si=yH7NVtL8CJaB1tvT&t=798)
 
 ```
 profile 0
@@ -312,13 +312,13 @@ set pidsum_limit = 1000
 set pidsum_limit_yaw = 1000
 set throttle_boost = 0
 set d_max_advance = 0
-set motor_output_limit = 90
+set motor_output_limit = 100
 set launch_control_mode = NORMAL
 set thrust_linear = 20
 set feedforward_averaging = OFF
 set feedforward_smooth_factor = 30
 set feedforward_jitter_factor = 9
-set dyn_idle_min_rpm = 60
+set dyn_idle_min_rpm = 100
 set simplified_dterm_filter_multiplier = 110
 
 profile 1
@@ -341,28 +341,21 @@ set iterm_windup = 85
 set pidsum_limit = 1000
 set pidsum_limit_yaw = 1000
 set throttle_boost = 0
-set p_pitch = 70
-set i_pitch = 125
-set d_pitch = 61
-set f_pitch = 187
-set p_roll = 56
-set i_roll = 100
-set d_roll = 44
-set f_roll = 150
-set p_yaw = 56
-set i_yaw = 100
-set f_yaw = 150
-set d_max_roll = 44
-set d_max_pitch = 61
+set p_pitch = 56
+set i_pitch = 100
+set d_pitch = 48
+set f_pitch = 149
+set d_roll = 35
+set d_max_roll = 35
+set d_max_pitch = 48
 set d_max_advance = 0
-set motor_output_limit = 90
+set motor_output_limit = 100
 set launch_control_mode = NORMAL
 set thrust_linear = 20
 set feedforward_averaging = OFF
 set feedforward_smooth_factor = 30
 set feedforward_jitter_factor = 9
-set dyn_idle_min_rpm = 60
-set simplified_master_multiplier = 125
+set dyn_idle_min_rpm = 100
 set simplified_d_gain = 120
 set simplified_d_max_gain = 0
 set simplified_pitch_d_gain = 120
@@ -390,28 +383,25 @@ set iterm_windup = 85
 set pidsum_limit = 1000
 set pidsum_limit_yaw = 1000
 set throttle_boost = 0
-set p_pitch = 67
-set i_pitch = 96
-set d_pitch = 58
-set f_pitch = 179
-set p_roll = 53
-set i_roll = 76
-set d_roll = 43
-set f_roll = 143
+set p_pitch = 56
+set i_pitch = 80
+set d_pitch = 48
+set f_pitch = 149
+set i_roll = 63
+set d_roll = 35
 set p_yaw = 80
 set f_yaw = 132
-set d_max_roll = 54
-set d_max_pitch = 75
+set d_max_roll = 45
+set d_max_pitch = 62
 set d_max_advance = 0
-set motor_output_limit = 90
+set motor_output_limit = 100
 set launch_control_mode = NORMAL
 set thrust_linear = 20
 set feedforward_averaging = OFF
 set feedforward_smooth_factor = 30
 set feedforward_jitter_factor = 9
-set dyn_idle_min_rpm = 60
+set dyn_idle_min_rpm = 100
 set simplified_pids_mode = RP
-set simplified_master_multiplier = 120
 set simplified_i_gain = 80
 set simplified_d_gain = 120
 set simplified_d_max_gain = 80
