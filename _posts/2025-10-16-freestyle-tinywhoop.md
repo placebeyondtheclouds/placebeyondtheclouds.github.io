@@ -37,19 +37,16 @@ batteries: batches of 高能 (GNB) 100C 550mAh LiHV 1S A30 and 格氏 (Tattu) 95
 ## pictures
 
 
-| - | - |
-| ![1](/assets/images/rebuild01.jpg) | ![2](/assets/images/rebuild02.jpg) |
-| - | - |
-| ![3](/assets/images/rebuild03.jpg) | ![4](/assets/images/rebuild04.jpg) |
-| - | - |
-| ![5](/assets/images/rebuild05.jpg) |  ![6](/assets/images/rebuild06.jpg) |
-| - | - |
-| ![7](/assets/images/rebuild07.jpg) | ![8](/assets/images/rebuild08.jpg) |
-| - | - |
-| ![9](/assets/images/rebuild09.jpg) | ![10](/assets/images/rebuild10.jpg) |
-| - | - |
-| ![11](/assets/images/rebuild11.jpg) | ![12](/assets/images/rebuild12.jpg) |
-
+| - | - | - |
+| ![1](/assets/images/rebuild01.jpg) | ![2](/assets/images/rebuild02.jpg) |![3](/assets/images/rebuild03.jpg) |
+| - | - | - |
+|  ![4](/assets/images/rebuild04.jpg) |![5](/assets/images/rebuild05.jpg) |  ![6](/assets/images/rebuild06.jpg) |
+| - | - | - |
+| ![7](/assets/images/rebuild07.jpg) | ![8](/assets/images/rebuild08.jpg) | ![9](/assets/images/rebuild09.jpg) |
+| - | - | - |
+| ![10](/assets/images/rebuild10.jpg) |![11](/assets/images/rebuild11.jpg) | ![12](/assets/images/rebuild12.jpg) |
+| - | - | - |
+| ![13](/assets/images/rebuild13.jpg) | ![14](/assets/images/rebuild14.jpg) |![15](/assets/images/rebuild15.jpg) |
 
 ## the process
 
@@ -186,7 +183,7 @@ aux 7 35 2 1925 2100 0 0
 
 - ZENCHANSI 棕熊 W007 400mw vtx. 
 
-> not using
+> not using 
 {: .prompt-warning }
 
 it uses smartaudio 2.1 protocol, so the power values will be in dBm. BF CLI has the command `vtx_info` to show the power levels that the VTX supports
@@ -230,7 +227,44 @@ vtxtable powervalues 14 23 26
 vtxtable powerlabels 25 200 400
 ```
 
--  VTX setup is **exactly** the same as with [this quad]({% post_url 2025-11-13-mobula8-runcam %}) 
+-  HGLRC Zeus nano 350mw [vtxtable](https://www.rotorama.cz/cms/assets/docs/d0c22322f24f3bf72e2e66bab648f238/13272-1/zeus-nano-350mw-vtx.json). [review.](https://www.multirotorguide.com/reviews/review-hglrc-zeus-vtx-nano/)
+
+```
+vtxtable bands 5
+vtxtable channels 8
+vtxtable band 1 BOSCAM_A A CUSTOM  5865 5845 5825 5805 5785 5765 5745 5725
+vtxtable band 2 BOSCAM_B B CUSTOM  5733 5752 5771 5790 5809 5828 5847 5866
+vtxtable band 3 FATSHARK F CUSTOM  5740 5760 5780 5800 5820 5840 5860 5880
+vtxtable band 4 RACEBAND R CUSTOM  5658 5695 5732 5769 5806 5843 5880 5917
+vtxtable band 5 IMD6     I CUSTOM  5362 5399 5436 5473 5510 5547 5584 5621
+vtxtable powerlevels 4
+vtxtable powervalues 25 100 200 400
+vtxtable powerlabels 25 100 200 350
+```
+
+- vtx settings
+
+```
+set vtx_band = 4
+set vtx_channel = 8
+set vtx_power = 1
+set vtx_low_power_disarm = UNTIL_FIRST_ARM
+set vcd_video_system = PAL
+```
+
+- in-flight VTX power switching on a pot, used S2 (BF:aux4, radio:ch8). 0 means no change. `<index> <aux_channel> <vtx_band> <vtx_channel> <vtx_power> <start_range> <end_range>`.
+
+```
+vtx 0 3 0 0 1 900 1249
+vtx 1 3 0 0 2 1250 1499
+vtx 2 3 0 0 3 1500 1749
+vtx 3 3 0 0 4 1750 2100
+```
+
+the radio reporting current VTX power level with audio messages can be set up like this: 
+
+| - | - | - |
+| ![29](/assets/images/not-mobula8-29.png) |   ![30](/assets/images/not-mobula8-30.png) | ![34](/assets/images/not-mobula8-34.png) |
 
 - PIDs
 
