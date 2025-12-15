@@ -388,36 +388,34 @@ set iterm_windup = 85
 set pidsum_limit = 1000
 set pidsum_limit_yaw = 1000
 set throttle_boost = 0
-set p_pitch = 62
-set i_pitch = 110
-set d_pitch = 53
-set f_pitch = 164
-set p_roll = 49
-set i_roll = 88
-set d_roll = 39
-set f_roll = 132
-set p_yaw = 49
-set i_yaw = 88
+set p_pitch = 67
+set i_pitch = 96
+set d_pitch = 58
+set f_pitch = 179
+set p_roll = 53
+set i_roll = 76
+set d_roll = 43
+set f_roll = 143
+set p_yaw = 80
 set f_yaw = 132
-set d_max_roll = 43
-set d_max_pitch = 59
+set d_max_roll = 54
+set d_max_pitch = 75
 set d_max_advance = 0
 set motor_output_limit = 90
-set auto_profile_cell_count = -1
 set launch_control_mode = NORMAL
 set thrust_linear = 20
 set feedforward_averaging = OFF
 set feedforward_smooth_factor = 30
 set feedforward_jitter_factor = 9
 set dyn_idle_min_rpm = 60
-set simplified_master_multiplier = 110
+set simplified_pids_mode = RP
+set simplified_master_multiplier = 120
+set simplified_i_gain = 80
 set simplified_d_gain = 120
-set simplified_d_max_gain = 30
+set simplified_d_max_gain = 80
 set simplified_pitch_d_gain = 120
 set simplified_pitch_pi_gain = 120
 set simplified_dterm_filter_multiplier = 110
-
-profile 2
 ```
 
 and [use master multiplier](https://www.youtube.com/watch?v=u74tDug6lpc) to adjust overall aggressiveness (sluggish, unpredictable <==> twitchy, motor heat, motor noise).
