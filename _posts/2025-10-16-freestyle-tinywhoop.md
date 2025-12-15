@@ -7,7 +7,7 @@ category: tutorial
 published: true
 ---
 
-I damaged ESC #2 on the 1S Matrix AIO (Meteor75 Pro), either by running a motor with damaged windings or from a voltage spike in a crash. It's overheating, not giving full power to the motor, and the video feed has white washouts during high throttle. So I'm replacing the AIO with JHEMCU G474ELRS and HGLRC Zeuz nano 350mw VTX. Update: the ELRS receiver on the AIO died after a week or so. Update: using another VTX (ZENCHANSI 棕熊 W007 400mw) until I solve the problem with the Zeus nano VTX table (very low output power on all frequences).
+I damaged ESC #2 on the 1S Matrix AIO (Meteor75 Pro), either by running a motor with damaged windings or from a voltage spike in a crash. It's overheating, not giving full power to the motor, and the video feed has white washouts during high throttle. So I'm replacing the AIO with JHEMCU G474ELRS and HGLRC Zeuz nano 350mw VTX. Update: the ELRS receiver on the AIO died after a week or so. ~~Update: using another VTX (ZENCHANSI 棕熊 W007 400mw) until I solve the problem with the Zeus nano VTX table (very low output power on all frequences).~~
 
 Meteor75 frame is scraping the battery and motor screws against the ground, so I am replacing it with a clone of Mobula7 but for 45mm props (80mm base and 47mm ducts instead of 75mm and 43mm). It has 2S battery tray, and with 1S battery the whoop will land on the lower part of the frame without the battery or motor screws touching the ground. Another solution to the problem would be keep the meteor75pro frame and printing [the battery bumper](https://www.thingiverse.com/thing:7056235). At first, I tried to pad the battery with foam, but it didn't help much.
 
