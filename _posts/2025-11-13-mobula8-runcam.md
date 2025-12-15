@@ -19,7 +19,7 @@ Here's how I built a cinewhoop using Mobula8 frame and Runcam Thumb 2 (codename 
 - ND filters are easy to lose in a crash (lost one ND8, 30元)
 - ~~it seems like the Runcam camera reads (sometimes?) date and time from the flight controller~~ no, it takes the time from the QR code
 - tried to use 3S with `set motor_output_limit = 60`, burned those the 1103 15000KV motors right after takeoff.
-- replaced the motors with **Happymodel EX1103 11000KV 2S**, at `set motor_output_limit = 80` there is no more voltage sag, the problem was with the generic motors not suitable for a quad this heavy (or them being close to 1S rather than 2S) and drawing too much current. the current dropped from 4.5A@34% to 3A@41%. probably can set the limit to 100, although not really needed because it gives me enough thrust even at 80%. `set motor_output_limit = 90` also works without FC restarts.
+- replaced the motors with **Happymodel EX1103 11000KV 2S**, at `set motor_output_limit = 80` there is no more voltage sag, the problem was with the generic motors not suitable for a quad this heavy (or them being close to 1S rather than 2S) and drawing too much current. the current dropped from 4.5A@34% to 3A@41%. `set motor_output_limit = 100` also works without FC restarts.
 - got motor desync event at 15 degrees timing, moved ESCs back to 22.5 degrees
 - flight time at 96kHz PWM, 22.5 degrees motor timing, 90% motor limit, outside temperature around 0 degrees celsius, two LiHV 550mah 100C A30 batteries in series: around 2 minutes down to 3.3v
 
@@ -312,13 +312,13 @@ set pidsum_limit = 1000
 set pidsum_limit_yaw = 1000
 set throttle_boost = 0
 set d_max_advance = 0
-set motor_output_limit = 100
 set launch_control_mode = NORMAL
 set thrust_linear = 20
 set feedforward_averaging = OFF
 set feedforward_smooth_factor = 30
 set feedforward_jitter_factor = 9
 set dyn_idle_min_rpm = 100
+set simplified_dterm_filter = OFF
 set simplified_dterm_filter_multiplier = 110
 
 profile 1
@@ -349,7 +349,6 @@ set d_roll = 35
 set d_max_roll = 35
 set d_max_pitch = 48
 set d_max_advance = 0
-set motor_output_limit = 100
 set launch_control_mode = NORMAL
 set thrust_linear = 20
 set feedforward_averaging = OFF
@@ -360,6 +359,7 @@ set simplified_d_gain = 120
 set simplified_d_max_gain = 0
 set simplified_pitch_d_gain = 120
 set simplified_pitch_pi_gain = 120
+set simplified_dterm_filter = OFF
 set simplified_dterm_filter_multiplier = 110
 
 
@@ -394,7 +394,6 @@ set f_yaw = 132
 set d_max_roll = 45
 set d_max_pitch = 62
 set d_max_advance = 0
-set motor_output_limit = 100
 set launch_control_mode = NORMAL
 set thrust_linear = 20
 set feedforward_averaging = OFF
@@ -407,6 +406,7 @@ set simplified_d_gain = 120
 set simplified_d_max_gain = 80
 set simplified_pitch_d_gain = 120
 set simplified_pitch_pi_gain = 120
+set simplified_dterm_filter = OFF
 set simplified_dterm_filter_multiplier = 110
 ```
 
@@ -426,16 +426,23 @@ set pitch_srate = 90
 set yaw_srate = 90
 ```
 
-- filters, [gyro low pass 2 can be disabled](https://youtu.be/E3s5XYk3M74?si=tRDyE5hmXNsq65gD&t=344) because the PID loop frequency is equal to the gyro update rate (8KHz), there is no antialiasing needed. also set these parameters to be profile-independent (`simplified_gyro_filter`):
+- filters, [gyro low pass 2 can be disabled](https://youtu.be/E3s5XYk3M74?si=tRDyE5hmXNsq65gD&t=344) because the PID loop frequency is equal to the gyro update rate (8KHz), there is no antialiasing needed. also set these parameters to be profile-independent (`set simplified_gyro_filter = ON` and `set simplified_dterm_filter = OFF`):
 
 ```
 set rpm_filter_weights = 100,20,20
 set rpm_filter_min_hz = 120
 set rpm_filter_fade_range_hz = 0
+
 set simplified_gyro_filter = ON
 set gyro_lpf1_static_hz = 0
 set gyro_lpf2_static_hz = 0
 set gyro_lpf1_dyn_min_hz = 0
+
+set simplified_dterm_filter = OFF
+set dterm_lpf1_dyn_min_hz = 82
+set dterm_lpf1_dyn_max_hz = 165
+set dterm_lpf1_static_hz = 82
+set dterm_lpf2_static_hz = 165
 ```
 
 - motors (important) and battery:
