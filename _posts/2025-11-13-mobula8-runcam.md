@@ -72,11 +72,11 @@ Here's how I built a cinewhoop using Mobula8 frame and Runcam Thumb 2 (codename 
 - 3 M1.4x5 or M1.4x7 screws (with coarse thread for plastic). there is [a mount to use with FPV camera](https://www.thingiverse.com/thing:6090638) that would lift the runcam higher above the frame. I used `Removable_V2_BlueJay_Canopy_with_Thumb_Pro.stl` from that thing and the top part of [the original Runcam Thumb 2 mount](https://www.thingiverse.com/thing:6807624). 
 - ~~generic 1103 15000KV 2S (3 hole M1.4 base with 6mm distance, same as the betafpv 1102 motors) or better, more expensive motors like `DarwinFPV bling 1103 8000KV`, `Happymodel EX1103 11000KV`, `sparkhobby xspeed 1103 8500KV`~~
 - ‌衢州市云端智能科技 (Happymodel) [EX1103 11000KV 2S](https://www.happymodel.cn/index.php/2022/09/05/bassline-spare-part-ex1103-kv11000-brushless-motor/) motors
-- ~~8 M2x6 machine screws for the props~~ (optional)
+- ~~8 M2x7 machine screws for the props~~ (optional)
 - ~~12 M1.4x4 machine screws for the motors~~ (came with the motors)
 - 津航电子 (JHEMCU) [GHF435AIO](https://www.jhemcu.com/e_productshow/?84-JHEMCU-GHF435AIO-2-4S-20A-w-Built-in-24G-ELRSIPEXSMD-84.html) V2 - 25mm mount, 2-4s, 4 UARTS, 20A Bluejay DSHOT600 ESCs, ArteryTek AT32F435: 288MHz core 1MB flash 384KB RAM, BETAFPV 2.4GHz Lite RX (serial) IPEX gen1, 16MB blackbox, ICM-42688 IMU, AT7656E OSD
 - 衢州市云端智能科技 (Happymodel) [5.8G Crown LDS antenna RHCP](https://www.happymodel.cn/index.php/2025/08/07/happymodel-5-8g-crown-lds-antenna-rhcp-lhcp-for-micro-fpv-whoops/), [3.5dBi, 5500-6000MHz](https://www.happymodel.cn/wp-content/uploads/2025/08/5.8G-Crown-antenna-RHCP-testing-data.xls.pdf), IPEX gen1
-- 化骨龙航模 (HGLRC) [Zeuz nano 350mw VTX](https://hglrc.freshdesk.com/support/solutions/articles/61000307667-zeus-350mw-vtx)
+- 化骨龙航模 (HGLRC) [Zeuz nano 350mw VTX](https://hglrc.freshdesk.com/support/solutions/articles/61000307667-zeus-350mw-vtx). [review](https://www.multirotorguide.com/reviews/review-hglrc-zeus-vtx-nano/).
 - two A30 female connectors (because I will use pairs of 1S batteries with A30 connectors, connected in series)
 - heatshrink, 2mm zip ties, 18AWG wires for the battery lead
 - batteries: pairs of 高能 (GNB) 100C 550mAh LiHV 1S A30 (18mmX6mmX66mm) in series
@@ -250,7 +250,7 @@ servo 0 1000 2000 1500 100 8
 
 this maps LED_STRIP pad resource to the first servo. mode value 2000 on the channel sets LED_STRIP pad to HIGH (3.3V). this will tell the video channel switcher to switch to VIDEO2 (runcam). the other state is LOW, which means the fpv camera will be connected to the FC by default.
 
--  HGLRC Zeus nano 350mw [vtxtable](https://www.rotorama.cz/cms/assets/docs/d0c22322f24f3bf72e2e66bab648f238/13272-1/zeus-nano-350mw-vtx.json). [review.](https://www.multirotorguide.com/reviews/review-hglrc-zeus-vtx-nano/)
+-  HGLRC Zeus nano 350mw [vtxtable](https://www.rotorama.cz/cms/assets/docs/d0c22322f24f3bf72e2e66bab648f238/13272-1/zeus-nano-350mw-vtx.json).
 
 ```
 vtxtable bands 5

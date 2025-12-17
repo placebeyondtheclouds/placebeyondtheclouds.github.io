@@ -26,7 +26,7 @@ batteries: batches of 高能 (GNB) 100C 550mAh LiHV 1S A30 and 格氏 (Tattu) 95
 - 卡德克斯技术 (Caddx) Ant lite (f/2.5 lens). Update: swapped to Caddx Ant (f/1.2 lens), not in the pictures
 - Mobula7 frame (80mm clone) - 45mm props, 80mm base, 47mm ducts
 - ~~ZENCHANSI 棕熊 W007 400mw vtx~~
-- 化骨龙航模 (HGLRC) [Zeuz nano 350mw VTX](https://hglrc.freshdesk.com/support/solutions/articles/61000307667-zeus-350mw-vtx)
+- 化骨龙航模 (HGLRC) [Zeuz nano 350mw VTX](https://hglrc.freshdesk.com/support/solutions/articles/61000307667-zeus-350mw-vtx). [review](https://www.multirotorguide.com/reviews/review-hglrc-zeus-vtx-nano/).
 - 哈鸣科技 (BETAFPV) 1102 22000kv motors (left from Meteor75 Pro)
 - 乾丰 (gemfan) 45mm-3 props (1.5mm shaft)
 - 220uF 16v capacitor
