@@ -19,9 +19,14 @@ Here's how I built a cinewhoop using Mobula8 frame and Runcam Thumb 2 (codename 
 - ND filters are easy to lose in a crash (lost one ND8, 30元)
 - ~~it seems like the Runcam camera reads (sometimes?) date and time from the flight controller~~ no, it takes the time from the QR code
 - tried to use 3S with `set motor_output_limit = 60`, burned those the 1103 15000KV motors right after takeoff.
-- replaced the motors with **Happymodel EX1103 11000KV 2S**, at `set motor_output_limit = 80` there is no more voltage sag, the problem was with the generic motors not suitable for a quad this heavy (or them being close to 1S rather than 2S) and drawing too much current. the current dropped from 4.5A@34% to 3A@41%. `set motor_output_limit = 100` also works without FC restarts.
+- replaced the motors with **Happymodel EX1103 11000KV 2S**, at `set motor_output_limit = 80` there is no more voltage sag, the problem was with the generic motors not suitable for a quad this heavy (or them being close to 1S rather than 2S) and drawing too much current. the current dropped from 4.5A@34% to 3A@41% (at `ibata_scale = 400`). `set motor_output_limit = 100` also works without FC restarts.
 - got motor desync event at 15 degrees timing, moved ESCs back to 22.5 degrees
 - flight time at 96kHz PWM, 22.5 degrees motor timing, 90% motor limit, outside temperature around 0 degrees celsius, two LiHV 550mah 100C A30 batteries in series: around 2 minutes down to 3.3v
+
+## update 2: transplant
+
+- transplanting everything into a carbon fiber frame [AstroRC Carbonfly 80 (薯片80) frame](https://astrorc.net/products/astrorc-carbonfly-80-1-8inch-frame-o4-version). [official frame assembly tutorial](https://www.youtube.com/watch?v=75qipfHU6d8)
+- dry weight: 95.6 grams, with batteries: 121.8 grams
 
 ## todo
 
@@ -135,7 +140,7 @@ UART5: VTX (IRC Tramp)
 - Caddx Ant camera settings (using OSD menu board): AE mode to BLC=3, brightness=35, contrast auto, saturation manual=20
 
 
-## radio setup
+## radio/modes setup
 
 - ADC Filter OFF
 - send radio's RTC data to the flight controller to have correct time in blackbox files and on the OSD: go to special functions, add `ON Lua bfbkgd On` and turn the checkmark on
@@ -147,7 +152,7 @@ UART5: VTX (IRC Tramp)
 - ch10, SW6 toggle - Runcam button
 - CH11 SW3 toggle (aux7) blackbox erase
 - CH12 SW2 2pos (aux8) blackbox
-- add special functions with playtrk `vtx` to SW6
+- add special function `SW6 playtrk vtx`
 
 ## ESCs configuration
 - [ESC Configurator](https://esc-configurator.com/) or [run it locally]({% post_url 2025-11-23-bf-local %})
@@ -194,7 +199,7 @@ serial UART3 16384 115200 57600 0 115200
 serial UART5 8192 115200 57600 0 115200
 ```
 
-- need to [adjust](https://oscarliang.com/current-sensor-calibration/) the current sensor calibration value later
+- [adjust](https://oscarliang.com/current-sensor-calibration/) the current sensor calibration value
 
 ```
 set ibata_scale = 400
@@ -248,7 +253,7 @@ set servo_pwm_rate = 50
 servo 0 1000 2000 1500 100 8
 ```
 
-this maps LED_STRIP pad resource to the first servo. mode value 2000 on the channel sets LED_STRIP pad to HIGH (3.3V). this will tell the video channel switcher to switch to VIDEO2 (runcam). the other state is LOW, which means the fpv camera will be connected to the FC by default.
+this maps LED_STRIP pad resource to the first servo. servo0 is activated with AUX5 (`8` here, count from 1 with 1-4 being the stick axes, 5 being AUX1 and so on). mode value 2000 on the CH10 (toggle on the radio) sets LED_STRIP pad to HIGH (3.3V). this will tell the video channel switcher to switch to VIDEO2 (runcam). the other state is LOW, which means the fpv camera (VIDEO1) will be connected to the FC by default.
 
 -  HGLRC Zeus nano 350mw [vtxtable](https://www.rotorama.cz/cms/assets/docs/d0c22322f24f3bf72e2e66bab648f238/13272-1/zeus-nano-350mw-vtx.json).
 
@@ -289,143 +294,6 @@ the radio reporting current VTX power level with audio messages can be set up li
 | - | - | - |
 | ![29](/assets/images/not-mobula8-29.png) |   ![30](/assets/images/not-mobula8-30.png) | ![34](/assets/images/not-mobula8-34.png) |
 
-- PIDs. dynamic idle value is based on the prop size/pitch, [here](https://oscarliang.com/how-to-enable-and-configure-betaflight-dynamic-idle/) and [here](https://youtu.be/1oYoVE4xu1U?si=yH7NVtL8CJaB1tvT&t=798)
-
-```
-profile 0
-
-# profile 0
-set profile_name = default
-set dterm_lpf1_dyn_min_hz = 82
-set dterm_lpf1_dyn_max_hz = 165
-set dterm_lpf1_static_hz = 82
-set dterm_lpf2_static_hz = 165
-set vbat_sag_compensation = 100
-set anti_gravity_gain = 40
-set crash_dthreshold = 80
-set crash_gthreshold = 600
-set crash_setpoint_threshold = 500
-set crash_recovery_rate = 150
-set crash_recovery = ON
-set iterm_relax_type = GYRO
-set iterm_windup = 85
-set pidsum_limit = 1000
-set pidsum_limit_yaw = 1000
-set throttle_boost = 0
-set d_max_advance = 0
-set launch_control_mode = NORMAL
-set thrust_linear = 20
-set feedforward_averaging = OFF
-set feedforward_smooth_factor = 30
-set feedforward_jitter_factor = 9
-set dyn_idle_min_rpm = 100
-set simplified_dterm_filter = OFF
-set simplified_dterm_filter_multiplier = 110
-
-profile 1
-
-# profile 1
-set profile_name = m.mult
-set dterm_lpf1_dyn_min_hz = 82
-set dterm_lpf1_dyn_max_hz = 165
-set dterm_lpf1_static_hz = 82
-set dterm_lpf2_static_hz = 165
-set vbat_sag_compensation = 100
-set anti_gravity_gain = 40
-set crash_dthreshold = 80
-set crash_gthreshold = 600
-set crash_setpoint_threshold = 500
-set crash_recovery_rate = 150
-set crash_recovery = ON
-set iterm_relax_type = GYRO
-set iterm_windup = 85
-set pidsum_limit = 1000
-set pidsum_limit_yaw = 1000
-set throttle_boost = 0
-set p_pitch = 56
-set i_pitch = 100
-set d_pitch = 48
-set f_pitch = 149
-set d_roll = 35
-set d_max_roll = 35
-set d_max_pitch = 48
-set d_max_advance = 0
-set launch_control_mode = NORMAL
-set thrust_linear = 20
-set feedforward_averaging = OFF
-set feedforward_smooth_factor = 30
-set feedforward_jitter_factor = 9
-set dyn_idle_min_rpm = 100
-set simplified_d_gain = 120
-set simplified_d_max_gain = 0
-set simplified_pitch_d_gain = 120
-set simplified_pitch_pi_gain = 120
-set simplified_dterm_filter = OFF
-set simplified_dterm_filter_multiplier = 110
-
-
-profile 2
-
-# profile 2
-set profile_name = test
-set dterm_lpf1_dyn_min_hz = 82
-set dterm_lpf1_dyn_max_hz = 165
-set dterm_lpf1_static_hz = 82
-set dterm_lpf2_static_hz = 165
-set vbat_sag_compensation = 100
-set anti_gravity_gain = 40
-set crash_dthreshold = 80
-set crash_gthreshold = 600
-set crash_setpoint_threshold = 500
-set crash_recovery_rate = 150
-set crash_recovery = ON
-set iterm_relax_type = GYRO
-set iterm_windup = 85
-set pidsum_limit = 1000
-set pidsum_limit_yaw = 1000
-set throttle_boost = 0
-set p_pitch = 56
-set i_pitch = 80
-set d_pitch = 48
-set f_pitch = 149
-set i_roll = 63
-set d_roll = 35
-set p_yaw = 80
-set f_yaw = 132
-set d_max_roll = 45
-set d_max_pitch = 62
-set d_max_advance = 0
-set launch_control_mode = NORMAL
-set thrust_linear = 20
-set feedforward_averaging = OFF
-set feedforward_smooth_factor = 30
-set feedforward_jitter_factor = 9
-set dyn_idle_min_rpm = 100
-set simplified_pids_mode = RP
-set simplified_i_gain = 80
-set simplified_d_gain = 120
-set simplified_d_max_gain = 80
-set simplified_pitch_d_gain = 120
-set simplified_pitch_pi_gain = 120
-set simplified_dterm_filter = OFF
-set simplified_dterm_filter_multiplier = 110
-```
-
-and [use master multiplier](https://www.youtube.com/watch?v=u74tDug6lpc) to adjust overall aggressiveness (sluggish, unpredictable <==> twitchy, motor heat, motor noise).
-
-- rates 
-
-```
-rateprofile 0
-
-set rateprofile_name = sasha
-set roll_rc_rate = 16
-set pitch_rc_rate = 16
-set yaw_rc_rate = 16
-set roll_srate = 90
-set pitch_srate = 90
-set yaw_srate = 90
-```
 
 - filters, [gyro low pass 2 can be disabled](https://youtu.be/E3s5XYk3M74?si=tRDyE5hmXNsq65gD&t=344) because the PID loop frequency is equal to the gyro update rate (8KHz), there is no antialiasing needed. also set these parameters to be profile-independent (`set simplified_gyro_filter = ON` and `set simplified_dterm_filter = OFF`):
 
@@ -445,6 +313,75 @@ set dterm_lpf1_dyn_max_hz = 165
 set dterm_lpf1_static_hz = 82
 set dterm_lpf2_static_hz = 165
 ```
+
+- PIDs. dynamic idle value is based on the prop size/pitch, [here](https://oscarliang.com/how-to-enable-and-configure-betaflight-dynamic-idle/) and [here](https://youtu.be/1oYoVE4xu1U?si=yH7NVtL8CJaB1tvT&t=798)
+
+```
+profile 2
+
+# profile 2
+set profile_name = nm8
+set dterm_lpf1_dyn_min_hz = 82
+set dterm_lpf1_dyn_max_hz = 165
+set dterm_lpf1_static_hz = 82
+set dterm_lpf2_static_hz = 165
+set vbat_sag_compensation = 100
+set anti_gravity_gain = 40
+set crash_dthreshold = 80
+set crash_gthreshold = 600
+set crash_setpoint_threshold = 500
+set crash_recovery_rate = 150
+set crash_recovery = ON
+set iterm_relax_type = GYRO
+set iterm_windup = 85
+set pidsum_limit = 1000
+set pidsum_limit_yaw = 1000
+set throttle_boost = 0
+set p_pitch = 56
+set i_pitch = 80
+set d_pitch = 48
+set f_pitch = 89
+set i_roll = 63
+set d_roll = 35
+set f_roll = 71
+set i_yaw = 63
+set f_yaw = 71
+set d_max_roll = 35
+set d_max_pitch = 48
+set d_max_advance = 0
+set launch_control_mode = NORMAL
+set thrust_linear = 20
+set feedforward_averaging = OFF
+set feedforward_smooth_factor = 30
+set feedforward_jitter_factor = 9
+set dyn_idle_min_rpm = 100
+set simplified_i_gain = 80
+set simplified_d_gain = 120
+set simplified_d_max_gain = 0
+set simplified_feedforward_gain = 60
+set simplified_pitch_d_gain = 120
+set simplified_pitch_pi_gain = 120
+set simplified_dterm_filter = OFF
+set simplified_dterm_filter_multiplier = 110
+```
+
+[use master multiplier](https://www.youtube.com/watch?v=u74tDug6lpc) to adjust overall aggressiveness (sluggish, unpredictable <==> twitchy, motor heat, motor noise).
+
+- rates 
+
+```
+rateprofile 0
+
+set rateprofile_name = sasha
+set roll_rc_rate = 16
+set pitch_rc_rate = 16
+set yaw_rc_rate = 16
+set roll_srate = 90
+set pitch_srate = 90
+set yaw_srate = 90
+```
+
+
 
 - motors (important) and battery:
 
@@ -629,12 +566,30 @@ I set `debug_mode = BATTERY` midway through the build to debug the voltage sag p
 save
 ```
 
+
 ## runcam configuration 
 
 - [update the firmware](https://www.runcam.com/download/thumb2/) to `1.2.2`
 - QR code: set the camera to power on automatically when it receives power, but manual start of recording. set to use gyro, no geometry correction, 4:3 4K 30FPS, PAL, daylight white balance, shutter 1/60, ISO manual, saturation 3, contrast 1, sharpness 1. use ISO and ND filters to adjust exposure. stop recording before cutting the power
 - [gyroflow best practices for older cameras, does not directly apply to thumb2](https://docs.gyroflow.xyz/app/getting-started/supported-cameras/runcam)
 - [lens profile](https://github.com/gyroflow/lens_profiles/blob/main/RunCam/Runcam_Thumb2_4by3.json) for Gyroflow
+
+## changes after transplanting into AstroRC Carbonfly 80 frame
+
+- the board is installed upside down in this frame
+
+```
+set align_board_roll = 180
+set align_board_yaw = 45
+```
+
+- reorder the motors. they are in pusher props out configuration
+
+```
+set motor_output_reordering = 2,3,0,1,4,5,6,7
+```
+
+- 2023 props are too big for this frame, I had to switch to Gemfan 45mm-3. will also try 2023 props with shims between the motors and the frame and longer bolts
 
 ## references
 - https://jhemcu.work:6/sharing/3c1SjKuS9
