@@ -8,7 +8,7 @@ published: true
 ---
 
 
-Here's how I built a cinewhoop using Mobula8 frame and Runcam Thumb 2 (codename `not mobula8`). I decided to build it on a FC with fast modern MCU from [ArteryTek](https://oscarliang.com/at32-flight-controllers/) and new industry standard gyro [ICM42688P](https://invensense.tdk.com/wp-content/uploads/2022/12/DS-000347-ICM-42688-P-v1.7.pdf). the Runcam camera will act as ~~both the fpv camera and~~ the 4K cine camera. having a live `preview` in the goggles is super convenient for dialing in Runcam's manual exposure settings. highlights of the build: live switching between the cameras, Runcam camera control from the radio, VTX power level adjustment on a pot, turtle mode without arming, RHCP antenna for VTX, whip-style antenna for RX, low esr capacitor.
+Here's how I built a cinewhoop using Mobula8 frame and Runcam Thumb 2 (codename `not mobula8`). I decided to build it on a FC with fast modern MCU from [ArteryTek](https://oscarliang.com/at32-flight-controllers/) and new industry standard gyro [ICM42688P](https://invensense.tdk.com/wp-content/uploads/2022/12/DS-000347-ICM-42688-P-v1.7.pdf). the Runcam camera will act as ~~both the fpv camera and~~ the 4K cine camera. having a live `preview` in the goggles is super convenient for dialing in Runcam's manual exposure settings. also useful to checking if I lost the action camera in a crash or not. **highlights of the build**: live switching between the cameras, Runcam camera control from the radio, VTX power level adjustment on a pot, turtle mode without arming, RHCP antenna for VTX, whip-style antenna for RX, low esr capacitor.
 
 ## results and updates
 
@@ -25,7 +25,7 @@ Here's how I built a cinewhoop using Mobula8 frame and Runcam Thumb 2 (codename 
 
 ## update 2: transplant
 
-- transplanting everything into a carbon fiber frame [AstroRC Carbonfly 80 (薯片80) frame](https://astrorc.net/products/astrorc-carbonfly-80-1-8inch-frame-o4-version). [official frame assembly tutorial](https://www.youtube.com/watch?v=75qipfHU6d8)
+- transplanting everything into a carbon fiber frame [AstroRC Carbonfly 80 (薯片80) frame](https://astrorc.net/products/astrorc-carbonfly-80-1-8inch-frame-o4-version). [AstroRC official frame assembly tutorial](https://www.youtube.com/watch?v=75qipfHU6d8)
 - dry weight: 95.6 grams, with batteries: 121.8 grams
 
 ## todo
@@ -41,7 +41,7 @@ Here's how I built a cinewhoop using Mobula8 frame and Runcam Thumb 2 (codename 
 
 
 
-## pictures
+## pictures (mobula8 frame)
 
 | - | - | - |
 | ![1](/assets/images/not-mobula8-01.jpg) | ![2](/assets/images/not-mobula8-02.jpg) |![2](/assets/images/not-mobula8-03.jpg) |
@@ -68,8 +68,12 @@ Here's how I built a cinewhoop using Mobula8 frame and Runcam Thumb 2 (codename 
 | - | - | - |
 | ![32](/assets/images/not-mobula8-32.png) |   ![33](/assets/images/not-mobula8-33.png) | - |
 
+## pictures (carbonfly80 frame)
 
-## parts list
+- [AstroRC Carbonfly 80 (薯片80) frame](https://astrorc.net/products/astrorc-carbonfly-80-1-8inch-frame-o4-version)
+- 乾丰 (gemfan) 45mm-3 props (1.5mm shaft)
+
+## parts list (mobula8 frame)
 - [motor size / motor kv / battery size / prop size lookup table](https://oscarliang.com/table-prop-motor-lipo-weight/)
 - ‌衢州市云端智能科技 (Happymodel) [Mobula8 2inch frame](https://www.happymodel.cn/index.php/2023/04/28/mobula8-frame-85mm-brushless-whoop-frame/)
 - props 乾丰 (Gemfan) 2023 2inch 3-blade (1.5mm shaft)
@@ -88,6 +92,8 @@ Here's how I built a cinewhoop using Mobula8 frame and Runcam Thumb 2 (codename 
 - 飞翼创新 FOXEER FP1112 video source switcher
 - 卡德克斯技术 CADDXFPV Ant (f/1.2 lens) camera
 - 5V 2A(continuous) 3A(spike) UBEC (input: 6.5-28V) for the Runcam
+
+## parts list (carbonfly 80 frame)
 
 ## wiring and assembly
 
@@ -588,6 +594,8 @@ set align_board_yaw = 45
 ```
 set motor_output_reordering = 2,3,0,1,4,5,6,7
 ```
+
+
 
 - 2023 props are too big for this frame, I had to switch to Gemfan 45mm-3. will also try 2023 props with shims between the motors and the frame and longer bolts
 
