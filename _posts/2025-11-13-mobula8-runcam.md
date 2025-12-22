@@ -10,9 +10,9 @@ published: true
 
 Here's how I built a cinewhoop using Mobula8 frame and Runcam Thumb 2 (codename `not mobula8`). I decided to build it on a FC with fast modern MCU from [ArteryTek](https://oscarliang.com/at32-flight-controllers/) and new industry standard gyro [ICM42688P](https://invensense.tdk.com/wp-content/uploads/2022/12/DS-000347-ICM-42688-P-v1.7.pdf). the Runcam camera will act as ~~both the fpv camera and~~ the 4K cine camera. having a live `preview` in the goggles is super convenient for dialing in Runcam's manual exposure settings. also useful for checking if I lost the action camera in a crash or not. **highlights of the build**: live switching between the cameras, Runcam camera recording start/stop from the radio, VTX power level adjustment on a pot, turtle mode without arming, RHCP antenna for VTX, whip-style antenna for RX, low esr capacitor.
 
-## results and updates
+## results and updates (mobula8 frame)
 
-- dry weight: 85.2g, with 550mah batteries: 111.4g
+- dry weight: 85.2g, with 550mah batteries: 111.4g. flight time 2 minutes (winter).
 - there is a significant delay in video from the Runcam camera, which makes it very difficult to fly, so I have to add an fpv camera and a video source switcher to still be able to view the preview of the runcam exposure in the goggles but fly with the regular fpv camera. the switcher is controlled with PWM by remapping LED_STRIP pad resource to a servo.
 - FC restarts because of a voltage sag caused by current spike caused by throttle bump or a crash (`crash_recovery = ON`). when FC restarts, camera comes back on but without video feed, last 10-20 seconds of video recording is lost, gyro data is lost completely. powering the camera not from the FCs onboard 5V but from the battery directly through a 5V BEC (to alleviate some load from the FC) did not solve the problem. `set motor_output_limit = 80` ~~seemd to help~~. ~~maybe just need to swap the two A30 for one XT30 and a proper 2S battery~~
 - the final part of the video and gyro data is lost if Runcam camera loses power before recording is stopped. if the camera is powered from the FC and the FC reboots, the camera loses power. powering the camera from the battery directly through the UBEC acts as a protection against that.
@@ -22,11 +22,12 @@ Here's how I built a cinewhoop using Mobula8 frame and Runcam Thumb 2 (codename 
 - replaced the motors with **Happymodel EX1103 11000KV 2S**, at `set motor_output_limit = 80` there is no more voltage sag, the problem was with the generic motors not suitable for a quad this heavy (or them being close to 1S rather than 2S) and drawing too much current. the current dropped from 4.5A@34% to 3A@41% (at `ibata_scale = 400`). `set motor_output_limit = 100` also works without FC restarts.
 - got motor desync event at 15 degrees timing, moved ESCs back to 22.5 degrees
 - flight time at 96kHz PWM, 22.5 degrees motor timing, 90% motor limit, outside temperature around 0 degrees celsius, two LiHV 550mah 100C A30 batteries in series: around 2 minutes down to 3.3v
+- the 5GHz antenna requires putting a heatshrink to the place where the cable is soldered to the antenna itself, otherwise the shielding gradually breaks and loses contact with the antenna
 
 ## update 2: transplant
 
-- transplanting everything into a carbon fiber frame [AstroRC Carbonfly 80 (薯片80) frame](https://astrorc.net/products/astrorc-carbonfly-80-1-8inch-frame-o4-version). [AstroRC official frame assembly tutorial](https://www.youtube.com/watch?v=75qipfHU6d8)
-- dry weight: 95.6 grams, with batteries: 121.8 grams
+- transplanting everything into a carbon fiber [AstroRC Carbonfly 80 (薯片80) frame](https://astrorc.net/products/astrorc-carbonfly-80-1-8inch-frame-o4-version). [AstroRC official frame assembly tutorial](https://www.youtube.com/watch?v=75qipfHU6d8), changing the props to gemfan 45mm-3 because 2023 do not fit into the frame without modifications (that will follow)
+- dry weight: 95.6 grams, with batteries: 121.8 grams. flight time 3 minutes (winter).
 
 ## todo
 
@@ -165,7 +166,6 @@ UART5: VTX (IRC Tramp)
 ## ESCs configuration
 - [ESC Configurator](https://esc-configurator.com/) or [run it locally]({% post_url 2025-11-23-bf-local %})
 
-- screenshot the original configuration
 - **connect the battery**, reflash bluejay, target `G-H-30`, PWM 96kHz
 
 ```
@@ -303,7 +303,7 @@ the radio reporting current VTX power level with audio messages can be set up li
 | ![29](/assets/images/not-mobula8-29.png) |   ![30](/assets/images/not-mobula8-30.png) | ![34](/assets/images/not-mobula8-34.png) |
 
 
-- filters, [gyro low pass 2 can be disabled](https://youtu.be/E3s5XYk3M74?si=tRDyE5hmXNsq65gD&t=344) because the PID loop frequency is equal to the gyro update rate (8KHz), there is no antialiasing needed. also set these parameters to be profile-independent (`set simplified_gyro_filter = ON` and `set simplified_dterm_filter = OFF`):
+- filters for mobula8 frame and gemfan 2023 props. [gyro low pass 2 can be disabled](https://youtu.be/E3s5XYk3M74?si=tRDyE5hmXNsq65gD&t=344) because the PID loop frequency is equal to the gyro update rate (8KHz), there is no antialiasing needed. also set these parameters to be profile-independent (`set simplified_gyro_filter = ON` and `set simplified_dterm_filter = OFF`):
 
 ```
 set rpm_filter_weights = 100,20,20
@@ -322,13 +322,20 @@ set dterm_lpf1_static_hz = 82
 set dterm_lpf2_static_hz = 165
 ```
 
+- filters for Carbonfly80 frame and gemfan 45mm-3 props
+
+```
+set rpm_filter_min_hz = 160
+set rpm_filter_fade_range_hz = 40
+```
+
 - PIDs. dynamic idle value is based on the prop size/pitch, [here](https://oscarliang.com/how-to-enable-and-configure-betaflight-dynamic-idle/) and [here](https://youtu.be/1oYoVE4xu1U?si=yH7NVtL8CJaB1tvT&t=798)
 
 ```
 profile 2
 
 # profile 2
-set profile_name = nm8
+set profile_name = mob8
 set dterm_lpf1_dyn_min_hz = 82
 set dterm_lpf1_dyn_max_hz = 165
 set dterm_lpf1_static_hz = 82
@@ -366,8 +373,50 @@ set dyn_idle_min_rpm = 100
 set simplified_i_gain = 80
 set simplified_d_gain = 120
 set simplified_d_max_gain = 0
-set simplified_feedforward_gain = 60
+set simplified_feedforward_gain = 80
 set simplified_pitch_d_gain = 120
+set simplified_pitch_pi_gain = 120
+set simplified_dterm_filter = OFF
+set simplified_dterm_filter_multiplier = 110
+
+profile 3
+
+# profile 3
+set profile_name = carbon80
+set dterm_lpf1_dyn_min_hz = 82
+set dterm_lpf1_dyn_max_hz = 165
+set dterm_lpf1_static_hz = 82
+set dterm_lpf2_static_hz = 165
+set vbat_sag_compensation = 100
+set anti_gravity_gain = 40
+set crash_dthreshold = 80
+set crash_gthreshold = 600
+set crash_setpoint_threshold = 500
+set crash_recovery_rate = 150
+set crash_recovery = ON
+set iterm_relax_type = GYRO
+set iterm_windup = 85
+set pidsum_limit = 1000
+set pidsum_limit_yaw = 1000
+set throttle_boost = 0
+set p_pitch = 56
+set i_pitch = 80
+set d_pitch = 44
+set f_pitch = 149
+set i_roll = 63
+set i_yaw = 63
+set d_max_roll = 30
+set d_max_pitch = 44
+set d_max_advance = 0
+set launch_control_mode = NORMAL
+set thrust_linear = 20
+set feedforward_averaging = OFF
+set feedforward_smooth_factor = 30
+set feedforward_jitter_factor = 9
+set dyn_idle_min_rpm = 100
+set simplified_i_gain = 80
+set simplified_d_max_gain = 0
+set simplified_pitch_d_gain = 130
 set simplified_pitch_pi_gain = 120
 set simplified_dterm_filter = OFF
 set simplified_dterm_filter_multiplier = 110
@@ -584,14 +633,14 @@ save
 
 ## changes after transplanting into AstroRC Carbonfly 80 frame
 
-- the board is installed upside down in this frame
+- the board is installed upside down in this frame. wrong alignment will trigger runaway protection on takeoff.
 
 ```
 set align_board_roll = 180
 set align_board_yaw = 45
 ```
 
-- reorder the motors. they are in pusher props out configuration
+- reorder the motors (do not touch the resources), set motors direction (using Betaflight wizard or directly in Bluejay). the motors are in pusher props out configuration
 
 ```
 set motor_output_reordering = 2,3,0,1,4,5,6,7
