@@ -102,38 +102,31 @@ Here's how I built a cinewhoop using Mobula8 frame and Runcam Thumb 2 (codename 
 
 - wiring diagrams for the FC are [here](https://jhemcu.work:6/sharing/3c1SjKuS9). 
 
-| wire color | GHF435AIO pad | Runcam Thumb 2 (type C pin) |  FOXEER FP1112 | 
-|------------|---------------|----------------------------|----------------|
-| purple      | RX3           | TX (A3)                 |           |
-| green      | TX3           | RX (A2)                  |           |
-| orange      | CAM           |                       | VIDEO OUT           |
-| green      | LED_STRIP       |                       | PWM           |
-
+| wire color | GHF435AIO pad | Runcam Thumb 2 (type C pin) |  FOXEER FP1112 |  Caddxfpv Ant |
+|------------|---------------|----------------------------|----------------|-------------|
+| purple      | RX3           | TX (A3)                 |                 |           |
+| green      | TX3           | RX (A2)                  |                 |           |
+| orange      | CAM           |                       | VIDEO OUT         |           |
+| green      | LED_STRIP       |                       | PWM              |           |
+| yellow      |              |         CVBS (A11)     | VIDEO 2        |           |
+| red          |             |                    | cam1 VCC        |     5V      |
+| black      |              |                    | cam1 GND        |    GND       |
+| yellow      |              |                   | VIDEO 1        |    VIDEO     |
+   
 
 | wire color | 2S 5V BEC | Runcam Thumb 2 (type C pin) | battery|
-|------------|---------------|----------------|-----------|
-| red        | 5V OUT            | 5V (A4,A9)         |   |
-| black      | GND OUT           | GND (A1,A12)       |   |
-| red        | 6.4-24V IN           |         |  + |
-| black      | GND IN           |           |  - |
-
-
-
-
-| wire color | FOXEER FP1112 | Caddxfpv Ant | Runcam Thumb 2 (type C pin) | 
 |------------|---------------|----------------|----------------|
-| red        | cam1 VCC          | 5V          |      |
-| black      | cam1 GND           | GND       |      |
-| yellow     | VIDEO 1           | VIDEO         |      |
-| yellow     | VIDEO 2       |           | CVBS (A11)
-
+| red        | 5V OUT            | 5V (A4 or A9)         |       |
+| black      | GND OUT           | GND (A1 or A12)       |       |
+| red        | 6.4-24V IN           |               |  +       |
+| black      | GND IN           |                   |  -       |
 
 
 | wire color | GHF435AIO pad | VTX pad |
 |------------|---------------|----------------|
 | red        | 5V            | 5V             |
 | black      | GND           | GND            |
-| yellow     | VTX           | video             |
+| yellow     | VTX           | video          |
 | purple     | TX5           | RX             |
 
 - use rosin-free flux paste and 63% tin soldering thread (melts at around 183 degrees), clean the board with isopropyl alcohol after soldering. apply `P-1025` conformal coating to the FC and VTX boards. add `Kafuter K-705` silicon sealant to the places where wires are soldered to the FC pads, U.FL connectors on FC and VTX. apply blue `Loctite-243` onto last threads of the motor screws.
@@ -497,7 +490,7 @@ set osd_rssi_pos = 6592
 set osd_link_quality_pos = 6629
 set osd_link_tx_power_pos = 6597
 set osd_rssi_dbm_pos = 6624
-set osd_rsnr_pos = 448
+set osd_rsnr_pos = 6560
 set osd_tim_1_pos = 385
 set osd_tim_2_pos = 14839
 set osd_remaining_time_estimate_pos = 4536
@@ -515,22 +508,22 @@ set osd_wh_drawn_pos = 341
 set osd_motor_diag_pos = 341
 set osd_craft_name_pos = 394
 set osd_pilot_name_pos = 341
-set osd_gps_speed_pos = 4323
+set osd_gps_speed_pos = 227
 set osd_gps_lon_pos = 17
 set osd_gps_lat_pos = 0
-set osd_gps_sats_pos = 6560
+set osd_gps_sats_pos = 6528
 set osd_home_dir_pos = 4206
 set osd_home_dist_pos = 4172
 set osd_flight_dist_pos = 407
 set osd_compass_bar_pos = 42
-set osd_altitude_pos = 20726
+set osd_altitude_pos = 16630
 set osd_pid_roll_pos = 341
 set osd_pid_pitch_pos = 341
 set osd_pid_yaw_pos = 341
-set osd_debug_pos = 4417
-set osd_debug2_pos = 4448
+set osd_debug_pos = 321
+set osd_debug2_pos = 352
 set osd_power_pos = 341
-set osd_pidrate_profile_pos = 341
+set osd_pidrate_profile_pos = 13
 set osd_warnings_pos = 14729
 set osd_avg_cell_voltage_pos = 14796
 set osd_pit_ang_pos = 341
@@ -538,9 +531,9 @@ set osd_rol_ang_pos = 341
 set osd_battery_usage_pos = 393
 set osd_disarmed_pos = 14603
 set osd_nheading_pos = 397
-set osd_up_down_reference_pos = 4348
+set osd_up_down_reference_pos = 252
 set osd_ready_mode_pos = 14508
-set osd_nvario_pos = 4374
+set osd_nvario_pos = 278
 set osd_esc_tmp_pos = 54
 set osd_esc_rpm_pos = 288
 set osd_esc_rpm_freq_pos = 341
@@ -553,7 +546,7 @@ set osd_stick_overlay_left_pos = 258
 set osd_stick_overlay_right_pos = 276
 set osd_stick_overlay_radio_mode = 2
 set osd_rate_profile_name_pos = 20
-set osd_pid_profile_name_pos = 374
+set osd_pid_profile_name_pos = 13
 set osd_profile_name_pos = 341
 set osd_rcchannels_pos = 341
 set osd_camera_frame_pos = 142
@@ -572,7 +565,7 @@ set osd_sys_warnings_pos = 341
 set osd_sys_vtx_temp_pos = 407
 set osd_sys_fan_speed_pos = 341
 set osd_stat_bitmask = 8521444
-set osd_profile = 2
+set osd_profile = 1
 set osd_profile_1_name = -
 set osd_profile_2_name = -
 set osd_profile_3_name = -
