@@ -152,7 +152,7 @@ UART5: VTX (IRC Tramp)
 - ch8 (aux4 is 3 in vtx CLI command), S2 - VTX power control
 - ch9 - SW5 toggle - switch between the cameras
 - ch10, SW6 toggle - Runcam button
-- CH11 SW3 toggle (aux7) blackbox erase
+- CH11 SD (aux7) beeper
 - CH12 SW2 2pos (aux8) blackbox
 - add special function `SW6 playtrk vtx`
 
@@ -233,9 +233,9 @@ set pid_process_denom = 1
 aux 0 0 0 1900 2100 0 0
 aux 1 0 2 1900 2100 0 0
 aux 2 1 1 1900 2100 0 0
-aux 3 26 7 1900 2100 0 0
-aux 4 28 1 900 1100 0 0
-aux 5 31 6 1900 2100 0 0
+aux 3 13 6 1900 2100 0 0
+aux 4 26 7 1900 2100 0 0
+aux 5 28 1 900 1100 0 0
 aux 6 33 5 1900 2100 0 0
 aux 7 35 2 1925 2100 0 0
 ```
@@ -409,6 +409,7 @@ set feedforward_jitter_factor = 9
 set dyn_idle_min_rpm = 100
 set simplified_i_gain = 80
 set simplified_d_max_gain = 0
+set simplified_feedforward_gain = 80
 set simplified_pitch_d_gain = 130
 set simplified_pitch_pi_gain = 120
 set simplified_dterm_filter = OFF
@@ -639,9 +640,9 @@ set align_board_yaw = 45
 set motor_output_reordering = 2,3,0,1,4,5,6,7
 ```
 
-
-
 - 2023 props are too big for this frame, I had to switch to Gemfan 45mm-3. will also try 2023 props with shims between the motors and the frame and longer bolts
+
+
 
 ## references
 - https://jhemcu.work:6/sharing/3c1SjKuS9
