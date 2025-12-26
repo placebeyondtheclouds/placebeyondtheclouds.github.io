@@ -7,9 +7,9 @@ category: tutorial
 published: true
 ---
 
-I damaged ESC #2 on the 1S Matrix AIO (Meteor75 Pro), either by running a motor with damaged windings or from a voltage spike in a crash. It's overheating, not giving full power to the motor, and the video feed has white washouts during high throttle. So I'm replacing the AIO with JHEMCU G474ELRS and HGLRC Zeuz nano 350mw VTX. Update: the ELRS receiver on the AIO died after a week or so. ~~Update: using another VTX (ZENCHANSI 棕熊 W007 400mw) until I solve the problem with the Zeus nano VTX table (very low output power on all frequences).~~
+I damaged ESC #2 on the 1S Matrix AIO (Meteor75 Pro), either by running a motor with damaged windings or from a voltage spike in a crash. It's overheating, not giving full power to the motor, and the video feed has white washouts during high throttle. So I'm replacing the AIO with JHEMCU G474ELRS and HGLRC Zeuz nano 350mw VTX. Update: the ELRS receiver on the AIO died after a week or so. ~~Update: using another VTX (ZENCHANSI 棕熊 W007 400mw) temporarily~~
 
-Meteor75 frame is scraping the battery and motor screws against the ground, so I am replacing it with a clone of Mobula7 but for 45mm props (80mm base and 47mm ducts instead of 75mm and 43mm). It has 2S battery tray, and with 1S battery the whoop will land on the lower part of the frame without the battery or motor screws touching the ground. Another solution to the problem would be keep the meteor75pro frame and printing [the battery bumper](https://www.thingiverse.com/thing:7056235). At first, I tried to pad the battery with foam, but it didn't help much.
+Meteor75 frame is scraping the battery and motor screws against the ground, so I am replacing it with a clone of Mobula7 but for 45mm props (80mm base and 47mm ducts instead of 75mm and 43mm respectively). It has 2S battery tray, and with 1S battery the whoop will land on the lower part of the frame without the battery or motor screws touching the ground. Another solution to the problem would be keep the meteor75pro frame and printing [the battery bumper](https://www.thingiverse.com/thing:7056235). At first, I tried to pad the battery with foam, but it didn't help much.
 
 The battery is mounted using rubber bands with zip ties, occupying the lower part of the 2S holder and pressing the 1S battery to the frame.
 
@@ -50,7 +50,7 @@ batteries: batches of 高能 (GNB) 100C 550mAh LiHV 1S A30 and 格氏 (Tattu) 95
 
 ## the process
 
-- wiring diagrams for the FC are here [here](https://jhemcu.work:6/sharing/3c1SjKuS9)
+- wiring diagrams for the FC are [here](https://jhemcu.work:6/sharing/3c1SjKuS9)
 - connect the FC, check that it is working, backup the config (`dump`, `diff all showdefaults` and save the outputs into separate files)
 
 - UARTs:
@@ -132,7 +132,7 @@ set yaw_motors_reversed = ON
 
 ## restore my settings
 
-- load elrs 150Hz rate profile (although some of the values will be changed with the filters tuning later)
+- load elrs 150Hz rate profile (although some of the values will be replaced with the filters tuning later)
 
 - UARTs:
 
@@ -144,7 +144,10 @@ serial UART3 0 115200 57600 0 115200
 serial UART4 64 115200 57600 0 115200
 ```
 
-- (not working) [camera control](https://oscarliang.com/fpv-camera-control-fc/). measure the OSD pin voltage. set mode `camera control 1` to a channel. enable led_strip feature. flip the channel, activate using `throttle=0, yaw=100`
+- [camera control](https://oscarliang.com/fpv-camera-control-fc/). measure the OSD pin voltage. set mode `camera control 1` to a channel. enable led_strip feature. flip the channel, activate using `throttle=0, yaw=100`
+
+> not working 
+{: .prompt-warning }
 
 ```
 resource
@@ -183,7 +186,7 @@ aux 7 35 2 1925 2100 0 0
 
 - ZENCHANSI 棕熊 W007 400mw vtx. 
 
-> not using 
+> not using this VTX, keeping this part for a reference
 {: .prompt-warning }
 
 it uses smartaudio 2.1 protocol, so the power values will be in dBm. BF CLI has the command `vtx_info` to show the power levels that the VTX supports
@@ -330,9 +333,9 @@ set rateprofile_name = sasha
 set roll_rc_rate = 16
 set pitch_rc_rate = 16
 set yaw_rc_rate = 16
-set roll_srate = 90
-set pitch_srate = 90
-set yaw_srate = 90
+set roll_srate = 70
+set pitch_srate = 70
+set yaw_srate = 70
 ```
 
 - filters (adjusted for this build):

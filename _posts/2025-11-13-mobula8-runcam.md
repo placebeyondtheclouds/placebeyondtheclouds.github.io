@@ -27,7 +27,7 @@ Here's how I built a cinewhoop using Mobula8 frame and Runcam Thumb 2 (codename 
 ## update 2: transplant
 
 - transplanting everything into a carbon fiber [AstroRC Carbonfly 80 (薯片80) frame](https://astrorc.net/products/astrorc-carbonfly-80-1-8inch-frame-o4-version). [AstroRC official frame assembly tutorial](https://www.youtube.com/watch?v=75qipfHU6d8), changing the props to gemfan 45mm-3 because 2023 do not fit into the frame without modifications (that will follow)
-- dry weight: 95.6 grams, with batteries: 121.8 grams. flight time 3 minutes (winter).
+- dry weight: 95.6 grams, with batteries: 121.8 grams. flight time 3 to 3.5 minutes (winter).
 
 ## todo
 
@@ -35,10 +35,14 @@ Here's how I built a cinewhoop using Mobula8 frame and Runcam Thumb 2 (codename 
 - [ ] tune PIDs
 - [ ] adjust the current sensor calibration value
 
-## video
+## initial build video
 
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/w96JuggRIIU" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+
+## video about transplanting into a carbon fiber frame
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/JF7ALfBuW54" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 
 
 
@@ -46,43 +50,37 @@ Here's how I built a cinewhoop using Mobula8 frame and Runcam Thumb 2 (codename 
 
 | - | - | - |
 | ![1](/assets/images/not-mobula8-01.jpg) | ![2](/assets/images/not-mobula8-02.jpg) |![2](/assets/images/not-mobula8-03.jpg) |
-| - | - | - |
 | ![4](/assets/images/not-mobula8-04.jpg) | ![5](/assets/images/not-mobula8-05.jpg) |![6](/assets/images/not-mobula8-06.jpg) |
-| - | - | - |
 | ![7](/assets/images/not-mobula8-07.jpg) | ![8](/assets/images/not-mobula8-08.jpg) |![9](/assets/images/not-mobula8-09.jpg) |
-| - | - | - |
 | ![10](/assets/images/not-mobula8-10.jpg) | ![11](/assets/images/not-mobula8-11.jpg) |![12](/assets/images/not-mobula8-12.jpg) |
-| - | - | - |
 | ![13](/assets/images/not-mobula8-13.jpg) | ![14](/assets/images/not-mobula8-14.jpg) |![15](/assets/images/not-mobula8-15.jpg) |
-| - | - | - |
 | ![16](/assets/images/not-mobula8-16.jpg) | ![17](/assets/images/not-mobula8-17.jpg) |![18](/assets/images/not-mobula8-18.jpg) |
-| - | - | - |
 | ![19](/assets/images/not-mobula8-19.jpg) | ![20](/assets/images/not-mobula8-20.jpg) |![21](/assets/images/not-mobula8-21.jpg) |
-| - | - | - |
 | ![22](/assets/images/not-mobula8-22.jpg) | ![23](/assets/images/not-mobula8-23.jpg) |![24](/assets/images/not-mobula8-24.jpg) |
-| - | - | - |
-| ![25](/assets/images/not-mobula8-25.jpg) |  ![34](/assets/images/not-mobula8-34.jpg) |![35](/assets/images/not-mobula8-35.jpg) |
-| - | - | - |
+| ![25](/assets/images/not-mobula8-25.jpg) |  ![34j](/assets/images/not-mobula8-34.jpg) |![35](/assets/images/not-mobula8-35.jpg) |
 | ![31](/assets/images/not-mobula8-31.png)   | ![27](/assets/images/not-mobula8-27.jpg) |![28](/assets/images/not-mobula8-28.jpg) |
-| - | - | - |
 | ![29](/assets/images/not-mobula8-29.png) |   ![30](/assets/images/not-mobula8-30.png) | ![34](/assets/images/not-mobula8-34.png) |
-| - | - | - |
-| ![32](/assets/images/not-mobula8-32.png) |   ![33](/assets/images/not-mobula8-33.png) | - |
+| ![32](/assets/images/not-mobula8-32.png) |   ![33](/assets/images/not-mobula8-33.png) |  |
 
-## pictures (carbonfly80 frame)
+## pictures (carbonfly80 frame + Gemfan 45mm-3 props)
 
+
+| - | - | - | - |
+| ![36](/assets/images/not-mobula8-36.jpg) | ![37](/assets/images/not-mobula8-37.jpg) | ![38](/assets/images/not-mobula8-38.jpg) |
+| ![40](/assets/images/not-mobula8-40.jpg) | ![41](/assets/images/not-mobula8-41.jpg) | ![39](/assets/images/not-mobula8-39.jpg) | 
+| ![42](/assets/images/not-mobula8-42.jpg) | ![43](/assets/images/not-mobula8-43.jpg) |  |
+| ![44](/assets/images/not-mobula8-44.png) | ![45](/assets/images/not-mobula8-45.png) |    |
 
 
 ## parts list (mobula8 frame)
-- [motor size / motor kv / battery size / prop size lookup table](https://oscarliang.com/table-prop-motor-lipo-weight/)
+
 - ‌衢州市云端智能科技 (Happymodel) [Mobula8 2inch frame](https://www.happymodel.cn/index.php/2023/04/28/mobula8-frame-85mm-brushless-whoop-frame/)
 - props 乾丰 (Gemfan) 2023 2inch 3-blade (1.5mm shaft)
 - [Runcam Thumb 2](https://shop.runcam.com/runcam-thumb-2/), IMX586 sensor, gyro, UART control, type C connector
 - 3 M1.4x5 or M1.4x7 screws (with coarse thread for plastic). there is [a mount to use with FPV camera](https://www.thingiverse.com/thing:6090638) that would lift the runcam higher above the frame. I used `Removable_V2_BlueJay_Canopy_with_Thumb_Pro.stl` from that thing and the top part of [the original Runcam Thumb 2 mount](https://www.thingiverse.com/thing:6807624). 
 - ~~generic 1103 15000KV 2S (3 hole M1.4 base with 6mm distance, same as the betafpv 1102 motors) or better, more expensive motors like `DarwinFPV bling 1103 8000KV`, `Happymodel EX1103 11000KV`, `sparkhobby xspeed 1103 8500KV`~~
-- ‌衢州市云端智能科技 (Happymodel) [EX1103 11000KV 2S](https://www.happymodel.cn/index.php/2022/09/05/bassline-spare-part-ex1103-kv11000-brushless-motor/) motors
+- ‌衢州市云端智能科技 (Happymodel) [EX1103 11000KV 2S](https://www.happymodel.cn/index.php/2022/09/05/bassline-spare-part-ex1103-kv11000-brushless-motor/) motors. the blueprint says the motor mounting holes are for M1.4 screws, but the actual size is more like M1.6
 - ~~8 M2x7 machine screws for the props~~ (optional)
-- ~~12 M1.4x4 machine screws for the motors~~ (came with the motors)
 - 津航电子 (JHEMCU) [GHF435AIO](https://www.jhemcu.com/e_productshow/?84-JHEMCU-GHF435AIO-2-4S-20A-w-Built-in-24G-ELRSIPEXSMD-84.html) V2 - 25mm mount, 2-4s, 4 UARTS, 20A Bluejay DSHOT600 ESCs, ArteryTek AT32F435: 288MHz core 1MB flash 384KB RAM, BETAFPV 2.4GHz Lite RX (serial) IPEX gen1, 16MB blackbox, ICM-42688 IMU, AT7656E OSD
 - 衢州市云端智能科技 (Happymodel) [5.8G Crown LDS antenna RHCP](https://www.happymodel.cn/index.php/2025/08/07/happymodel-5-8g-crown-lds-antenna-rhcp-lhcp-for-micro-fpv-whoops/), [3.5dBi, 5500-6000MHz](https://www.happymodel.cn/wp-content/uploads/2025/08/5.8G-Crown-antenna-RHCP-testing-data.xls.pdf), IPEX gen1
 - 化骨龙航模 (HGLRC) [Zeuz nano 350mw VTX](https://hglrc.freshdesk.com/support/solutions/articles/61000307667-zeus-350mw-vtx). [review](https://www.multirotorguide.com/reviews/review-hglrc-zeus-vtx-nano/).
@@ -148,9 +146,9 @@ UART5: VTX (IRC Tramp)
 - send radio's RTC data to the flight controller to have correct time in blackbox files and on the OSD: go to special functions, add `ON Lua bfbkgd On` and turn the checkmark on
 - ch5 inverted, SB - arm
 - ch6 inverted, SA - air / acro / angle 
-- ch7 - turtle mode
+- ch7 - turtle mode (+ blackbox erase)
 - ch8 (aux4 is 3 in vtx CLI command), S2 - VTX power control
-- ch9 - SW5 toggle - switch between the cameras
+- ch9 - SW5 toggle (aux5) - switch between the cameras
 - ch10, SW6 toggle - Runcam button
 - CH11 SD (aux7) beeper
 - CH12 SW2 2pos (aux8) blackbox
@@ -236,8 +234,9 @@ aux 2 1 1 1900 2100 0 0
 aux 3 13 6 1900 2100 0 0
 aux 4 26 7 1900 2100 0 0
 aux 5 28 1 900 1100 0 0
-aux 6 33 5 1900 2100 0 0
-aux 7 35 2 1925 2100 0 0
+aux 6 31 2 1925 2100 0 0
+aux 7 33 5 1900 2100 0 0
+aux 8 35 2 1925 2100 0 0
 ```
 
 
@@ -315,7 +314,7 @@ set dterm_lpf1_static_hz = 82
 set dterm_lpf2_static_hz = 165
 ```
 
-- filters for Carbonfly80 frame and gemfan 45mm-3 props
+- changes to the rpm filters for Carbonfly80 frame and gemfan 45mm-3 props
 
 ```
 set rpm_filter_min_hz = 160
@@ -375,7 +374,7 @@ set simplified_dterm_filter_multiplier = 110
 profile 3
 
 # profile 3
-set profile_name = carbon80
+set profile_name = carb45
 set dterm_lpf1_dyn_min_hz = 82
 set dterm_lpf1_dyn_max_hz = 165
 set dterm_lpf1_static_hz = 82
@@ -407,7 +406,52 @@ set feedforward_averaging = OFF
 set feedforward_smooth_factor = 30
 set feedforward_jitter_factor = 9
 set dyn_idle_min_rpm = 100
-set simplified_i_gain = 80
+set simplified_i_gain = 100
+set simplified_d_max_gain = 0
+set simplified_feedforward_gain = 80
+set simplified_pitch_d_gain = 130
+set simplified_pitch_pi_gain = 120
+set simplified_dterm_filter = OFF
+set simplified_dterm_filter_multiplier = 110
+
+profile 0
+
+# profile 0
+set profile_name = carb2023
+set dterm_lpf1_dyn_min_hz = 82
+set dterm_lpf1_dyn_max_hz = 165
+set dterm_lpf1_static_hz = 82
+set dterm_lpf2_static_hz = 165
+set vbat_sag_compensation = 100
+set anti_gravity_gain = 40
+set crash_dthreshold = 80
+set crash_gthreshold = 600
+set crash_setpoint_threshold = 500
+set crash_recovery_rate = 150
+set crash_recovery = ON
+set iterm_relax_type = GYRO
+set iterm_windup = 85
+set pidsum_limit = 1000
+set pidsum_limit_yaw = 1000
+set throttle_boost = 0
+set p_pitch = 56
+set i_pitch = 50
+set d_pitch = 44
+set f_pitch = 119
+set i_roll = 40
+set f_roll = 95
+set i_yaw = 40
+set f_yaw = 95
+set d_max_roll = 30
+set d_max_pitch = 44
+set d_max_advance = 0
+set launch_control_mode = NORMAL
+set thrust_linear = 20
+set feedforward_averaging = OFF
+set feedforward_smooth_factor = 30
+set feedforward_jitter_factor = 9
+set dyn_idle_min_rpm = 100
+set simplified_i_gain = 50
 set simplified_d_max_gain = 0
 set simplified_feedforward_gain = 80
 set simplified_pitch_d_gain = 130
@@ -427,9 +471,10 @@ set rateprofile_name = sasha
 set roll_rc_rate = 16
 set pitch_rc_rate = 16
 set yaw_rc_rate = 16
-set roll_srate = 90
-set pitch_srate = 90
-set yaw_srate = 90
+set roll_srate = 70
+set pitch_srate = 70
+set yaw_srate = 70
+
 ```
 
 
@@ -584,7 +629,7 @@ set osd_aux_symbol = 65
 set osd_craftname_msgs = OFF
 ```
 
-- blackbox for filter tuning (2kHz). for PID tuning it will be `set blackbox_sample_rate = 1/2` (4kHz)
+- blackbox for filter tuning (2kHz). for PID tuning it will be `set blackbox_sample_rate = 1/2` (4kHz). UAVTech's workspace for blackbox viewer is [here](https://theuavtech.com/wp-content/uploads/2024/10/UAVtech-BF-BBE-4.0-Version.json)
 
 ```
 set blackbox_sample_rate = 1/4
@@ -611,7 +656,7 @@ set blackbox_high_resolution = OFF
 set debug_mode = GYRO_RAW
 ```
 
-I set `debug_mode = BATTERY` midway through the build to debug the voltage sag problem
+I set `debug_mode = BATTERY` midway through the first part of the build to debug the voltage sag problem
 
 ```
 save
@@ -645,6 +690,8 @@ set motor_output_reordering = 2,3,0,1,4,5,6,7
 
 
 ## references
+
+- [motor size / motor kv / battery size / prop size lookup table](https://oscarliang.com/table-prop-motor-lipo-weight/)
 - https://jhemcu.work:6/sharing/3c1SjKuS9
 - https://store-m8o52p.mybigcommerce.com/product_images/img_runcam_thumb2/runcam_thumb2_manual_en.pdf
 - https://flying-rabbit-fpv.com/2020/11/07/creating-a-betaflight-target/
