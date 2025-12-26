@@ -91,7 +91,7 @@ Here's how I built a cinewhoop using Mobula8 frame and Runcam Thumb 2 (codename 
 - 卡德克斯技术 CADDXFPV Ant (f/1.2 lens) camera
 - 5V 2A(continuous) 3A(spike) UBEC (input: 6.5-28V) for the Runcam
 
-## parts list (carbonfly 80 frame)
+## additional parts list (carbonfly 80 frame transplant)
 
 - [AstroRC Carbonfly 80 (薯片80) frame](https://astrorc.net/products/astrorc-carbonfly-80-1-8inch-frame-o4-version)
 - 乾丰 (gemfan) 45mm-3 props (1.5mm shaft)
@@ -428,9 +428,9 @@ set rateprofile_name = sasha
 set roll_rc_rate = 16
 set pitch_rc_rate = 16
 set yaw_rc_rate = 16
-set roll_srate = 70
-set pitch_srate = 70
-set yaw_srate = 70
+set roll_srate = 90
+set pitch_srate = 90
+set yaw_srate = 90
 
 ```
 
@@ -623,7 +623,7 @@ save
 ## runcam configuration 
 
 - [update the firmware](https://www.runcam.com/download/thumb2/) to `1.2.2`
-- QR code: set the camera to power on automatically when it receives power, but manual start of recording. set to use gyro, no geometry correction, 4:3 4K 30FPS, PAL, daylight white balance, shutter 1/60, ISO manual, saturation 3, contrast 1, sharpness 1. use ISO and ND filters to adjust exposure. stop recording before cutting the power
+- QR code: set the camera to power on automatically when it receives power, but manual start of recording. set it to use gyro, no geometry correction, 4:3 4K 30FPS, PAL, daylight white balance, shutter 1/60, ISO manual, saturation 3, contrast 1, sharpness 1. use ISO and ND filters to adjust the exposure. stop recording before cutting the power, otherwise the end of the video file and the gyro data will be lost.
 - [gyroflow best practices for older cameras, does not directly apply to thumb2](https://docs.gyroflow.xyz/app/getting-started/supported-cameras/runcam)
 - [lens profile](https://github.com/gyroflow/lens_profiles/blob/main/RunCam/Runcam_Thumb2_4by3.json) for Gyroflow
 
