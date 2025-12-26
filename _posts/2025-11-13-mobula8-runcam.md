@@ -414,50 +414,7 @@ set simplified_pitch_pi_gain = 120
 set simplified_dterm_filter = OFF
 set simplified_dterm_filter_multiplier = 110
 
-profile 0
 
-# profile 0
-set profile_name = carb2023
-set dterm_lpf1_dyn_min_hz = 82
-set dterm_lpf1_dyn_max_hz = 165
-set dterm_lpf1_static_hz = 82
-set dterm_lpf2_static_hz = 165
-set vbat_sag_compensation = 100
-set anti_gravity_gain = 40
-set crash_dthreshold = 80
-set crash_gthreshold = 600
-set crash_setpoint_threshold = 500
-set crash_recovery_rate = 150
-set crash_recovery = ON
-set iterm_relax_type = GYRO
-set iterm_windup = 85
-set pidsum_limit = 1000
-set pidsum_limit_yaw = 1000
-set throttle_boost = 0
-set p_pitch = 56
-set i_pitch = 50
-set d_pitch = 44
-set f_pitch = 119
-set i_roll = 40
-set f_roll = 95
-set i_yaw = 40
-set f_yaw = 95
-set d_max_roll = 30
-set d_max_pitch = 44
-set d_max_advance = 0
-set launch_control_mode = NORMAL
-set thrust_linear = 20
-set feedforward_averaging = OFF
-set feedforward_smooth_factor = 30
-set feedforward_jitter_factor = 9
-set dyn_idle_min_rpm = 100
-set simplified_i_gain = 50
-set simplified_d_max_gain = 0
-set simplified_feedforward_gain = 80
-set simplified_pitch_d_gain = 130
-set simplified_pitch_pi_gain = 120
-set simplified_dterm_filter = OFF
-set simplified_dterm_filter_multiplier = 110
 ```
 
 [use master multiplier](https://www.youtube.com/watch?v=u74tDug6lpc) to adjust overall aggressiveness (sluggish, unpredictable <==> twitchy, motor heat, motor noise).
