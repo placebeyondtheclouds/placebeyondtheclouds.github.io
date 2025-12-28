@@ -127,7 +127,7 @@ set yaw_motors_reversed = ON
 - ch6 inverted, SA - air / acro / angle
 - ch7 - turtle mode
 - ch8 (aux4), S2 - VTX power switching
-- ch9 - buzzer
+- ch9 - SD - buzzer
 - ch10 - SW2 2pos - aux6 blackbox
 - CH11 (AUX7), S1 - OSD profile switching
 - ch12 - SW3 toggle - aux8 blackbox erase
@@ -335,9 +335,9 @@ set rateprofile_name = sasha
 set roll_rc_rate = 16
 set pitch_rc_rate = 16
 set yaw_rc_rate = 16
-set roll_srate = 70
-set pitch_srate = 70
-set yaw_srate = 70
+set roll_srate = 90
+set pitch_srate = 90
+set yaw_srate = 90
 ```
 
 - filters (adjusted for this build):
