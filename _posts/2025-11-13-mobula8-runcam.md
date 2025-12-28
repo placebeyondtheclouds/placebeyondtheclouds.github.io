@@ -26,7 +26,7 @@ Here's how I built a cinewhoop using Mobula8 frame and Runcam Thumb 2 (codename 
 
 ## update 2: transplant
 
-- transplanting everything into a carbon fiber [AstroRC Carbonfly 80 (薯片80) frame](https://astrorc.net/products/astrorc-carbonfly-80-1-8inch-frame-o4-version). [AstroRC official frame assembly tutorial](https://www.youtube.com/watch?v=75qipfHU6d8), changing the props to gemfan 45mm-3 because 2023 do not fit into the frame without modifications (that will follow)
+- transplanting everything into a carbon fiber [AstroRC Carbonfly 80 (薯片80) frame](https://astrorc.net/products/astrorc-carbonfly-80-1-8inch-frame-o4-version). I couldn't choose the 2inch frame because the motor mounts are different (4 holes on 9mm radius) and I would like to keep my motors. [AstroRC official frame assembly tutorial](https://www.youtube.com/watch?v=75qipfHU6d8), changing the props to gemfan 45mm-3 because 2023 do not fit into the frame without modifications (that will follow)
 - dry weight: 95.6 grams, with batteries: 121.8 grams. flight time 3 to 3.5 minutes (winter).
 - looking for the explanation to the extended flight time
   - with Gemfan 45mm-3 max RPM at full throttle reach 53000rpm, compared to 38000rpm with 2023 props
@@ -36,7 +36,7 @@ Here's how I built a cinewhoop using Mobula8 frame and Runcam Thumb 2 (codename 
 ## todo
 
 - [x] tune filters
-- [ ] tune PIDs
+- [x] tune PIDs
 - [ ] adjust the current sensor calibration value
 
 ## initial build video
