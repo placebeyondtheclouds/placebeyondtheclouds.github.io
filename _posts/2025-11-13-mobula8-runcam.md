@@ -19,7 +19,7 @@ Here's how I built a cinewhoop using Mobula8 frame and Runcam Thumb 2 (codename 
 - ND filters are easy to lose in a crash (lost one ND8, 30元)
 - ~~it seems like the Runcam camera reads (sometimes?) date and time from the flight controller~~ no, it takes the time from the QR code
 - tried to use 3S with `set motor_output_limit = 60`, burned those the 1103 15000KV motors right after takeoff.
-- replaced the motors with **Happymodel EX1103 11000KV 2S**, at `set motor_output_limit = 80` there is no more voltage sag, the problem was with the generic motors not suitable for a quad this heavy (or them being close to 1S rather than 2S) and drawing too much current. the current dropped from 4.5A@34% to 3A@41% (at `ibata_scale = 400`). `set motor_output_limit = 100` also works without FC restarts.
+- replaced the motors with **Happymodel EX1103 11000KV 2S**, at `set motor_output_limit = 80` there is no more voltage sag, the problem was with the generic motors not suitable for a quad this heavy (or them being close to 1S rather than 2S) and drawing too much current. the current at hovering dropped from 4.5A@34% to 3A@41% (at `ibata_scale = 400`). `set motor_output_limit = 100` also works without FC restarts.
 - got motor desync event at 15 degrees timing, moved ESCs back to 22.5 degrees
 - flight time at 96kHz PWM, 22.5 degrees motor timing, 90% motor limit, outside temperature around 0 degrees celsius, two LiHV 550mah 100C A30 batteries in series: around 2 minutes down to 3.3v
 - the 5GHz antenna requires putting a heatshrink to the place where the cable is soldered to the antenna itself, otherwise the shielding gradually breaks and loses contact with the antenna
@@ -29,9 +29,13 @@ Here's how I built a cinewhoop using Mobula8 frame and Runcam Thumb 2 (codename 
 - transplanting everything into a carbon fiber [AstroRC Carbonfly 80 (薯片80) frame](https://astrorc.net/products/astrorc-carbonfly-80-1-8inch-frame-o4-version). I couldn't choose the 2inch frame because the motor mounts are different (4 holes on 9mm radius) and I would like to keep my motors. [AstroRC official frame assembly tutorial](https://www.youtube.com/watch?v=75qipfHU6d8), changing the props to gemfan 45mm-3 because 2023 do not fit into the frame without modifications (that will follow)
 - dry weight: 95.6 grams, with batteries: 121.8 grams. flight time 3 to 3.5 minutes (winter).
 - looking for the explanation to the extended flight time
-  - with Gemfan 45mm-3 max RPM at full throttle reach 53000rpm, compared to 38000rpm with 2023 props
-  - **hypothesis**: the motors do not have enough torque to spin the 2023 props at high RPM on a quad this heavy, so they draw more current, draining the battery while not producing enough thrust. and the smaller props, on contrary, are able to spin to higher RPM, producing more thrust at lower current draw. 
-  so presumably on a lighter quad like the original analog mobula8 with 1103 motors the 2023 props would work fine.
+  - the 1103 motors with Gemfan 45mm-3 max RPM at full throttle reach 53000rpm, compared to 38000rpm with 2023 props in mobula8 frame
+  - **hypothesis**: the motors do not have enough torque to spin the 2023 props (high pitch) at high RPM on a quad this heavy, so they draw more current, draining the battery while not producing enough thrust. and the smaller props, on contrary, are able to spin to higher RPM, producing more thrust at lower current draw. so presumably on a lighter quad like the original analog mobula8 with 1103 motors the 2023 props would work just fine.
+- 2023 props test: motors at full throttle rpm reach 40000rpm, overloads the battery on high throttle maneuvers (FC restarts on crash but not in flight). hovering at 3.4A@40%. flight time feels a bit shorter (around 2.5 to 3 minutes)
+
+## update 3
+
+- try gemfan [2023s props](https://www.gemfanhobby.com/2023s-hurricane-pc-3-blade.html) (50.8mm, pitch 2in)
 
 ## todo
 
@@ -44,11 +48,13 @@ Here's how I built a cinewhoop using Mobula8 frame and Runcam Thumb 2 (codename 
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/w96JuggRIIU" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 
-## video about transplanting into a carbon fiber frame
+## video about transplanting into a carbon fiber frame (and changing props to 45mm-3)
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/JF7ALfBuW54" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 
+## video about trying the original 2023 props instead of 45mm-3
 
+<iframe width="560" height="315" src="https://www.youtube.com/embed/J0_ydPTKdlM" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 
 ## pictures (mobula8 frame)
 
@@ -79,7 +85,7 @@ Here's how I built a cinewhoop using Mobula8 frame and Runcam Thumb 2 (codename 
 ## parts list (mobula8 frame)
 
 - ‌衢州市云端智能科技 (Happymodel) [Mobula8 2inch frame](https://www.happymodel.cn/index.php/2023/04/28/mobula8-frame-85mm-brushless-whoop-frame/)
-- props 乾丰 (Gemfan) 2023 2inch 3-blade (1.5mm shaft)
+- props 乾丰 (Gemfan) [2023](https://www.gemfanhobby.com/2023-hurricane-pc-3-blade.html) 2 inch (52.17mm), pitch 2.3 inch,  3-blade (1.5mm shaft)
 - [Runcam Thumb 2](https://shop.runcam.com/runcam-thumb-2/), IMX586 sensor, gyro, UART control, type C connector
 - 3 M1.4x5 or M1.4x7 screws (with coarse thread for plastic). there is [a mount to use with FPV camera](https://www.thingiverse.com/thing:6090638) that would lift the runcam higher above the frame. I used `Removable_V2_BlueJay_Canopy_with_Thumb_Pro.stl` from that thing and the top part of [the original Runcam Thumb 2 mount](https://www.thingiverse.com/thing:6807624). 
 - ~~generic 1103 15000KV 2S (3 hole M1.4 base with 6mm distance, same as the betafpv 1102 motors) or better, more expensive motors like `DarwinFPV bling 1103 8000KV`, `Happymodel EX1103 11000KV`, `sparkhobby xspeed 1103 8500KV`~~
@@ -98,7 +104,7 @@ Here's how I built a cinewhoop using Mobula8 frame and Runcam Thumb 2 (codename 
 ## additional parts list (carbonfly 80 frame transplant)
 
 - [AstroRC Carbonfly 80 (薯片80) frame](https://astrorc.net/products/astrorc-carbonfly-80-1-8inch-frame-o4-version)
-- 乾丰 (gemfan) 45mm-3 props (1.5mm shaft)
+- [乾丰 (gemfan) 45mm-3](https://www.gemfanhobby.com/45mm-pc-3-blade.html) props (1.5 inch pitch, 1.5mm shaft)
 
 ## wiring and assembly
 
