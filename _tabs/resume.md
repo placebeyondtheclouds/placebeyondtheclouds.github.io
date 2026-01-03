@@ -27,11 +27,14 @@ Network and system administration, on-prem, cybersecurity, data engineering, mac
 
 ## Projects:
 
-#### On-premise GPU cluster
-Designed and built on-premise multi-node multi-GPU hyper-converged cluster, including surrounding infrastructure, cybersecurity and helpdesk. 10GbE fiber optics in LACP bonds and 200G Nvidia InfiniBand. Proxmox VE, CEPH with RBD erasure coding pools, FreeIPA central authentication, LXC containers, Docker. The cluster is used for training deep learning models, and also for other tasks such as data engineering and data analysis. HCI was chosen to lower the total cost of ownership, and to increase flexibility and scalability. Increased flexibility of resource allocation allows more efficient hardware utilization.
+#### On-premise GPU cluster | 2022.9 - Present   
+Designed and built on-premise multi-node multi-GPU hyper-converged cluster, including surrounding infrastructure, cybersecurity and helpdesk. 10GbE fiber optics in LACP bonds and 200G Nvidia InfiniBand. Proxmox VE, [CEPH with RBD erasure coding pools]({% post_url 2024-11-15-ceph %}), FreeIPA central authentication, LXC containers, Docker.
+
+Project outcomes: A system with reliable redundant high-speed storage for a large number of small files (audio and text) that allows running data analysis, data processing and training deep learning models. HCI lowers the total cost of ownership, and increases flexibility and scalability. Increased flexibility of resource allocation allows for more efficient hardware utilization.
+
 
 #### Horizontal scaling
-Rewriting single process CPU and GPU tasks code to use multiprocessing and multithreading to optimize compute load and shorten task execution time. Tasks range from text and audio signal data engineering to deep learning models inference.
+Rewriting single process CPU and GPU tasks Python code to use multiprocessing and multithreading to optimize compute load and shorten task execution time. Tasks range from text and audio signal data engineering to deep learning models inference.
 
 My other [Projects](/projects)
 
