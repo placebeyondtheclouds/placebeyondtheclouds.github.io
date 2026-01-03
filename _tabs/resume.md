@@ -32,6 +32,9 @@ Designed and built on-premise multi-node multi-GPU hyper-converged cluster, incl
 
 Project outcomes: A system with reliable redundant high-speed storage for a large number of small files (audio and text) that allows running data analysis, data processing and training deep learning models. HCI lowers the total cost of ownership, and increases flexibility and scalability. Increased flexibility of resource allocation allows for more efficient hardware utilization.
 
+#### GPU docker (DevOps)
+Deployed a very flexible, straightforward (no hacks) and scalable system for non-exclusive allocation of GPU compute and VRAM resources between multiple docker installations within one cluster node while maintaining a certain degree of isolation using unprivileged LXCs.
+Project outcomes: multiple GPUs are shared among multiple isolated docker instances and can be assigned to docker containers individually. GPU compute overcommitment leads to more efficient utilization and less time spent on idle. [Writeup 1]({% post_url 2024-12-7-gpu-home-server %}), [writeup 2]({% post_url 2025-01-15-shared-gpu %})
 
 #### Horizontal scaling
 Rewriting single process CPU and GPU tasks Python code to use multiprocessing and multithreading to optimize compute load and shorten task execution time. Tasks range from text and audio signal data engineering to deep learning models inference.
