@@ -27,15 +27,15 @@ I want to build the smallest quad possible that can carry a 4K camera onboard, h
 ## update 2: transplant
 
 - transplanting everything into a carbon fiber [AstroRC Carbonfly 80 (薯片80) frame](https://astrorc.net/products/astrorc-carbonfly-80-1-8inch-frame-o4-version). I couldn't choose the 2inch frame because the motor mounts are different (4 holes on 9mm radius) and I would like to keep my motors. [AstroRC official frame assembly tutorial](https://www.youtube.com/watch?v=75qipfHU6d8), changing the props to gemfan 45mm-3 because 2023 do not fit into the frame without modifications (that will follow)
-- dry weight: 95.6 grams, with batteries: 121.8 grams. flight time 3 to 3.5 minutes (winter).
+- dry weight: 95.6 grams, with batteries: 121.8 grams. flight time 3 to 3.5 minutes (winter), max current 9A.
 - looking for the explanation to the extended flight time
   - the 1103 motors with Gemfan 45mm-3 max RPM at full throttle reach 53000rpm, compared to 38000rpm with 2023 props in mobula8 frame
   - **hypothesis**: the motors do not have enough torque to spin the 2023 props (high pitch) at high RPM on a quad this heavy, so they draw more current, draining the battery while not producing enough thrust. and the smaller props, on contrary, are able to spin to higher RPM, producing more thrust at lower current draw. so presumably on a lighter quad like the original analog mobula8 with 1103 motors the 2023 props would work just fine.
-- 2023 props test: motors at full throttle rpm reach 40000rpm, overloads the battery on high throttle maneuvers (FC restarts on crash but not in flight). hovering at 3.4A@40%. flight time feels a bit shorter (around 2.5 to 3 minutes)
+- 2023 props test: use 4mm aluminum alloy standoffs and M1.6x8 screws. motors at full throttle rpm reach 40000rpm, overloads the battery on high throttle maneuvers (FC restarts on crash but not in flight). hovering at 3.4A@40%. flight time feels a bit shorter (around 2.5 to 3 minutes). switched back to gemfan 45mm-3
 
 ## update 3
 
-- try gemfan [2023s props](https://www.gemfanhobby.com/2023s-hurricane-pc-3-blade.html) (50.8mm, pitch 2in)
+- tried gemfan [2023S props](https://www.gemfanhobby.com/2023s-hurricane-pc-3-blade.html) (50.8mm, pitch 2in). max current 12A, flight time almost the same as with 2023. switched back to gemfan 45mm-3
 
 ## todo
 
@@ -89,7 +89,7 @@ I want to build the smallest quad possible that can carry a 4K camera onboard, h
 - [Runcam Thumb 2](https://shop.runcam.com/runcam-thumb-2/), IMX586 sensor, gyro, UART control, type C connector
 - 3 M1.4x5 or M1.4x7 screws (with coarse thread for plastic). there is [a mount to use with FPV camera](https://www.thingiverse.com/thing:6090638) that would lift the runcam higher above the frame. I used `Removable_V2_BlueJay_Canopy_with_Thumb_Pro.stl` from that thing and the top part of [the original Runcam Thumb 2 mount](https://www.thingiverse.com/thing:6807624). 
 - ~~generic 1103 15000KV 2S (3 hole M1.4 base with 6mm distance, same as the betafpv 1102 motors) or better, more expensive motors like `DarwinFPV bling 1103 8000KV`, `Happymodel EX1103 11000KV`, `sparkhobby xspeed 1103 8500KV`~~
-- ‌衢州市云端智能科技 (Happymodel) [EX1103 11000KV 2S](https://www.happymodel.cn/index.php/2022/09/05/bassline-spare-part-ex1103-kv11000-brushless-motor/) motors. the blueprint says the motor mounting holes are for M1.4 screws, but the actual size is more like M1.6
+- ‌衢州市云端智能科技 (Happymodel) [EX1103 11000KV 2S](https://www.happymodel.cn/index.php/2022/09/05/bassline-spare-part-ex1103-kv11000-brushless-motor/) motors. the blueprint says the motor mounting holes are for M1.4 screws, but the actual size is more like M1.6x4
 - 津航电子 (JHEMCU) [GHF435AIO](https://www.jhemcu.com/e_productshow/?84-JHEMCU-GHF435AIO-2-4S-20A-w-Built-in-24G-ELRSIPEXSMD-84.html) V2 - 25mm mount, 2-4s, 4 UARTS, 20A Bluejay DSHOT600 ESCs, ArteryTek AT32F435: 288MHz core 1MB flash 384KB RAM, BETAFPV 2.4GHz Lite RX (serial) IPEX gen1, 16MB blackbox, ICM-42688 IMU, AT7656E OSD
 - 衢州市云端智能科技 (Happymodel) [5.8G Crown LDS antenna RHCP](https://www.happymodel.cn/index.php/2025/08/07/happymodel-5-8g-crown-lds-antenna-rhcp-lhcp-for-micro-fpv-whoops/), [3.5dBi, 5500-6000MHz](https://www.happymodel.cn/wp-content/uploads/2025/08/5.8G-Crown-antenna-RHCP-testing-data.xls.pdf), IPEX gen1
 - 化骨龙航模 (HGLRC) [Zeuz nano 350mw VTX](https://hglrc.freshdesk.com/support/solutions/articles/61000307667-zeus-350mw-vtx). [review](https://www.multirotorguide.com/reviews/review-hglrc-zeus-vtx-nano/).
