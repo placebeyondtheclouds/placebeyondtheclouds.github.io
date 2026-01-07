@@ -19,7 +19,7 @@ China
 
 ## Position:
 
-Datacenter technician, DevOps, Data analysis, Data engineering, Cybersecurity, Research assistant, DevOps, DevSecOps
+Datacenter engineer, DevOps, Data analysis, Data engineering, Cybersecurity, Research assistant, DevOps, DevSecOps
 
 ## Summary:
 
