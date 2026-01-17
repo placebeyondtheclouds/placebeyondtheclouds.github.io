@@ -40,7 +40,7 @@ Project outcomes: multiple GPUs are shared among multiple isolated docker instan
 Rewriting single process CPU and GPU tasks Python code to use multiprocessing and multithreading to optimize compute load and shorten task execution time. Tasks range from text and audio signal data engineering to deep learning models inference.
 
 #### Training Word Vector Models
-Preprocessed Chinese text data and trained word vector models with word2vec, fasttext, and glove architectures. The outcomes are resulted in some of the papers that are outlined below.
+Preprocessed Chinese text data and trained word vector models with word2vec, fasttext, and glove architectures for research purposes. The outcomes are resulted in some of the papers that are outlined below.
 
 My other [Projects](/projects)
 
