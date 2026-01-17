@@ -16,7 +16,7 @@ timezone: Asia/Shanghai
 
 title: Aleksandr Mitkov # the main title
 
-tagline: My README.md. No AI was used in any of the writeups in this blog # it will display as the subtitle
+tagline: My README.md. No AI was used in writing any of the articles in this blog # it will display as the subtitle
 
 description: >- # used by seo meta and the atom feed
   on-premise GPU solutions, DevOps, SysOps, software engineer
