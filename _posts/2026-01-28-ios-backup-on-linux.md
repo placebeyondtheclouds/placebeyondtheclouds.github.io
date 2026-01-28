@@ -75,9 +75,7 @@ Once the backup is decrypted, it is possible to run a check for IOCs:
 ```shell
 docker run -it \
   --user "$(id -u):$(id -g)" \
-  -e MVT_IOS_BACKUP_PASSWORD \
   -v /mnt/encrypted_storage:/mnt/encrypted_storage:rw \
-  -v /mnt/backups:/mnt/backups:ro \
   -v "$PWD/iocs:/home/ubuntu/.local/share/mvt/indicators:rw" \
   mvt \
   mvt-ios download-iocs
@@ -88,14 +86,14 @@ docker run -it \
 ```shell
 docker run -it \
   --user "$(id -u):$(id -g)" \
-  -e MVT_IOS_BACKUP_PASSWORD \
   -v /mnt/encrypted_storage:/mnt/encrypted_storage:rw \
-  -v /mnt/backups:/mnt/backups:ro \
   -v "$PWD/iocs:/home/ubuntu/.local/share/mvt/indicators:rw" \
   -v "$PWD/reports:/reports:rw" \
   mvt \
   mvt-ios check-backup --output /reports/ /mnt/encrypted_storage/phone-decrypted/
 ```
+
+`reports/` **will contain sensitive information** and must be stored accordingly.
 
 ## references
 
