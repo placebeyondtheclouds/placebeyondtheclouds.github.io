@@ -75,7 +75,6 @@ Once the backup is decrypted, it is possible to run a check for IOCs:
 ```shell
 docker run -it \
   --user "$(id -u):$(id -g)" \
-  -v /mnt/encrypted_storage:/mnt/encrypted_storage:rw \
   -v "$PWD/iocs:/home/ubuntu/.local/share/mvt/indicators:rw" \
   mvt \
   mvt-ios download-iocs
