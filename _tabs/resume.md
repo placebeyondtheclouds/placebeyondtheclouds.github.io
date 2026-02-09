@@ -19,7 +19,7 @@ China
 
 ## Position:
 
-Datacenter engineer, DevOps, Data analysis, Data engineering, Cybersecurity, Research assistant, DevOps, DevSecOps
+Data center engineer, DevOps, CEPH storage engineer, Infrastructure engineer, Site reliability engineer
 
 ## Summary:
 
