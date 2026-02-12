@@ -31,7 +31,7 @@ sudo chmod 750 /usr/bin/tcpdump
 
 ## local machine
 
-local machine is running Linux with desktop manager (I use Ubuntu), have wireshark installed, ssh access to the `remote` machine.
+local machine is running Linux with desktop manager (I use Ubuntu), have wireshark installed, ssh **key** access to the `remote` machine.
 
 warm up sudo to avoid typing in the password. it is also possible to add current user to the wireshark group, for that must first choose to allow *non-superusers be able to capture packets* during wireshark installation (which basically does the same thing as above but for `dumpcap` on the local machine), and then `sudo usermod -a -G wireshark $USER`:
 
