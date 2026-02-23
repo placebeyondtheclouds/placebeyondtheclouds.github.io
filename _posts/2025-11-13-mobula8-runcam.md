@@ -36,6 +36,7 @@ I want to build the smallest quad possible that can carry a 4K camera onboard, h
 ## update 3
 
 - tried gemfan [2023S props](https://www.gemfanhobby.com/2023s-hurricane-pc-3-blade.html) (50.8mm, pitch 2in). max current 12A, flight time almost the same as with 2023. switched back to gemfan 45mm-3
+- `set crash_recovery = OFF` because if ON and landing on an exhausted battery it might trigger the recovery and cause voltage dip, leading to the Thumb losing power and not writing the gyro data onto the memory card.
 
 ## todo
 
@@ -347,7 +348,7 @@ set crash_dthreshold = 80
 set crash_gthreshold = 600
 set crash_setpoint_threshold = 500
 set crash_recovery_rate = 150
-set crash_recovery = ON
+set crash_recovery = OFF
 set iterm_relax_type = GYRO
 set iterm_windup = 85
 set pidsum_limit = 1000
@@ -394,7 +395,7 @@ set crash_dthreshold = 80
 set crash_gthreshold = 600
 set crash_setpoint_threshold = 500
 set crash_recovery_rate = 150
-set crash_recovery = ON
+set crash_recovery = OFF
 set iterm_relax_type = GYRO
 set iterm_windup = 85
 set pidsum_limit = 1000
