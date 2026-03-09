@@ -45,6 +45,7 @@ gem install jekyll bundler
 - https://lbhoe.dev/posts/chirpy-favicon-customization-issues/
 - https://chirpy.cotes.page/posts/customize-the-favicon/
 - https://realfavicongenerator.net/
+- https://developers.cloudflare.com/pages/migrations/migrating-jekyll-from-github-pages/
 
 ## License
 

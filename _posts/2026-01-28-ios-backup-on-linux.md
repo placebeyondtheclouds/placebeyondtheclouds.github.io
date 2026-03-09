@@ -35,10 +35,19 @@ Then do the backup:
 idevicebackup2 backup --full /mnt/backups/phone-backup
 ```
 
-To restore the backup (haven't tried it yet) I would erase the device first and then do:
+To restore the backup, I would erase the device first, activate it, and then do:
 
 ```shell
-idevicebackup2 restore --system --settings /mnt/backups/phone-backup
+#find out the new device's UDID if restoring to another iPhone
+ideviceinfo | grep UniqueDeviceID
+#check the activation state. the new iPhone must be activated to restore the backup
+ideviceinfo | grep ActivationState:
+```
+
+then restore the backup. it can be done right after the activation without completing the process of setting up a new device:
+
+```shell
+idevicebackup2 -i restore --system --settings /mnt/backups/phone-backup --source BACKUPUDID  --udid NEWUDID
 ```
 
 It might be useful in some cases (not just when doing forensics) to decrypt an encrypted backup to save the files from it if no device available to roll out the backup to. For that we need the MVT.
