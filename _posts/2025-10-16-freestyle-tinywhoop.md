@@ -1,11 +1,13 @@
 ---
 layout: post
-title:  "Re-building 1S 80mm freestyle quad"
+title:  "Re-building 1S (2S) 80mm (85mm) freestyle quad"
 lang: en
-tags: [en, 1s, tinywhoop, quad, fpv, diy, 80mm, analog ]
+tags: [en, 1s, tinywhoop, quad, fpv, diy, 80mm, analog, 85mm, 2s ]
 category: tutorial
 published: true
 ---
+
+
 
 I damaged ESC #2 on the 1S Matrix AIO (Meteor75 Pro), either by running a motor with damaged windings or from a voltage spike in a crash. It's overheating, not giving full power to the motor, and the video feed has white washouts during high throttle. So I'm replacing the AIO with JHEMCU G474ELRS and HGLRC Zeuz nano 350mw VTX. 
 
@@ -21,8 +23,11 @@ batteries: batches of 高能 (GNB) 100C 550mAh LiHV 1S A30 and 格氏 (Tattu) 95
 
 dry weight: 39.8 grams.
 
-> [!WARNING]
-> read the updates! the quad ended up being very different
+
+> read the updates! the quad ended up being very different 
+{: .prompt-warning }
+
+
 
 ## update 1
 
