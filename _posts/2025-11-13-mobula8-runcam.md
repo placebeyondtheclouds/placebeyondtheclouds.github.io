@@ -2,7 +2,7 @@
 layout: post
 title:  "4K analog 2 (2.5)-inch 2S (4S) cinewhoop build start to finish"
 lang: en
-tags: [en, 2s, cinewhoop, quad, fpv, diy, 85mm, analog, 4k, 2inch]
+tags: [en, 2s, cinewhoop, quad, fpv, diy, 85mm, analog, 4k, 2inch, 2.5inch, 4s]
 category: tutorial
 published: true
 ---
@@ -43,7 +43,7 @@ I want to build the smallest quad possible that can carry a 4K camera onboard, h
 
 ## update 4
 
-- got tired of lack of thrust. decided to transplant the project into a 2.5" frame, AstroRC Carbonfly 25 V3. [frame assembly tutorial for v2](https://www.youtube.com/watch?v=BBmyJonWY08). recompile the firmware with softserial support, turn on the feature, remap the resources of SCL and SDA pads to softserial1, resolder runcam `tx3->scl` and `rx3->sda` and change in the settings `camera control` from uart3 to softseral1, solder gps to uart3. bz- is not suitable for use with softserial because the pad has an npn transistor in the circuit. if 20A ESCs would not hold, I will replace the AIO with GH743AIO (480MHz, 7 UARTS, AM32 40A ESCs, 3s-6s, 16AWG lead). the motor screws that came with the motors are M2x6 and are too long for this frame, must use M2x4.5. The frame set was missing 4 M2x16 screws for the FC. M2x6 screws for the props. also removed 5V BEC used for the Runcam, because with 4s battery there is no voltage sag now.
+- got tired of lack of thrust. decided to **transplant the project into a 2.5" frame**, AstroRC Carbonfly 25 V3. [frame assembly tutorial for v2](https://www.youtube.com/watch?v=BBmyJonWY08). recompile the firmware with softserial support, turn on the feature, remap the resources of SCL and SDA pads to softserial1, resolder runcam `tx3->scl` and `rx3->sda` and change in the settings `camera control` from uart3 to softseral1, solder gps to uart3. bz- is not suitable for use with softserial because the pad has an npn transistor in the circuit. if 20A ESCs would not hold, I will replace the AIO with GH743AIO (480MHz, 7 UARTS, AM32 40A ESCs, 3s-6s, 16AWG lead). the motor screws that came with the motors are M2x6 and are too long for this frame, must use M2x4.5. The frame set was missing 4 M2x16 screws for the FC. M2x6 screws for the props. also removed 5V BEC used for the Runcam, because with 4s battery there is no voltage sag now.
 - 175 g without the battery, 245.8 g with the 4s 720mah battery.
 - Happymodel Crown LDS antenna breaks very easly, the traces with the soldering joint are ripped from the antenna's body. I used linear polarized dipole temporarily
 - flight time 4 m 40 sec, max current 24A
