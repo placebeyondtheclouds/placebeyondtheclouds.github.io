@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "4K analog 2-inch 2S cinewhoop build start to finish"
+title:  "4K analog 2 (2.5)-inch 2S (4S) cinewhoop build start to finish"
 lang: en
 tags: [en, 2s, cinewhoop, quad, fpv, diy, 85mm, analog, 4k, 2inch]
 category: tutorial
