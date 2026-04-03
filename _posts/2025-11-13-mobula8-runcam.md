@@ -10,6 +10,9 @@ published: true
 
 I want to build the smallest quad possible that can carry a 4K camera onboard, have prop guards and have enough thrust to be able to do light freestyle. Here's how I built a cinewhoop using Mobula8 frame and Runcam Thumb 2. I decided to build it on a FC with fast modern MCU from [ArteryTek](https://oscarliang.com/at32-flight-controllers/) and new industry standard gyro [ICM42688P](https://invensense.tdk.com/wp-content/uploads/2022/12/DS-000347-ICM-42688-P-v1.7.pdf). the Runcam camera will act as ~~both the fpv camera and~~ the 4K cine camera. having a live `preview` in the goggles is super convenient for dialing in Runcam's manual exposure settings. also useful for checking if I lost the action camera in a crash or not. **highlights of the build**: live switching between the cameras, Runcam camera recording start/stop from the radio, VTX power level adjustment on a pot, turtle mode without arming, RHCP antenna for VTX, whip-style antenna for RX, low esr capacitor.
 
+> [!WARNING]
+> read the updates! the quad ended up being very different
+
 ## results and updates (mobula8 frame)
 
 - dry weight: 85.2g, with 550mah batteries: 111.4g. flight time 2 minutes (winter).
@@ -37,6 +40,14 @@ I want to build the smallest quad possible that can carry a 4K camera onboard, h
 
 - tried gemfan [2023S props](https://www.gemfanhobby.com/2023s-hurricane-pc-3-blade.html) (50.8mm, pitch 2in). max current 12A, flight time almost the same as with 2023. switched back to gemfan 45mm-3
 - `set crash_recovery = OFF` because if ON and landing on an exhausted battery it might trigger the recovery and cause voltage dip, leading to the Thumb losing power and not writing the gyro data onto the memory card.
+
+## update 4
+
+- got tired of lack of thrust. decided to transplant the project into a 2.5" frame, AstroRC Carbonfly 25 V3. [frame assembly tutorial for v2](https://www.youtube.com/watch?v=BBmyJonWY08). recompile the firmware with softserial support, turn on the feature, remap the resources of SCL and SDA pads to softserial1, resolder runcam `tx3->scl` and `rx3->sda` and change in the settings `camera control` from uart3 to softseral1, solder gps to uart3. bz- is not suitable for use with softserial because the pad has an npn transistor in the circuit. if 20A ESCs would not hold, I will replace the AIO with GH743AIO (480MHz, 7 UARTS, AM32 40A ESCs, 3s-6s, 16AWG lead). the motor screws that came with the motors are M2x6 and are too long for this frame, must use M2x4.5. The frame set was missing 4 M2x16 screws for the FC. M2x6 screws for the props. also removed 5V BEC used for the Runcam, because with 4s battery there is no voltage sag now.
+- 175 g without the battery, 245.8 g with the 4s 720mah battery.
+- Happymodel Crown LDS antenna breaks very easly, the traces with the soldering joint are ripped from the antenna's body. I used linear polarized dipole temporarily
+- flight time 4 m 40 sec, max current 24A
+
 
 ## todo
 
@@ -83,6 +94,16 @@ I want to build the smallest quad possible that can carry a 4K camera onboard, h
 | ![44](/assets/images/not-mobula8-44.png) | ![45](/assets/images/not-mobula8-45.png) |    |
 
 
+## transplanting into carbonfly 25 frame + Gemfan 2023 props
+
+| - | - | - | - |
+| ![46](/assets/images/not-mobula8-46.jpg) | ![47](/assets/images/not-mobula8-47.jpg) | ![38](/assets/images/not-mobula8-48.jpg) |
+| ![49](/assets/images/not-mobula8-49.jpg) | ![50](/assets/images/not-mobula8-50.jpg) | ![51](/assets/images/not-mobula8-51.jpg) |
+| ![52](/assets/images/not-mobula8-52.jpg) | ![53](/assets/images/not-mobula8-53.jpg) | ! [54](/assets/images/not-mobula8-54.jpg) |
+| ![55](/assets/images/not-mobula8-55.jpg) | ![56](/assets/images/not-mobula8-56.jpg) |  ![57](/assets/images/not-mobula8-57.jpg) |
+| ![58](/assets/images/not-mobula8-58.jpg) | ![59](/assets/images/not-mobula8-59.jpg) |  ![60](/assets/images/not-mobula8-60.jpg) |
+| ![61](/assets/images/not-mobula8-61.jpg) | ![62](/assets/images/not-mobula8-62.jpg) |  ![63](/assets/images/not-mobula8-63.jpg) |
+
 ## parts list (mobula8 frame)
 
 - ‌衢州市云端智能科技 (Happymodel) [Mobula8 2inch frame](https://www.happymodel.cn/index.php/2023/04/28/mobula8-frame-85mm-brushless-whoop-frame/)
@@ -90,8 +111,8 @@ I want to build the smallest quad possible that can carry a 4K camera onboard, h
 - [Runcam Thumb 2](https://shop.runcam.com/runcam-thumb-2/), IMX586 sensor, gyro, UART control, type C connector
 - 3 M1.4x5 or M1.4x7 screws (with coarse thread for plastic). there is [a mount to use with FPV camera](https://www.thingiverse.com/thing:6090638) that would lift the runcam higher above the frame. I used `Removable_V2_BlueJay_Canopy_with_Thumb_Pro.stl` from that thing and the top part of [the original Runcam Thumb 2 mount](https://www.thingiverse.com/thing:6807624). 
 - ~~generic 1103 15000KV 2S (3 hole M1.4 base with 6mm distance, same as the betafpv 1102 motors) or better, more expensive motors like `DarwinFPV bling 1103 8000KV`, `Happymodel EX1103 11000KV`, `sparkhobby xspeed 1103 8500KV`~~
-- ‌衢州市云端智能科技 (Happymodel) [EX1103 11000KV 2S](https://www.happymodel.cn/index.php/2022/09/05/bassline-spare-part-ex1103-kv11000-brushless-motor/) motors. the blueprint says the motor mounting holes are for M1.4 screws, but the actual size is more like M1.6x4
-- 津航电子 (JHEMCU) [GHF435AIO](https://www.jhemcu.com/e_productshow/?84-JHEMCU-GHF435AIO-2-4S-20A-w-Built-in-24G-ELRSIPEXSMD-84.html) V2 - 25mm mount, 2-4s, 4 UARTS, 20A Bluejay DSHOT600 ESCs, ArteryTek AT32F435: 288MHz core 1MB flash 384KB RAM, BETAFPV 2.4GHz Lite RX (serial) IPEX gen1, 16MB blackbox, ICM-42688 IMU, AT7656E OSD
+- ‌衢州市云端智能科技 (Happymodel) [EX1103 11000KV 2S](https://www.happymodel.cn/index.php/2022/09/05/bassline-spare-part-ex1103-kv11000-brushless-motor/) motors. the blueprint says the motor mounting holes are for M1.4 screws, but the actual size is M1.6x4
+- 津航电子 (JHEMCU) [GHF435AIO](https://www.jhemcu.com/e_productshow/?84-JHEMCU-GHF435AIO-2-4S-20A-w-Built-in-24G-ELRSIPEXSMD-84.html) V2 - 25mm mount, 2-4s, 4 UARTS, 20A Bluejay DSHOT600 ESCs, ArteryTek AT32F435: 288MHz core 1MB flash 384KB RAM, BETAFPV 2.4GHz Lite RX (serial) IPEX gen1, 16MB blackbox, ICM-42688 IMU, AT7656E OSD. 18AWG lead. [board pinout](https://www.jhemcu.com/pic/other/2024-10-16-20-24-200.jpg)
 - 衢州市云端智能科技 (Happymodel) [5.8G Crown LDS antenna RHCP](https://www.happymodel.cn/index.php/2025/08/07/happymodel-5-8g-crown-lds-antenna-rhcp-lhcp-for-micro-fpv-whoops/), [3.5dBi, 5500-6000MHz](https://www.happymodel.cn/wp-content/uploads/2025/08/5.8G-Crown-antenna-RHCP-testing-data.xls.pdf), IPEX gen1
 - 化骨龙航模 (HGLRC) [Zeuz nano 350mw VTX](https://hglrc.freshdesk.com/support/solutions/articles/61000307667-zeus-350mw-vtx). [review](https://www.multirotorguide.com/reviews/review-hglrc-zeus-vtx-nano/).
 - two A30 female connectors (because I will use pairs of 1S batteries with A30 connectors, connected in series)
@@ -106,28 +127,51 @@ I want to build the smallest quad possible that can carry a 4K camera onboard, h
 - [AstroRC Carbonfly 80 (薯片80) frame](https://astrorc.net/products/astrorc-carbonfly-80-1-8inch-frame-o4-version)
 - [乾丰 (gemfan) 45mm-3](https://www.gemfanhobby.com/45mm-pc-3-blade.html) props (1.5 inch pitch, 1.5mm shaft)
 
+## additional parts list (2.5" frame transplant)
+
+- [Carbonfly 25 V3](https://astrorc.net/products/cf25). [board pinout](https://astrorc.net/cdn/shop/files/0114_5e7e23f8-4c25-40f2-9cc7-693ee7c1fa6c.jpg)
+- LANNRC 1404 4600kv
+ - motors spec:
+ ```
+  4600KV 
+  Configuration: 9N12P
+  Stator diameter: 14mm
+  Stator Length:4mm
+  Staft Diameter:2mm
+  Size: Φ19.3*14.8mm
+  Weight:10.3g
+  Idle current (10) @10V: ≤0.72A
+  No. of cells (Lipo): 3~4S
+  Max continuous power (W) 60S: 287.8W
+  Internal Resistance: 159mΩ
+  Max current(60S): 17.99A
+  Cable: 22AWG # 150mm Cable
+ ```
+- HQprop DT63mmX3V2 props (pitch 1.5), eight M2x6 screws
+- 高能 720 mAh 4S 100C HV
+
 ## wiring and assembly
 
 - wiring diagrams for the FC are [here](https://jhemcu.work:6/sharing/3c1SjKuS9). 
 
 | wire color | GHF435AIO pad | Runcam Thumb 2 (type C pin) |  FOXEER FP1112 |  Caddxfpv Ant |
 |------------|---------------|----------------------------|----------------|-------------|
-| purple      | RX3           | TX (A3)                 |                 |           |
-| green      | TX3           | RX (A2)                  |                 |           |
+| purple      | sda (softserial1 rx)           | TX (A3)                 |                 |           |
+| green      | scl (softserial1 tx)          | RX (A2)                  |                 |           |
 | orange      | CAM           |                       | VIDEO OUT         |           |
 | green      | LED_STRIP       |                       | PWM              |           |
 | yellow      |              |         CVBS (A11)     | VIDEO 2        |           |
 | red          |             |                    | cam1 VCC        |     5V      |
 | black      |              |                    | cam1 GND        |    GND       |
 | yellow      |              |                   | VIDEO 1        |    VIDEO     |
-   
+| red      |      +5V        |                   | VCC (5-15V)        |         |
+| black      |      GND        |                   | GND        |         |
 
-| wire color | 2S 5V BEC | Runcam Thumb 2 (type C pin) | battery|
-|------------|---------------|----------------|----------------|
-| red        | 5V OUT            | 5V (A4 or A9)         |       |
-| black      | GND OUT           | GND (A1 or A12)       |       |
-| red        | 6.4-24V IN           |               |  +       |
-| black      | GND IN           |                   |  -       |
+| wire color | FOXEER FP1112 | Runcam Thumb 2 (type C pin) | 
+|------------|---------------|----------------|
+| red        | VCC (5-15V)            | 5V (A4 or A9)         |      
+| black      | GND           | GND (A1 or A12)       |      
+      
 
 
 | wire color | GHF435AIO pad | VTX pad |
@@ -137,18 +181,37 @@ I want to build the smallest quad possible that can carry a 4K camera onboard, h
 | yellow     | VTX           | video          |
 | purple     | TX5           | RX             |
 
-- use rosin-free flux paste and 63% tin soldering thread (melts at around 183 degrees), clean the board with isopropyl alcohol after soldering. apply `P-1025` conformal coating to the FC and VTX boards. add `Kafuter K-705` silicon sealant to the places where wires are soldered to the FC pads, U.FL connectors on FC and VTX. apply blue `Loctite-243` onto last threads of the motor screws.
+
+| wire color | GHF435AIO pad                  |       gps    |  buzzer |
+|------------|------------------------------|----------------|----------|
+| red        | 4.5V (through the frame PCB)            | 5V         |    +      | 
+| black      | GND  (through the frame PCB)          | GND       |     |
+| yellow     | RX3  (through the frame PCB)          | TX          |       |
+| white     | TX3  (through the frame PCB)          | RX          |       |
+| black     | BZ-  (through the frame PCB)          |           |   -    |
+
+
+- use rosin-free flux paste and 63% tin soldering thread (melts at around 183 degrees), clean the board with isopropyl alcohol after soldering. apply `P-1025` conformal coating to the FC and VTX boards. add ~~`Kafuter K-705` silicon sealant~~ `B-7000` to the places where wires are soldered to the FC pads, U.FL connectors on FC and VTX. apply blue `Loctite-243` onto last threads of the motor screws.
 
 - UARTs configuration:
 ```
 UART1: SBUS
 UART2: onboard ELRS
-UART3: Runcam
+UART3: GPS
 UART5: VTX (IRC Tramp)
+softserial1: Runcam
 ```
+
+- solder the frame PCB wiring +5v(red),tx3(yellow),rx3(black),bz-(green) to the FC. gnd is connected through the battery lead.
 
 - Caddx Ant camera settings (using OSD menu board): AE mode to BLC=3, brightness=35, contrast auto, saturation manual=20
 
+## soft serial for runcam
+
+- set up [softserial](https://oscarliang.com/betaflight-soft-serial). set PID loop frequency to 1/2 or 1/4 (and enable gyro low pass 2) if the cpu load is too high with softserial enabled.
+add `  -DUSE_SOFTSERIAL  -DUSE_CAMERA_CONTROL` flags to the firmware.
+
+set `camera power` in modes to softserial1
 
 ## radio/modes setup
 
@@ -156,18 +219,18 @@ UART5: VTX (IRC Tramp)
 - send radio's RTC data to the flight controller to have correct time in blackbox files and on the OSD: go to special functions, add `ON Lua bfbkgd On` and turn the checkmark on
 - ch5 inverted, SB - arm
 - ch6 inverted, SA - air / acro / angle 
-- ch7 - turtle mode (+ blackbox erase)
+- ch7 - turtle mode
 - ch8 (aux4 is 3 in vtx CLI command), S2 - VTX power control
-- ch9 - SW5 toggle (aux5) - switch between the cameras
+- ch9 - SW5 toggle (aux5 servo1) - switch between the cameras
 - ch10, SW6 toggle - Runcam button
 - CH11 SD (aux7) beeper
-- CH12 SW2 2pos (aux8) blackbox
+- CH12 SW2 2pos (aux8) failsafe
 - add special function `SW6 playtrk vtx`
 
 ## ESCs configuration
 - [ESC Configurator](https://esc-configurator.com/) or [run it locally]({% post_url 2025-11-23-bf-local %})
 
-- **connect the battery**, reflash bluejay, target `G-H-30`, PWM 96kHz
+- **connect the battery**, reflash bluejay, target `G-H-30`, PWM 96kHz, version `v0.21.1-RC1`
 
 ```
 startup boost min 1025, max 1050
@@ -194,7 +257,7 @@ beacon delay 1 min
 - `status`: GYRO=ICM42688P, ACC=ICM42688P, BARO=DPS310
 - find out the firmware target: `JHEF435`. 
 - build and flash betaflight v2025.12, analog OSD, add features: camera control.
-  - [can be built locally]({% post_url 2025-11-23-bf-local %}). local build command: `make JHEF435 EXTRA_FLAGS=" -D'RELEASE_NAME=2025.12.0-RC2' -DCLOUD_BUILD -DUSE_ACRO_TRAINER -DUSE_CAMERA_CONTROL -DUSE_DSHOT -DUSE_GPS -DUSE_GPS_PLUS_CODES -DUSE_LED_STRIP -DUSE_OSD -DUSE_OSD_SD -DUSE_PINIO -DUSE_SERIALRX -DUSE_SERIALRX_CRSF -DUSE_TELEMETRY -DUSE_TELEMETRY_CRSF -DUSE_VTX -DUSE_SERVOS" -j`
+  - [can be built locally]({% post_url 2025-11-23-bf-local %}). local build command: `make JHEF435 EXTRA_FLAGS=" -D'RELEASE_NAME=2025.12.0-RC2' -DCLOUD_BUILD -DUSE_ACRO_TRAINER -DUSE_CAMERA_CONTROL -DUSE_DSHOT -DUSE_GPS -DUSE_GPS_PLUS_CODES -DUSE_LED_STRIP -DUSE_OSD -DUSE_OSD_SD -DUSE_PINIO -DUSE_SERIALRX -DUSE_SERIALRX_CRSF -DUSE_TELEMETRY -DUSE_TELEMETRY_CRSF -DUSE_VTX -DUSE_SERVOS -DUSE_SOFTSERIAL" -j`
 - calibrate the accelerometer. fly in angle mode and use [the stick commands](https://oscarliang.com/stick-commands/) to adjust trim: disarm, throttle up with yaw in the center and use the right stick to add roll or pitch trim iteratively with test flights until the quad hovers level.
 - load elrs 150Hz rate profile
 - UARTS:
@@ -204,7 +267,7 @@ beacon delay 1 min
 serial VCP 1 115200 57600 0 115200
 serial UART1 0 115200 57600 0 115200
 serial UART2 64 115200 57600 0 115200
-serial UART3 16384 115200 57600 0 115200
+serial UART3 2 115200 57600 0 115200
 serial UART5 8192 115200 57600 0 115200
 ```
 
@@ -241,12 +304,11 @@ set pid_process_denom = 1
 aux 0 0 0 1900 2100 0 0
 aux 1 0 2 1900 2100 0 0
 aux 2 1 1 1900 2100 0 0
-aux 3 13 6 1900 2100 0 0
-aux 4 26 7 1900 2100 0 0
+aux 3 27 7 1875 2100 0 0
+aux 4 13 6 1900 2100 0 0
 aux 5 28 1 900 1100 0 0
-aux 6 31 2 1925 2100 0 0
-aux 7 33 5 1900 2100 0 0
-aux 8 35 2 1925 2100 0 0
+aux 6 33 5 1900 2100 0 0
+aux 7 35 2 1925 2100 0 0
 ```
 
 
@@ -334,10 +396,10 @@ set rpm_filter_fade_range_hz = 40
 - PIDs. dynamic idle value is based on the prop size/pitch, [here](https://oscarliang.com/how-to-enable-and-configure-betaflight-dynamic-idle/) and [here](https://youtu.be/1oYoVE4xu1U?si=yH7NVtL8CJaB1tvT&t=798)
 
 ```
-profile 2
+profile 0
 
-# profile 2
-set profile_name = mob8
+# profile 0
+set profile_name = carb25
 set dterm_lpf1_dyn_min_hz = 82
 set dterm_lpf1_dyn_max_hz = 165
 set dterm_lpf1_static_hz = 82
@@ -348,65 +410,17 @@ set crash_dthreshold = 80
 set crash_gthreshold = 600
 set crash_setpoint_threshold = 500
 set crash_recovery_rate = 150
-set crash_recovery = OFF
 set iterm_relax_type = GYRO
 set iterm_windup = 85
 set pidsum_limit = 1000
 set pidsum_limit_yaw = 1000
 set throttle_boost = 0
 set p_pitch = 56
-set i_pitch = 80
-set d_pitch = 48
-set f_pitch = 89
-set i_roll = 63
-set d_roll = 35
-set f_roll = 71
-set i_yaw = 63
-set f_yaw = 71
-set d_max_roll = 35
-set d_max_pitch = 48
-set d_max_advance = 0
-set launch_control_mode = NORMAL
-set thrust_linear = 20
-set feedforward_averaging = OFF
-set feedforward_smooth_factor = 30
-set feedforward_jitter_factor = 9
-set dyn_idle_min_rpm = 100
-set simplified_i_gain = 80
-set simplified_d_gain = 120
-set simplified_d_max_gain = 0
-set simplified_feedforward_gain = 80
-set simplified_pitch_d_gain = 120
-set simplified_pitch_pi_gain = 120
-set simplified_dterm_filter = OFF
-set simplified_dterm_filter_multiplier = 110
-
-profile 3
-
-# profile 3
-set profile_name = carb45
-set dterm_lpf1_dyn_min_hz = 82
-set dterm_lpf1_dyn_max_hz = 165
-set dterm_lpf1_static_hz = 82
-set dterm_lpf2_static_hz = 165
-set vbat_sag_compensation = 100
-set anti_gravity_gain = 40
-set crash_dthreshold = 80
-set crash_gthreshold = 600
-set crash_setpoint_threshold = 500
-set crash_recovery_rate = 150
-set crash_recovery = OFF
-set iterm_relax_type = GYRO
-set iterm_windup = 85
-set pidsum_limit = 1000
-set pidsum_limit_yaw = 1000
-set throttle_boost = 0
-set p_pitch = 56
-set i_pitch = 80
+set i_pitch = 100
 set d_pitch = 44
-set f_pitch = 149
-set i_roll = 63
-set i_yaw = 63
+set f_pitch = 119
+set f_roll = 95
+set f_yaw = 95
 set d_max_roll = 30
 set d_max_pitch = 44
 set d_max_advance = 0
@@ -415,15 +429,13 @@ set thrust_linear = 20
 set feedforward_averaging = OFF
 set feedforward_smooth_factor = 30
 set feedforward_jitter_factor = 9
-set dyn_idle_min_rpm = 100
-set simplified_i_gain = 100
+set dyn_idle_min_rpm = 80
 set simplified_d_max_gain = 0
 set simplified_feedforward_gain = 80
 set simplified_pitch_d_gain = 130
 set simplified_pitch_pi_gain = 120
 set simplified_dterm_filter = OFF
 set simplified_dterm_filter_multiplier = 110
-
 
 ```
 
@@ -637,7 +649,7 @@ save
 - [gyroflow best practices for older cameras, does not directly apply to thumb2](https://docs.gyroflow.xyz/app/getting-started/supported-cameras/runcam)
 - [lens profile](https://github.com/gyroflow/lens_profiles/blob/main/RunCam/Runcam_Thumb2_4by3.json) for Gyroflow
 
-## changes after transplanting into AstroRC Carbonfly 80 frame
+## changes after transplanting into AstroRC Carbonfly 80 frame (same for the carbonfly 25)
 
 - the board is installed upside down in this frame. wrong alignment will trigger runaway protection on takeoff.
 

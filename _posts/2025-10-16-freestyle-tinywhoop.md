@@ -7,7 +7,7 @@ category: tutorial
 published: true
 ---
 
-I damaged ESC #2 on the 1S Matrix AIO (Meteor75 Pro), either by running a motor with damaged windings or from a voltage spike in a crash. It's overheating, not giving full power to the motor, and the video feed has white washouts during high throttle. So I'm replacing the AIO with JHEMCU G474ELRS and HGLRC Zeuz nano 350mw VTX. Update: the ELRS receiver on the AIO died after a week or so. ~~Update: using another VTX (ZENCHANSI 棕熊 W007 400mw) temporarily~~
+I damaged ESC #2 on the 1S Matrix AIO (Meteor75 Pro), either by running a motor with damaged windings or from a voltage spike in a crash. It's overheating, not giving full power to the motor, and the video feed has white washouts during high throttle. So I'm replacing the AIO with JHEMCU G474ELRS and HGLRC Zeuz nano 350mw VTX. 
 
 Meteor75 frame is scraping the battery and motor screws against the ground, so I am replacing it with a clone of Mobula7 but for 45mm props (80mm base and 47mm ducts instead of 75mm and 43mm respectively). It has 2S battery tray, and with 1S battery the whoop will land on the lower part of the frame without the battery or motor screws touching the ground. Another solution to the problem would be keep the meteor75pro frame and printing [the battery bumper](https://www.thingiverse.com/thing:7056235).
 
@@ -20,6 +20,19 @@ batteries: batches of 高能 (GNB) 100C 550mAh LiHV 1S A30 and 格氏 (Tattu) 95
 **Highlights of this build's configuration**: 1s, PAL analog, OSD profile change on a pot, VTX power change on a pot, turtle mode without arming, full weather protection, battry crash protection, RHCP antenna for VTX, whip-style antenna for RX, buzzer, 220uf 16v cap, tuned filters.
 
 dry weight: 39.8 grams.
+
+> [!WARNING]
+> read the updates! the quad ended up being very different
+
+## update 1
+
+the ELRS receiver on the AIO died after a week or so. ~~Update: using another VTX (ZENCHANSI 棕熊 W007 400mw) temporarily~~
+
+## update 2
+
+- with a dedicated VTX and added ELRS receiver the quad became too heavy and feels very underpowered now. so I decided to swap it into Mobula8 2 inch frame (85 mm motorpost to motorpost), swap motors to 1103 11000KV, props gemfan 2023. run on 1s pairs first, then resolder xt30 to the FC and use a proper 2s battery GNB 550mAh 2s 100C HV XT30
+- dry weight: 51.2 g, with two 1s batteries: 77.6 g
+- flight time 5 min, max total current 24A
 
 ## components
 
@@ -35,6 +48,12 @@ dry weight: 39.8 grams.
 - 20AWG wires for the battery lead, A30 connector
 - added: cyclone EP1 ELRS 2.4ghz nano rx (IPEX gen1), whip antenna 
 
+## components (mobula8 85mm frame)
+
+- ‌衢州市云端智能科技 (Happymodel) [Mobula8 2inch frame](https://www.happymodel.cn/index.php/2023/04/28/mobula8-frame-85mm-brushless-whoop-frame/) (85mm base, 51mm props, 3 or 4 hole motor mounts)
+- props 乾丰 (Gemfan) [2023](https://www.gemfanhobby.com/2023-hurricane-pc-3-blade.html) 2 inch (52.17mm), pitch 2.3 inch, 3-blade (1.5mm shaft)
+- ‌衢州市云端智能科技 (Happymodel) [EX1103 11000KV 2S](https://www.happymodel.cn/index.php/2022/09/05/bassline-spare-part-ex1103-kv11000-brushless-motor/) motors. the blueprint says the motor mounting holes are for M1.4 screws, but the actual size is M1.6x4
+- 高能 (GNB) 100C 550mAh LiHV 2S XT30, 18mmX12mmX69mm (GNB550025100AHV)
 
 ## pictures
 
@@ -49,6 +68,12 @@ dry weight: 39.8 grams.
 | ![10](/assets/images/rebuild10.jpg) |![11](/assets/images/rebuild11.jpg) | ![12](/assets/images/rebuild12.jpg) |
 | - | - | - |
 | ![13](/assets/images/rebuild13.jpg) | ![14](/assets/images/rebuild14.jpg) |![15](/assets/images/rebuild15.jpg) |
+
+## mobula 8 85mm transplant
+
+| - | - | - |
+| ![1](/assets/images/rebuild16.jpg) | ![2](/assets/images/rebuild17.jpg) |![3](/assets/images/rebuild18.jpg) |
+| ![1](/assets/images/rebuild19.jpg) | - | - |
 
 ## the process
 
@@ -128,9 +153,9 @@ set yaw_motors_reversed = ON
 - ch7 - turtle mode
 - ch8 (aux4), S2 - VTX power switching
 - ch9 - SD - buzzer
-- ch10 - SW2 2pos - aux6 blackbox
+- ch10 - SW2 2pos - aux6 
 - CH11 (AUX7), S1 - OSD profile switching
-- ch12 - SW3 toggle - aux8 blackbox erase
+- ch12 - SW3 toggle - aux8 
 
 ## restore my settings
 
@@ -527,7 +552,7 @@ blackbox_high_resolution = OFF
 
 ## testing
 
-- _after_ successful test flights, apply `P-1025` conformal coating to the FC and VTX boards (I already applied it to the camera board), add `Kafuter K-705` silicon sealant to the places where wires are soldered to the FC pads, U.FL connectors on FC and VTX. apply blue `Loctite-243` onto last threads of the motor screws.
+- _after_ successful test flights, apply `P-1025` conformal coating to the FC and VTX boards (I already applied it to the camera board), add ~~`Kafuter K-705` silicon sealant~~ `B-7000` to the places where wires are soldered to the FC pads, U.FL connectors on FC and VTX. apply blue `Loctite-243` onto last threads of the motor screws.
 
 ## Update on the AIO's RX failure
 
