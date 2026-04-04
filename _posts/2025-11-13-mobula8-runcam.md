@@ -48,7 +48,7 @@ I want to build the smallest quad possible that can carry a 4K camera onboard, h
 - 175 g without the battery, 245.8 g with the 4s 720mah battery.
 - Happymodel Crown LDS antenna breaks very easly, the traces with the soldering joint are ripped from the antenna's body. I used linear polarized dipole temporarily
 - flight time 4 m 40 sec, max current 24A
-- because there is not enough ports and [softserial was implemented only for STM32 MCUs](https://github.com/betaflight/betaflight/issues/15058#issuecomment-4184127886) and is not available for ArteryTek MCUs, I had to disable camera control using UART in favor of running the GPS module. camera control will be implemented using the PWM input in the socket on the back of the camera, connected to SCL pad on the AIO, which will be remapped to PINIO2.
+- because there are not enough UARTs on this AIO and [softserial was implemented only for STM32 MCUs](https://github.com/betaflight/betaflight/issues/15058#issuecomment-4184127886) and is not available for ArteryTek MCUs, I had to disable camera control using UART in favor of running the GPS module. camera control will be implemented using the PWM input in the socket on the back of the camera, connected to SCL pad on the AIO, which will be remapped to PINIO2.
 
 
 ## todo
@@ -160,14 +160,16 @@ I want to build the smallest quad possible that can carry a 4K camera onboard, h
 |------------|---------------|----------------------------|----------------|-------------|
 | purple      | -           | TX (A3)                 |                 |           |
 | green      | -          | RX (A2)                  |                 |           |
+| yellow      | SCL          | PWM                  |                 |           |
 | orange      | CAM           |                       | VIDEO OUT         |           |
-| green      | SCL       |                       | PWM              |           |
+| green      | LED_STRIP       |                       | PWM              |           |
 | yellow      |              |         CVBS (A11)     | VIDEO 2        |           |
 | red          |             |                    | cam1 VCC        |     5V      |
 | black      |              |                    | cam1 GND        |    GND       |
 | yellow      |              |                   | VIDEO 1        |    VIDEO     |
 | red      |      +5V        |                   | VCC (5-15V)        |         |
 | black      |      GND        |                   | GND        |         |
+
 
 | wire color | FOXEER FP1112 | Runcam Thumb 2 (type C pin) | 
 |------------|---------------|----------------|
