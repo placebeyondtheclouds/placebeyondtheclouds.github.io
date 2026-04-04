@@ -44,10 +44,11 @@ I want to build the smallest quad possible that can carry a 4K camera onboard, h
 
 ## update 4
 
-- got tired of lack of thrust. decided to **transplant the project into a 2.5" frame**, AstroRC Carbonfly 25 V3. [frame assembly tutorial for v2](https://www.youtube.com/watch?v=BBmyJonWY08). recompile the firmware with softserial support, turn on the feature, remap the resources of SCL and SDA pads to softserial1, resolder runcam `tx3->scl` and `rx3->sda` and change in the settings `camera control` from uart3 to softseral1, solder gps to uart3. bz- is not suitable for use with softserial because the pad has an npn transistor in the circuit. if 20A ESCs would not hold, I will replace the AIO with GH743AIO (480MHz, 7 UARTS, AM32 40A ESCs, 3s-6s, 16AWG lead). the motor screws that came with the motors are M2x6 and are too long for this frame, must use M2x4.5. The frame set was missing 4 M2x16 screws for the FC. M2x6 screws for the props. also removed 5V BEC used for the Runcam, because with 4s battery there is no voltage sag now.
+- got tired of lack of thrust. decided to **transplant the project into a 2.5" frame**, AstroRC Carbonfly 25 V3. [frame assembly tutorial for v2](https://www.youtube.com/watch?v=BBmyJonWY08). ~~recompile the firmware with softserial support, turn on the feature, remap the resources of SCL and SDA pads to softserial1, resolder runcam `tx3->scl` and `rx3->sda` and change in the settings `camera control` from uart3 to softseral1,~~ solder SCL pad to PWM input on the Runcam, solder gps to UART3. bz- is not suitable for use with softserial because the pad has an npn transistor in the circuit. if 20A ESCs would not hold, I will replace the AIO with GH743AIO (480MHz, 7 UARTS, AM32 40A ESCs, 3s-6s, 16AWG lead). the motor screws that came with the motors are M2x6 and are too long for this frame, must use M2x4.5. The frame set was missing 4 M2x16 screws for the FC. M2x6 screws for the props. also removed 5V BEC used for the Runcam, because with 4s battery there is no voltage sag now.
 - 175 g without the battery, 245.8 g with the 4s 720mah battery.
 - Happymodel Crown LDS antenna breaks very easly, the traces with the soldering joint are ripped from the antenna's body. I used linear polarized dipole temporarily
 - flight time 4 m 40 sec, max current 24A
+- because there is not enough ports and [softserial was implemented only for STM32 MCUs](https://github.com/betaflight/betaflight/issues/15058#issuecomment-4184127886) and is not available for ArteryTek MCUs, I had to disable camera control using UART in favor of running the GPS module. camera control will be implemented using the PWM input in the socket on the back of the camera, connected to SCL pad on the AIO, which will be remapped to PINIO2.
 
 
 ## todo
@@ -157,10 +158,10 @@ I want to build the smallest quad possible that can carry a 4K camera onboard, h
 
 | wire color | GHF435AIO pad | Runcam Thumb 2 (type C pin) |  FOXEER FP1112 |  Caddxfpv Ant |
 |------------|---------------|----------------------------|----------------|-------------|
-| purple      | sda (softserial1 rx)           | TX (A3)                 |                 |           |
-| green      | scl (softserial1 tx)          | RX (A2)                  |                 |           |
+| purple      | -           | TX (A3)                 |                 |           |
+| green      | -          | RX (A2)                  |                 |           |
 | orange      | CAM           |                       | VIDEO OUT         |           |
-| green      | LED_STRIP       |                       | PWM              |           |
+| green      | SCL       |                       | PWM              |           |
 | yellow      |              |         CVBS (A11)     | VIDEO 2        |           |
 | red          |             |                    | cam1 VCC        |     5V      |
 | black      |              |                    | cam1 GND        |    GND       |
@@ -209,10 +210,40 @@ softserial1: Runcam
 
 ## soft serial for runcam
 
+> softserial is not implemented for ArteryTek MCUs
+{: .prompt-warning }
+
 - set up [softserial](https://oscarliang.com/betaflight-soft-serial). set PID loop frequency to 1/2 or 1/4 (and enable gyro low pass 2) if the cpu load is too high with softserial enabled.
 add `  -DUSE_SOFTSERIAL  -DUSE_CAMERA_CONTROL` flags to the firmware.
 
 set `camera power` in modes to softserial1
+
+
+## Runcam camera control with PINIO
+
+https://www.betaflight.com/docs/wiki/guides/current/Pinio-and-PinioBox
+
+
+ set the switch to `trigger` mode in edgetx, set mode `user1` in betaflight to AUX6. pad signal is inverted by adding 128 to 1 in box1, so triggering `user1` sets the SCL pad momentarily to LOW (0V)
+
+original
+
+```
+resource I2C_SCL 2 H02
+resource PINIO 1 NONE
+pinio_config = 1,1,1,1
+pinio_box = 255,255,255,255
+```
+
+actual change
+
+```
+resource I2C_SCL 2 NONE
+resource PINIO 1 H02
+set pinio_config = 129,1,1,1
+set pinio_box = 40,255,255,255
+save
+```
 
 ## radio/modes setup
 
@@ -223,7 +254,7 @@ set `camera power` in modes to softserial1
 - ch7 - turtle mode
 - ch8 (aux4 is 3 in vtx CLI command), S2 - VTX power control
 - ch9 - SW5 toggle (aux5 servo1) - switch between the cameras
-- ch10, SW6 toggle - Runcam button
+- ch10, SW6 toggle (aux6) - Runcam button
 - CH11 SD (aux7) beeper
 - CH12 SW2 2pos (aux8) failsafe
 - add special function `SW6 playtrk vtx`
@@ -258,7 +289,7 @@ beacon delay 1 min
 - `status`: GYRO=ICM42688P, ACC=ICM42688P, BARO=DPS310
 - find out the firmware target: `JHEF435`. 
 - build and flash betaflight v2025.12, analog OSD, add features: camera control.
-  - [can be built locally]({% post_url 2025-11-23-bf-local %}). local build command: `make JHEF435 EXTRA_FLAGS=" -D'RELEASE_NAME=2025.12.0-RC2' -DCLOUD_BUILD -DUSE_ACRO_TRAINER -DUSE_CAMERA_CONTROL -DUSE_DSHOT -DUSE_GPS -DUSE_GPS_PLUS_CODES -DUSE_LED_STRIP -DUSE_OSD -DUSE_OSD_SD -DUSE_PINIO -DUSE_SERIALRX -DUSE_SERIALRX_CRSF -DUSE_TELEMETRY -DUSE_TELEMETRY_CRSF -DUSE_VTX -DUSE_SERVOS -DUSE_SOFTSERIAL" -j`
+  - [can be built locally]({% post_url 2025-11-23-bf-local %}). local build command: `make JHEF435 EXTRA_FLAGS=" -D'RELEASE_NAME=2025.12.0-RC2' -DCLOUD_BUILD -DUSE_ACRO_TRAINER -DUSE_CAMERA_CONTROL -DUSE_DSHOT -DUSE_GPS -DUSE_GPS_PLUS_CODES -DUSE_LED_STRIP -DUSE_OSD -DUSE_OSD_SD -DUSE_PINIO -DUSE_SERIALRX -DUSE_SERIALRX_CRSF -DUSE_TELEMETRY -DUSE_TELEMETRY_CRSF -DUSE_VTX -DUSE_SERVOS" -j`
 - calibrate the accelerometer. fly in angle mode and use [the stick commands](https://oscarliang.com/stick-commands/) to adjust trim: disarm, throttle up with yaw in the center and use the right stick to add roll or pitch trim iteratively with test flights until the quad hovers level.
 - load elrs 150Hz rate profile
 - UARTS:
@@ -308,8 +339,8 @@ aux 2 1 1 1900 2100 0 0
 aux 3 27 7 1875 2100 0 0
 aux 4 13 6 1900 2100 0 0
 aux 5 28 1 900 1100 0 0
-aux 6 33 5 1900 2100 0 0
-aux 7 35 2 1925 2100 0 0
+aux 6 35 2 1925 2100 0 0
+aux 7 40 5 1850 2100 0 0
 ```
 
 
