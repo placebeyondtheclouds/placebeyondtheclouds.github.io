@@ -41,16 +41,16 @@ the ELRS receiver on the AIO died after a week or so. ~~Update: using another VT
 
 ## components
 
-- 津航电子 (JHEMCU) G474ELRS - 1-2s, 4 UARTS, 12A bluejay, STM32G474: 170MHz core 512KB flash 128KB RAM, 8MB blackbox, BETAFPV 2.4GHz Lite RX (serial) IPEX gen1
+- 津航电子 (JHEMCU) G474ELRS - 1s-2s, 4 UARTS, 12A bluejay, STM32G474: 170MHz core 512KB flash 128KB RAM, 8MB blackbox, BETAFPV 2.4GHz Lite RX (serial) IPEX gen1
 - 衢州市云端智能科技 (Happymodel) [5.8G Crown LDS antenna RHCP](https://www.happymodel.cn/index.php/2025/08/07/happymodel-5-8g-crown-lds-antenna-rhcp-lhcp-for-micro-fpv-whoops/), [3.5dBi, 5500-6000MHz](https://www.happymodel.cn/wp-content/uploads/2025/08/5.8G-Crown-antenna-RHCP-testing-data.xls.pdf), IPEX gen1
 - 卡德克斯技术 (Caddx) Ant lite (f/2.5 lens). Update: swapped to Caddx Ant (f/1.2 lens), not in the pictures
-- Mobula7 frame (80mm clone) - 45mm props, 80mm base, 47mm ducts
+- ~~Mobula7 frame (80mm clone) - 45mm props, 80mm base, 47mm ducts~~
 - ~~ZENCHANSI 棕熊 W007 400mw vtx~~
 - 化骨龙航模 (HGLRC) [Zeuz nano 350mw VTX](https://hglrc.freshdesk.com/support/solutions/articles/61000307667-zeus-350mw-vtx). [review](https://www.multirotorguide.com/reviews/review-hglrc-zeus-vtx-nano/).
-- 哈鸣科技 (BETAFPV) 1102 22000kv motors (left from Meteor75 Pro)
-- 乾丰 (gemfan) 45mm-3 props (1.5mm shaft)
+- ~~哈鸣科技 (BETAFPV) 1102 22000kv motors (left from Meteor75 Pro)~~
+- ~~乾丰 (gemfan) 45mm-3 props (1.5mm shaft)~~
 - 220uF 16v capacitor
-- 20AWG wires for the battery lead, A30 connector
+- ~~20AWG wires for the battery lead, A30 connector~~
 - added: cyclone EP1 ELRS 2.4ghz nano rx (IPEX gen1), whip antenna 
 
 ## components (mobula8 85mm frame)
@@ -58,7 +58,9 @@ the ELRS receiver on the AIO died after a week or so. ~~Update: using another VT
 - ‌衢州市云端智能科技 (Happymodel) [Mobula8 2inch frame](https://www.happymodel.cn/index.php/2023/04/28/mobula8-frame-85mm-brushless-whoop-frame/) (85mm base, 51mm props, 3 or 4 hole motor mounts)
 - props 乾丰 (Gemfan) [2023](https://www.gemfanhobby.com/2023-hurricane-pc-3-blade.html) 2 inch (52.17mm), pitch 2.3 inch, 3-blade (1.5mm shaft)
 - ‌衢州市云端智能科技 (Happymodel) [EX1103 11000KV 2S](https://www.happymodel.cn/index.php/2022/09/05/bassline-spare-part-ex1103-kv11000-brushless-motor/) motors. the blueprint says the motor mounting holes are for M1.4 screws, but the actual size is M1.6x4
-- 高能 (GNB) 100C 550mAh LiHV 2S XT30, 18mmX12mmX69mm (GNB550025100AHV)
+- ~~高能 (GNB) 100C 550mAh LiHV 2S XT30, 18mmX12mmX69mm (GNB5502S100AHV), 29g~~
+- 高能 (GNB) 70C 350mAh LiHV 2S XT30, 16mmX12mmX49mm (GNB3502S70AHV), 18g
+- 18AWG leads, XT30 male connector
 
 ## pictures
 

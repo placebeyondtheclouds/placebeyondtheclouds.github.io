@@ -108,30 +108,31 @@ I want to build the smallest quad possible that **can carry a 4K camera onboard,
 
 ## parts list (mobula8 frame)
 
-- ‌衢州市云端智能科技 (Happymodel) [Mobula8 2inch frame](https://www.happymodel.cn/index.php/2023/04/28/mobula8-frame-85mm-brushless-whoop-frame/)
-- props 乾丰 (Gemfan) [2023](https://www.gemfanhobby.com/2023-hurricane-pc-3-blade.html) 2 inch (52.17mm), pitch 2.3 inch,  3-blade (1.5mm shaft)
-- [Runcam Thumb 2](https://shop.runcam.com/runcam-thumb-2/), IMX586 sensor, gyro, UART control, type C connector
-- 3 M1.4x5 or M1.4x7 screws (with coarse thread for plastic). there is [a mount to use with FPV camera](https://www.thingiverse.com/thing:6090638) that would lift the runcam higher above the frame. I used `Removable_V2_BlueJay_Canopy_with_Thumb_Pro.stl` from that thing and the top part of [the original Runcam Thumb 2 mount](https://www.thingiverse.com/thing:6807624). 
+- ~~‌衢州市云端智能科技 (Happymodel) [Mobula8 2inch frame](https://www.happymodel.cn/index.php/2023/04/28/mobula8-frame-85mm-brushless-whoop-frame/)~~
+- ~~props 乾丰 (Gemfan) [2023](https://www.gemfanhobby.com/2023-hurricane-pc-3-blade.html) 2 inch (52.17mm), pitch 2.3 inch,  3-blade (1.5mm shaft)~~
+- [Runcam Thumb 2](https://shop.runcam.com/runcam-thumb-2/), IMX586 sensor, gyro, UART control, PWM control, type C connector
+- ~~3 M1.4x5 or M1.4x7 screws (with coarse thread for plastic). there is [a mount to use with FPV camera](https://www.thingiverse.com/thing:6090638) that would lift the runcam higher above the frame. I used `Removable_V2_BlueJay_Canopy_with_Thumb_Pro.stl` from that thing and the top part of [the original Runcam Thumb 2 mount](https://www.thingiverse.com/thing:6807624). ~~
 - ~~generic 1103 15000KV 2S (3 hole M1.4 base with 6mm distance, same as the betafpv 1102 motors) or better, more expensive motors like `DarwinFPV bling 1103 8000KV`, `Happymodel EX1103 11000KV`, `sparkhobby xspeed 1103 8500KV`~~
-- ‌衢州市云端智能科技 (Happymodel) [EX1103 11000KV 2S](https://www.happymodel.cn/index.php/2022/09/05/bassline-spare-part-ex1103-kv11000-brushless-motor/) motors. the blueprint says the motor mounting holes are for M1.4 screws, but the actual size is M1.6x4
+- ~~‌衢州市云端智能科技 (Happymodel) [EX1103 11000KV 2S](https://www.happymodel.cn/index.php/2022/09/05/bassline-spare-part-ex1103-kv11000-brushless-motor/) motors. the blueprint says the motor mounting holes are for M1.4 screws, but the actual size is M1.6x4~~
 - 津航电子 (JHEMCU) [GHF435AIO](https://www.jhemcu.com/e_productshow/?84-JHEMCU-GHF435AIO-2-4S-20A-w-Built-in-24G-ELRSIPEXSMD-84.html) V2 - 25mm mount, 2-4s, 4 UARTS, 20A Bluejay DSHOT600 ESCs, ArteryTek AT32F435: 288MHz core 1MB flash 384KB RAM, BETAFPV 2.4GHz Lite RX (serial) IPEX gen1, 16MB blackbox, ICM-42688 IMU, AT7656E OSD. 18AWG lead. [board pinout](https://www.jhemcu.com/pic/other/2024-10-16-20-24-200.jpg)
-- 衢州市云端智能科技 (Happymodel) [5.8G Crown LDS antenna RHCP](https://www.happymodel.cn/index.php/2025/08/07/happymodel-5-8g-crown-lds-antenna-rhcp-lhcp-for-micro-fpv-whoops/), [3.5dBi, 5500-6000MHz](https://www.happymodel.cn/wp-content/uploads/2025/08/5.8G-Crown-antenna-RHCP-testing-data.xls.pdf), IPEX gen1
+- ~~衢州市云端智能科技 (Happymodel) [5.8G Crown LDS antenna RHCP](https://www.happymodel.cn/index.php/2025/08/07/happymodel-5-8g-crown-lds-antenna-rhcp-lhcp-for-micro-fpv-whoops/), [3.5dBi, 5500-6000MHz](https://www.happymodel.cn/wp-content/uploads/2025/08/5.8G-Crown-antenna-RHCP-testing-data.xls.pdf), IPEX gen1~~
 - 化骨龙航模 (HGLRC) [Zeuz nano 350mw VTX](https://hglrc.freshdesk.com/support/solutions/articles/61000307667-zeus-350mw-vtx). [review](https://www.multirotorguide.com/reviews/review-hglrc-zeus-vtx-nano/).
-- two A30 female connectors (because I will use pairs of 1S batteries with A30 connectors, connected in series)
+- ~~two A30 female connectors (because I will use pairs of 1S batteries with A30 connectors, connected in series)~~
 - heatshrink, 2mm zip ties, 18AWG wires for the battery lead
-- batteries: pairs of 高能 (GNB) 100C 550mAh LiHV 1S A30 (18mmX6mmX66mm) in series
+- ~~batteries: pairs of 高能 (GNB) 100C 550mAh LiHV 1S A30 (18mmX6mmX66mm) in series~~
 - 飞翼创新 FOXEER FP1112 video source switcher
 - 卡德克斯技术 CADDXFPV Ant (f/1.2 lens) camera
-- 5V 2A(continuous) 3A(spike) UBEC (input: 6.5-28V) for the Runcam
+- ~~5V 2A(continuous) 3A(spike) UBEC (input: 6.5-28V) for the Runcam~~
+- ~~220 uf 16v capacitor~~
 
 ## additional parts list (carbonfly 80 frame transplant)
 
-- [AstroRC Carbonfly 80 (薯片80) frame](https://astrorc.net/products/astrorc-carbonfly-80-1-8inch-frame-o4-version)
-- [乾丰 (gemfan) 45mm-3](https://www.gemfanhobby.com/45mm-pc-3-blade.html) props (1.5 inch pitch, 1.5mm shaft)
+- ~~[AstroRC Carbonfly 80 (薯片80) frame](https://astrorc.net/products/astrorc-carbonfly-80-1-8inch-frame-o4-version)~~
+- ~~[乾丰 (gemfan) 45mm-3](https://www.gemfanhobby.com/45mm-pc-3-blade.html) props (1.5 inch pitch, 1.5mm shaft)~~
 
-## additional parts list (2.5" frame transplant)
+## additional parts list (carbonfly 2.5" frame transplant)
 
-- [Carbonfly 25 V3](https://astrorc.net/products/cf25). [board pinout](https://astrorc.net/cdn/shop/files/0114_5e7e23f8-4c25-40f2-9cc7-693ee7c1fa6c.jpg)
+- [Carbonfly 25 V3](https://astrorc.net/products/cf25).
 - LANNRC 1404 4600kv
  - motors spec:
  ```
@@ -149,8 +150,11 @@ I want to build the smallest quad possible that **can carry a 4K camera onboard,
   Max current(60S): 17.99A
   Cable: 22AWG # 150mm Cable
  ```
+
 - HQprop DT63mmX3V2 props (pitch 1.5), eight M2x6 screws
-- 高能 720 mAh 4S 100C HV
+- 高能 720 mAh 4S 100C HV, XT30
+- Mayatech Redbean gen4 RHCP antenna, 5.2-6GHz (lowest VSWR is at 5.7GHz), 3dBi gain, IPEX gen1 with 150mm cable
+- 220 uf 35v solid state capacitor
 
 ## wiring and assembly
 
@@ -203,7 +207,7 @@ UART5: VTX (IRC Tramp)
 
 - Caddx Ant camera settings (using OSD menu board): AE mode to BLC=3, brightness=35, contrast auto, saturation manual=20
 
-## soft serial for runcam
+## soft serial for Runcam (not using)
 
 > softserial is not implemented for ArteryTek MCUs
 {: .prompt-warning }
@@ -211,7 +215,7 @@ UART5: VTX (IRC Tramp)
 - set up [softserial](https://oscarliang.com/betaflight-soft-serial). set PID loop frequency to 1/2 or 1/4 (and enable gyro low pass 2) if the cpu load is too high with softserial enabled.
 add `  -DUSE_SOFTSERIAL  -DUSE_CAMERA_CONTROL` flags to the firmware.
 
-set `camera power` in modes to softserial1
+set `camera power` in modes to softserial1, set softserial1 protocol to *runcam* in ports
 
 
 ## Runcam camera control with PINIO
