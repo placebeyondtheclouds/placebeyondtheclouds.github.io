@@ -35,7 +35,7 @@ the ELRS receiver on the AIO died after a week or so. ~~Update: using another VT
 
 ## update 2
 
-- with a dedicated VTX and added ELRS receiver the quad became too heavy and feels very underpowered now. so I decided to swap it into Mobula8 2 inch frame (85 mm motorpost to motorpost), swap motors to 1103 11000KV, props gemfan 2023. run on 1s pairs first, then resolder xt30 to the FC and use a proper 2s battery GNB 550mAh 2s 100C HV XT30
+- with a dedicated VTX and added ELRS receiver the quad became too heavy and feels very underpowered now. so I decided to swap it into Mobula8 2 inch frame (85 mm motorpost to motorpost), swap motors to 1103 11000KV, props gemfan 2023 or 2023s. run on 1s pairs first, then resolder xt30 to the FC and use a proper 2s battery GNB 550mAh 2s 100C HV XT30
 - dry weight: 51.2 g, with two 1s batteries: 77.6 g
 - flight time 5 min, max total current 24A
 

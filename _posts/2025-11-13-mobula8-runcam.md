@@ -8,9 +8,9 @@ published: true
 ---
 
 
-I want to build the smallest quad possible that can carry a 4K camera onboard, have prop guards and have enough thrust to be able to do light freestyle. Here's how I built a cinewhoop using Mobula8 frame and Runcam Thumb 2. I decided to build it on a FC with fast modern MCU from [ArteryTek](https://oscarliang.com/at32-flight-controllers/) and new industry standard gyro [ICM42688P](https://invensense.tdk.com/wp-content/uploads/2022/12/DS-000347-ICM-42688-P-v1.7.pdf). the Runcam camera will act as ~~both the fpv camera and~~ the 4K cine camera. having a live `preview` in the goggles is super convenient for dialing in Runcam's manual exposure settings. also useful for checking if I lost the action camera in a crash or not. **highlights of the build**: live switching between the cameras, Runcam camera recording start/stop from the radio, VTX power level adjustment on a pot, turtle mode without arming, RHCP antenna for VTX, whip-style antenna for RX, low esr capacitor.
+I want to build the smallest quad possible that **can carry a 4K camera onboard, have prop guards and have enough thrust to be able to do light freestyle**. Here's how I built a cinewhoop using ~~Mobula8 frame~~ 2.5 inch frame and Runcam Thumb 2. I decided to build it on a FC with fast modern MCU from [ArteryTek](https://oscarliang.com/at32-flight-controllers/) and new industry standard gyro [ICM42688P](https://invensense.tdk.com/wp-content/uploads/2022/12/DS-000347-ICM-42688-P-v1.7.pdf). the Runcam camera will act as ~~both the fpv camera and~~ the 4K video camera. having a live `preview` in the goggles is super convenient for dialing in Runcam's manual exposure settings. also useful for checking if I lost the action camera (or its ND filter) in a crash or not, by switching to the camera feed. **highlights of the build**: live switching between the cameras, Runcam camera recording start/stop from the radio, VTX power level adjustment on a pot, turtle mode without arming, RHCP antenna for VTX, whip-style antenna for RX, low esr capacitor.
 
-> read the updates! the quad ended up being very different 
+> read the updates! the quad ended up being very different. the "smallest" part is not the case anymore since it means very poor (borderline unusable) flight performance.
 {: .prompt-warning }
 
 
@@ -28,7 +28,7 @@ I want to build the smallest quad possible that can carry a 4K camera onboard, h
 - flight time at 96kHz PWM, 22.5 degrees motor timing, 90% motor limit, outside temperature around 0 degrees celsius, two LiHV 550mah 100C A30 batteries in series: around 2 minutes down to 3.3v
 - the 5GHz antenna requires putting a heatshrink to the place where the cable is soldered to the antenna itself, otherwise the shielding gradually breaks and loses contact with the antenna
 
-## update 2: transplant
+## update 2: 1.8 inch frame transplant
 
 - transplanting everything into a carbon fiber [AstroRC Carbonfly 80 (薯片80) frame](https://astrorc.net/products/astrorc-carbonfly-80-1-8inch-frame-o4-version). I couldn't choose the 2inch frame because the motor mounts are different (4 holes on 9mm radius) and I would like to keep my motors. [AstroRC official frame assembly tutorial](https://www.youtube.com/watch?v=75qipfHU6d8), changing the props to gemfan 45mm-3 because 2023 do not fit into the frame without modifications (that will follow)
 - dry weight: 95.6 grams, with batteries: 121.8 grams. flight time 3 to 3.5 minutes (winter), max current 9A.
@@ -42,19 +42,19 @@ I want to build the smallest quad possible that can carry a 4K camera onboard, h
 - tried gemfan [2023S props](https://www.gemfanhobby.com/2023s-hurricane-pc-3-blade.html) (50.8mm, pitch 2in). max current 12A, flight time almost the same as with 2023. switched back to gemfan 45mm-3
 - `set crash_recovery = OFF` because if ON and landing on an exhausted battery it might trigger the recovery and cause voltage dip, leading to the Thumb losing power and not writing the gyro data onto the memory card.
 
-## update 4
+## update 4: 2.5 inch frame transplant
 
 - got tired of lack of thrust. decided to **transplant the project into a 2.5" frame**, AstroRC Carbonfly 25 V3. [frame assembly tutorial for v2](https://www.youtube.com/watch?v=BBmyJonWY08). ~~recompile the firmware with softserial support, turn on the feature, remap the resources of SCL and SDA pads to softserial1, resolder runcam `tx3->scl` and `rx3->sda` and change in the settings `camera control` from uart3 to softseral1,~~ solder SCL pad to PWM input on the Runcam, solder gps to UART3. bz- is not suitable for use with softserial because the pad has an npn transistor in the circuit. if 20A ESCs would not hold, I will replace the AIO with GH743AIO (480MHz, 7 UARTS, AM32 40A ESCs, 3s-6s, 16AWG lead). the motor screws that came with the motors are M2x6 and are too long for this frame, must use M2x4.5. The frame set was missing 4 M2x16 screws for the FC. M2x6 screws for the props. also removed 5V BEC used for the Runcam, because with 4s battery there is no voltage sag now.
 - 175 g without the battery, 245.8 g with the 4s 720mah battery.
 - Happymodel Crown LDS antenna breaks very easly, the traces with the soldering joint are ripped from the antenna's body. I used linear polarized dipole temporarily
 - flight time 4 m 40 sec, max current 24A
-- because there are not enough UARTs on this AIO and [softserial was implemented only for STM32 MCUs](https://github.com/betaflight/betaflight/issues/15058#issuecomment-4184127886) and is not available for ArteryTek MCUs, I had to disable camera control using UART in favor of running the GPS module. camera control will be implemented using the PWM input in the socket on the back of the camera, connected to SCL pad on the AIO, which will be remapped to PINIO2.
+- because there are not enough UARTs on this AIO and [softserial was implemented only for STM32 MCUs](https://github.com/betaflight/betaflight/issues/15058#issuecomment-4184127886) and is not available for ArteryTek MCUs, I had to disable camera control using UART in favor of running the GPS module. camera control will be implemented using the PWM input in the socket on the back of the camera, connected to SCL pad on the AIO, which will be remapped to PINIO2. it is also possible to use servo output instead of PINIO.
 
 
 ## todo
 
-- [x] tune filters
-- [x] tune PIDs
+- [ ] tune filters
+- [ ] tune PIDs
 - [ ] adjust the current sensor calibration value
 
 ## initial build video
@@ -101,7 +101,7 @@ I want to build the smallest quad possible that can carry a 4K camera onboard, h
 | - | - | - | - |
 | ![46](/assets/images/not-mobula8-46.jpg) | ![47](/assets/images/not-mobula8-47.jpg) | ![38](/assets/images/not-mobula8-48.jpg) |
 | ![49](/assets/images/not-mobula8-49.jpg) | ![50](/assets/images/not-mobula8-50.jpg) | ![51](/assets/images/not-mobula8-51.jpg) |
-| ![52](/assets/images/not-mobula8-52.jpg) | ![53](/assets/images/not-mobula8-53.jpg) | ! [54](/assets/images/not-mobula8-54.jpg) |
+| ![52](/assets/images/not-mobula8-52.jpg) | ![53](/assets/images/not-mobula8-53.jpg) | ![54](/assets/images/not-mobula8-54.jpg) |
 | ![55](/assets/images/not-mobula8-55.jpg) | ![56](/assets/images/not-mobula8-56.jpg) |  ![57](/assets/images/not-mobula8-57.jpg) |
 | ![58](/assets/images/not-mobula8-58.jpg) | ![59](/assets/images/not-mobula8-59.jpg) |  ![60](/assets/images/not-mobula8-60.jpg) |
 | ![61](/assets/images/not-mobula8-61.jpg) | ![62](/assets/images/not-mobula8-62.jpg) |  ![63](/assets/images/not-mobula8-63.jpg) |
