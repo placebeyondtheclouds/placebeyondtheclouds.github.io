@@ -167,16 +167,10 @@ I want to build the smallest quad possible that **can carry a 4K camera onboard,
 | red          |             |                    | cam1 VCC        |     5V      |
 | black      |              |                    | cam1 GND        |    GND       |
 | yellow      |              |                   | VIDEO 1        |    VIDEO     |
-| red      |      +5V        |                   | VCC (5-15V)        |         |
-| black      |      GND        |                   | GND        |         |
+| red      |      +5V        |     5V (A4 or A9)    | VCC (5-15V)        |         |
+| black      |      GND        |   GND (A1 or A12)    | GND        |         |
 
-
-| wire color | FOXEER FP1112 | Runcam Thumb 2 (type C pin) | 
-|------------|---------------|----------------|
-| red        | VCC (5-15V)            | 5V (A4 or A9)         |      
-| black      | GND           | GND (A1 or A12)       |      
       
-
 
 | wire color | GHF435AIO pad | VTX pad |
 |------------|---------------|----------------|
@@ -246,6 +240,24 @@ set pinio_config = 129,1,1,1
 set pinio_box = 40,255,255,255
 save
 ```
+
+## video source switcher control with servo output. 
+
+the `FOXEER FP1112` switcher's manual says it uses PWM 3.3V, 50Hz, duty 5-10%
+
+```
+resource
+resource LED_STRIP 1 none
+resource servo 1 B01
+feature LED_STRIP
+feature SERVO_TILT
+feature -CHANNEL_FORWARDING
+set servo_pwm_rate = 50
+servo 0 1000 2000 1500 100 8
+```
+
+this maps LED_STRIP pad (it is also possible to use the SDA pad) resource to the first servo (servo0). servo0 is activated with AUX5 (`8` here, count from 1 with 1-4 being the stick axes, 5 being AUX1 and so on). mode value 2000 on the CH10 (toggle on the radio) sets LED_STRIP pad to HIGH (3.3V). this will tell the video channel switcher to switch to VIDEO2 (runcam). the other state is LOW, which means the fpv camera (VIDEO1) will be connected to the FC by default.
+
 
 ## radio/modes setup
 
@@ -346,20 +358,6 @@ aux 7 40 5 1850 2100 0 0
 ```
 
 
-- video source switcher control with servo output. the switcher's manual says it uses PWM 3.3V, 50Hz, duty 5-10%
-
-```
-resource
-resource LED_STRIP 1 none
-resource servo 1 B01
-feature LED_STRIP
-feature SERVO_TILT
-feature -CHANNEL_FORWARDING
-set servo_pwm_rate = 50
-servo 0 1000 2000 1500 100 8
-```
-
-this maps LED_STRIP pad resource to the first servo. servo0 is activated with AUX5 (`8` here, count from 1 with 1-4 being the stick axes, 5 being AUX1 and so on). mode value 2000 on the CH10 (toggle on the radio) sets LED_STRIP pad to HIGH (3.3V). this will tell the video channel switcher to switch to VIDEO2 (runcam). the other state is LOW, which means the fpv camera (VIDEO1) will be connected to the FC by default.
 
 -  HGLRC Zeus nano 350mw [vtxtable](https://www.rotorama.cz/cms/assets/docs/d0c22322f24f3bf72e2e66bab648f238/13272-1/zeus-nano-350mw-vtx.json).
 
@@ -683,7 +681,7 @@ save
 - [gyroflow best practices for older cameras, does not directly apply to thumb2](https://docs.gyroflow.xyz/app/getting-started/supported-cameras/runcam)
 - [lens profile](https://github.com/gyroflow/lens_profiles/blob/main/RunCam/Runcam_Thumb2_4by3.json) for Gyroflow
 
-## changes after transplanting into AstroRC Carbonfly 80 frame (same for the carbonfly 25)
+## changes to motors order and board alignment after transplanting into AstroRC Carbonfly 80mm frame (same for the carbonfly 25)
 
 - the board is installed upside down in this frame. wrong alignment will trigger runaway protection on takeoff.
 
@@ -698,7 +696,7 @@ set align_board_yaw = 45
 set motor_output_reordering = 2,3,0,1,4,5,6,7
 ```
 
-- 2023 props are too big for this frame, I had to switch to Gemfan 45mm-3. will also try 2023 props with shims between the motors and the frame and longer bolts
+
 
 
 
