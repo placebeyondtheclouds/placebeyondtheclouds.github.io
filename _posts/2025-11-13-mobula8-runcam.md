@@ -270,7 +270,7 @@ this maps LED_STRIP pad (it is also possible to use the SDA pad) resource to the
 - ch9 - SW5 toggle (aux5 servo1) - switch between the cameras
 - ch10, SW6 toggle (aux6) - Runcam button
 - CH11 SD (aux7) beeper
-- CH12 SW2 2pos (aux8) failsafe
+- CH12 SW1 2pos (aux8) failsafe 1500, SW2 pos hold and alt hold 2000 (SW1 and SW2 are in group 1. in special functions SW1 down adjust global variable G2 to 0, SW2 down adjust G2 to 1024. in logical switches L17 SW1 up AND SW2 up, in special functions L17 adjusts G2 to -1024.  in mixes CH12 is set to G2)
 - add special function `SW6 playtrk vtx`
 
 ## ESCs configuration
@@ -303,7 +303,7 @@ beacon delay 1 min
 - `status`: GYRO=ICM42688P, ACC=ICM42688P, BARO=DPS310
 - find out the firmware target: `JHEF435`. 
 - build and flash betaflight v2025.12, analog OSD, add features: camera control.
-  - [can be built locally]({% post_url 2025-11-23-bf-local %}). local build command: `make JHEF435 EXTRA_FLAGS=" -D'RELEASE_NAME=2025.12.0-RC2' -DCLOUD_BUILD -DUSE_ACRO_TRAINER -DUSE_CAMERA_CONTROL -DUSE_DSHOT -DUSE_GPS -DUSE_GPS_PLUS_CODES -DUSE_LED_STRIP -DUSE_OSD -DUSE_OSD_SD -DUSE_PINIO -DUSE_SERIALRX -DUSE_SERIALRX_CRSF -DUSE_TELEMETRY -DUSE_TELEMETRY_CRSF -DUSE_VTX -DUSE_SERVOS" -j`
+  - [can be built locally]({% post_url 2025-11-23-bf-local %}). local build command: `make JHEF435 EXTRA_FLAGS=" -D'RELEASE_NAME=2025.12.0-RC2' -DCLOUD_BUILD -DUSE_ACRO_TRAINER -DUSE_CAMERA_CONTROL -DUSE_DSHOT -DUSE_GPS -DUSE_GPS_PLUS_CODES -DUSE_LED_STRIP -DUSE_OSD -DUSE_OSD_SD -DUSE_PINIO -DUSE_SERIALRX -DUSE_SERIALRX_CRSF -DUSE_TELEMETRY -DUSE_TELEMETRY_CRSF -DUSE_VTX -DUSE_SERVOS -DUSE_ALTITUDE_HOLD -DUSE_POSITION_HOLD" -j`
 - calibrate the accelerometer. fly in angle mode and use [the stick commands](https://oscarliang.com/stick-commands/) to adjust trim: disarm, throttle up with yaw in the center and use the right stick to add roll or pitch trim iteratively with test flights until the quad hovers level.
 - load elrs 150Hz rate profile
 - UARTS:
@@ -347,14 +347,17 @@ set pid_process_denom = 1
 
 ```
 # mode / function ID / channel 0-7 (AUX1-8 in configurator) / range
+
 aux 0 0 0 1900 2100 0 0
 aux 1 0 2 1900 2100 0 0
 aux 2 1 1 1900 2100 0 0
-aux 3 27 7 1875 2100 0 0
-aux 4 13 6 1900 2100 0 0
-aux 5 28 1 900 1100 0 0
-aux 6 35 2 1925 2100 0 0
-aux 7 40 5 1850 2100 0 0
+aux 3 3 7 1900 2100 0 0
+aux 4 27 7 1375 1600 0 0
+aux 5 11 7 1875 2100 0 0
+aux 6 13 6 1900 2100 0 0
+aux 7 28 1 900 1100 0 0
+aux 8 35 2 1925 2100 0 0
+aux 9 40 5 1850 2100 0 0
 ```
 
 
@@ -668,6 +671,49 @@ set debug_mode = GYRO_RAW
 ```
 
 I set `debug_mode = BATTERY` midway through the first part of the build to debug the voltage sag problem
+
+
+- GPS rescue, position hold and alt hold
+
+just for fun, configure pos+alt hold, needs `pos_hold_without_mag = ON`, and then a calibration flight (a straight line for 10 meters) each time
+
+```
+rxfail 0 a
+rxfail 1 a
+rxfail 2 a
+rxfail 3 s 1500
+rxfail 4 h
+rxfail 5 s 2000
+```
+
+```
+set failsafe_delay = 15
+set failsafe_switch_mode = STAGE1
+set failsafe_throttle_low_delay = 100
+set failsafe_procedure = GPS-RESCUE
+set failsafe_recovery_delay = 5
+set failsafe_stick_threshold = 30
+```
+
+```
+set gps_provider = UBLOX
+set gps_auto_config = ON
+set gps_set_home_point_once = ON
+
+set gps_rescue_min_start_dist = 15
+set gps_rescue_alt_mode = CURRENT_ALT
+set gps_rescue_initial_climb = 5
+set gps_rescue_disarm_threshold = 30
+set gps_rescs = 5
+set gps_rescue_allow_arming_without_fix = ON
+
+set pos_hold_without_mag = ON
+
+set ap_hover_throttle = 1435
+```
+
+
+- save
 
 ```
 save
