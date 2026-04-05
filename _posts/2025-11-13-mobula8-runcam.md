@@ -189,7 +189,7 @@ I want to build the smallest quad possible that **can carry a 4K camera onboard,
 
 
 
-- use rosin-free flux paste and 63% tin soldering thread (melts at around 183 degrees), clean the board with isopropyl alcohol after soldering. apply `P-1025` conformal coating to the FC and VTX boards. add ~~`Kafuter K-705` silicon sealant~~ `B-7000` to the places where wires are soldered to the FC pads, U.FL connectors on FC and VTX. apply blue `Loctite-243` onto last threads of the motor screws.
+- use rosin-free flux paste and 63% tin soldering thread (melts at around 183 degrees), clean the board with isopropyl alcohol after soldering. apply `P-1025` conformal coating to the FC and VTX boards. add `Kafuter K-705` silicon sealant (mechanically weak and easily removed) or `B-7000` (strong glue) to the places where wires are soldered to the FC pads, U.FL connectors on FC and VTX. apply blue `Loctite-243` onto last threads of the motor screws.
 
 - UARTs configuration:
 ```
@@ -197,10 +197,9 @@ UART1: SBUS
 UART2: onboard ELRS
 UART3: GPS
 UART5: VTX (IRC Tramp)
-softserial1: Runcam
 ```
 
-- solder the frame PCB wiring +5v(red),tx3(yellow),rx3(black),bz-(green) to the FC. gnd is connected through the battery lead.
+- solder the frame PCB wiring +5v(red),tx3(yellow),rx3(black) to the FC. GPS is connected to the frame PCB pads. gnd is connected through the battery lead. BZ- pad is connected to the Runcam's PWM.
 
 - Caddx Ant camera settings (using OSD menu board): AE mode to BLC=3, brightness=35, contrast auto, saturation manual=20
 
@@ -220,7 +219,7 @@ set `camera power` in modes to softserial1
 https://www.betaflight.com/docs/wiki/guides/current/Pinio-and-PinioBox
 
 
- set the switch to `trigger` mode in edgetx, set mode `user1` in betaflight to AUX6. pad signal is inverted by adding 128 to 1 in box1, so triggering `user1` sets the SCL pad momentarily to LOW (0V)
+ set the switch to `trigger` mode in edgetx, set mode `user1` in betaflight to AUX6. pad signal is inverted by adding 128 to 1 in box1, so triggering `user1` sets the BZ- pad momentarily to LOW (0V)
 
 original
 
