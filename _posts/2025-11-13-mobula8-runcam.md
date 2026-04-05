@@ -44,11 +44,11 @@ I want to build the smallest quad possible that **can carry a 4K camera onboard,
 
 ## update 4: 2.5 inch frame transplant
 
-- got tired of lack of thrust. decided to **transplant the project into a 2.5" frame**, AstroRC Carbonfly 25 V3. [frame assembly tutorial for v2](https://www.youtube.com/watch?v=BBmyJonWY08). ~~recompile the firmware with softserial support, turn on the feature, remap the resources of SCL and SDA pads to softserial1, resolder runcam `tx3->scl` and `rx3->sda` and change in the settings `camera control` from uart3 to softseral1,~~ solder SCL pad to PWM input on the Runcam, solder gps to UART3. bz- is not suitable for use with softserial because the pad has an npn transistor in the circuit. if 20A ESCs would not hold, I will replace the AIO with GH743AIO (480MHz, 7 UARTS, AM32 40A ESCs, 3s-6s, 16AWG lead). the motor screws that came with the motors are M2x6 and are too long for this frame, must use M2x4.5. The frame set was missing 4 M2x16 screws for the FC. M2x6 screws for the props. also removed 5V BEC used for the Runcam, because with 4s battery there is no voltage sag now.
+- got tired of lack of thrust. decided to **transplant the project into a 2.5" frame**, AstroRC Carbonfly 25 V3. [frame assembly tutorial for v2](https://www.youtube.com/watch?v=BBmyJonWY08). solder gps to UART3. ~~recompile the firmware with softserial support, turn on the feature, remap the resources of SCL and SDA pads to softserial1, resolder runcam `tx3->scl` and `rx3->sda` and change in the settings `camera control` from uart3 to softseral1,  bz- is not suitable for use with softserial because the pad has an npn transistor in the circuit.~~ but bz- can be used for PINIO, solder bz- pad to PWM input on the Runcam. if 20A ESCs would not hold, I will replace the AIO with GH743AIO (480MHz, 7 UARTS, AM32 40A ESCs, 3s-6s, 16AWG lead). the motor screws that came with the motors are M2x6 and are too long for this frame, must use M2x4.5. The frame set was missing 4 M2x16 screws for the FC. M2x6 screws for the props. also removed 5V BEC used for the Runcam, because with 4s battery there is no voltage sag now.
 - 175 g without the battery, 245.8 g with the 4s 720mah battery.
 - Happymodel Crown LDS antenna breaks very easly, the traces with the soldering joint are ripped from the antenna's body. I used linear polarized dipole temporarily
 - flight time 4 m 40 sec, max current 24A
-- because there are not enough UARTs on this AIO and [softserial was implemented only for STM32 MCUs](https://github.com/betaflight/betaflight/issues/15058#issuecomment-4184127886) and is not available for ArteryTek MCUs, I had to disable camera control using UART in favor of running the GPS module. camera control will be implemented using the PWM input in the socket on the back of the camera, connected to SCL pad on the AIO, which will be remapped to PINIO2. it is also possible to use servo output instead of PINIO.
+- because there are not enough UARTs on this AIO and [softserial was implemented only for STM32 MCUs](https://github.com/betaflight/betaflight/issues/15058#issuecomment-4184127886) and is not available for ArteryTek MCUs, I had to disable camera control using UART in favor of running the GPS module. camera control will be implemented using the PWM input in the socket on the back of the camera, connected to ~~SCL pad (can not use SCL or SDA, because both resources must be mapped to the I2C bus in order for the barometer to work)~~ BZ- on the AIO, which will be remapped to PINIO1. it is also possible to use servo output instead of PINIO.
 
 
 ## todo
@@ -160,7 +160,7 @@ I want to build the smallest quad possible that **can carry a 4K camera onboard,
 |------------|---------------|----------------------------|----------------|-------------|
 | purple      | -           | TX (A3)                 |                 |           |
 | green      | -          | RX (A2)                  |                 |           |
-| yellow      | SCL          | PWM                  |                 |           |
+| yellow      | BZ-          | PWM                  |                 |           |
 | orange      | CAM           |                       | VIDEO OUT         |           |
 | green      | LED_STRIP       |                       | PWM              |           |
 | yellow      |              |         CVBS (A11)     | VIDEO 2        |           |
@@ -180,13 +180,13 @@ I want to build the smallest quad possible that **can carry a 4K camera onboard,
 | purple     | TX5           | RX             |
 
 
-| wire color | GHF435AIO pad                  |       gps    |  buzzer |
-|------------|------------------------------|----------------|----------|
-| red        | 4.5V (through the frame PCB)            | 5V         |    +      | 
-| black      | GND  (through the frame PCB)          | GND       |     |
-| yellow     | RX3  (through the frame PCB)          | TX          |       |
-| white     | TX3  (through the frame PCB)          | RX          |       |
-| black     | BZ-  (through the frame PCB)          |           |   -    |
+| wire color | GHF435AIO pad                  |       gps    |  
+|------------|------------------------------|----------------|
+| red        | 4.5V (through the frame PCB)            | 5V         |    
+| black      | GND  (through the frame PCB)          | GND       |     
+| yellow     | RX3  (through the frame PCB)          | TX          |     
+| white     | TX3  (through the frame PCB)          | RX          |      
+
 
 
 - use rosin-free flux paste and 63% tin soldering thread (melts at around 183 degrees), clean the board with isopropyl alcohol after soldering. apply `P-1025` conformal coating to the FC and VTX boards. add ~~`Kafuter K-705` silicon sealant~~ `B-7000` to the places where wires are soldered to the FC pads, U.FL connectors on FC and VTX. apply blue `Loctite-243` onto last threads of the motor screws.
@@ -225,7 +225,7 @@ https://www.betaflight.com/docs/wiki/guides/current/Pinio-and-PinioBox
 original
 
 ```
-resource I2C_SCL 2 H02
+resource BEEPER 1 C15
 resource PINIO 1 NONE
 pinio_config = 1,1,1,1
 pinio_box = 255,255,255,255
@@ -234,8 +234,8 @@ pinio_box = 255,255,255,255
 actual change
 
 ```
-resource I2C_SCL 2 NONE
-resource PINIO 1 H02
+resource BEEPER 1 NONE
+resource PINIO 1 C15
 set pinio_config = 129,1,1,1
 set pinio_box = 40,255,255,255
 save
@@ -341,7 +341,17 @@ set pidsum_limit_yaw = 1000
 set pid_process_denom = 1
 ```
 
-- `set baro_hardware = DPS310` to skip barometer auto detection
+- [barometer](https://betaflight.com/docs/wiki/guides/current/Barometer) configuration
+
+```
+set baro_i2c_address = 118
+set baro_i2c_device = 2
+set baro_hardware = DPS310
+set altitude_source = DEFAULT
+set altitude_prefer_baro = 100
+resource I2C_SCL 2 H02
+resource I2C_SDA 2 H03
+```
 
 - modes (for my radio setup). IDs are [here](https://github.com/betaflight/betaflight/blob/master/src/main/msp/msp_box.c). add mode `camera power` to AUX6
 
@@ -500,7 +510,7 @@ set dshot_bidir = ON
 set dshot_bitbang = AUTO
 set motor_pwm_protocol = DSHOT600
 set motor_poles = 12
-set bat_capacity = 550
+set bat_capacity = 720
 set vbat_max_cell_voltage = 440
 set vbat_full_cell_voltage = 420
 set vbat_min_cell_voltage = 320
