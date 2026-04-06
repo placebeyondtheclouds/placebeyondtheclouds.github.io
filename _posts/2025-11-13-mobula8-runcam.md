@@ -45,8 +45,8 @@ I want to build the smallest quad possible that **can carry a 4K camera onboard,
 ## update 4: 2.5 inch frame transplant
 
 - got tired of lack of thrust. decided to **transplant the project into a 2.5" frame**, AstroRC Carbonfly 25 V3. [frame assembly tutorial for v2](https://www.youtube.com/watch?v=BBmyJonWY08). solder gps to UART3. ~~recompile the firmware with softserial support, turn on the feature, remap the resources of SCL and SDA pads to softserial1, resolder runcam `tx3->scl` and `rx3->sda` and change in the settings `camera control` from uart3 to softseral1,  bz- is not suitable for use with softserial because the pad has an npn transistor in the circuit.~~ but bz- can be used for PINIO, solder bz- pad to PWM input on the Runcam. if 20A ESCs would not hold, I will replace the AIO with GH743AIO (480MHz, 7 UARTS, AM32 40A ESCs, 3s-6s, 16AWG lead). the motor screws that came with the motors are M2x6 and are too long for this frame, must use M2x4.5. The frame set was missing 4 M2x16 screws for the FC. M2x6 screws for the props. also removed 5V BEC used for the Runcam, because with 4s battery there is no voltage sag now.
-- 175 g without the battery, 245.8 g with the 4s 720mah battery.
-- Happymodel Crown LDS antenna breaks very easly, the traces with the soldering joint are ripped from the antenna's body. I used linear polarized dipole temporarily
+- 180.7 g without the battery, 247.3 g with the 4s 720mah battery.
+- Happymodel Crown LDS antenna breaks very easly, the traces with the soldering joint are ripped from the antenna's body. ~~I used linear polarized dipole temporarily.~~
 - flight time 4 m 40 sec, max current 24A
 - because there are not enough UARTs on this AIO and [softserial was implemented only for STM32 MCUs](https://github.com/betaflight/betaflight/issues/15058#issuecomment-4184127886) and is not available for ArteryTek MCUs, I had to disable camera control using UART in favor of running the GPS module. camera control will be implemented using the PWM input in the socket on the back of the camera, connected to ~~SCL pad (can not use SCL or SDA, because both resources must be mapped to the I2C bus in order for the barometer to work)~~ BZ- on the AIO, which will be remapped to PINIO1. it is also possible to use servo output instead of PINIO.
 
@@ -105,6 +105,7 @@ I want to build the smallest quad possible that **can carry a 4K camera onboard,
 | ![55](/assets/images/not-mobula8-55.jpg) | ![56](/assets/images/not-mobula8-56.jpg) |  ![57](/assets/images/not-mobula8-57.jpg) |
 | ![58](/assets/images/not-mobula8-58.jpg) | ![59](/assets/images/not-mobula8-59.jpg) |  ![60](/assets/images/not-mobula8-60.jpg) |
 | ![61](/assets/images/not-mobula8-61.jpg) | ![62](/assets/images/not-mobula8-62.jpg) |  ![63](/assets/images/not-mobula8-63.jpg) |
+| ![64](/assets/images/not-mobula8-64.jpg) | - |  - |
 
 ## parts list (mobula8 frame)
 
@@ -270,11 +271,11 @@ this maps LED_STRIP pad (it is also possible to use the SDA pad) resource to the
 - ch6 inverted, SA - air / acro / angle 
 - ch7 - turtle mode
 - ch8 (aux4 is 3 in vtx CLI command), S2 - VTX power control
-- ch9 - SW5 toggle (aux5 servo1) - switch between the cameras
-- ch10, SW6 toggle (aux6) - Runcam button
+- ch9 - SW5 toggle, no group (aux5 servo1) - switch between the cameras
+- ch10, SW6 toggle, no group (aux6) - Runcam button
 - CH11 SD (aux7) beeper
 - CH12 SW1 2pos (aux8) failsafe 1500, SW2 pos hold and alt hold 2000 (SW1 and SW2 are in group 1. in special functions SW1 down adjust global variable G2 to 0, SW2 down adjust G2 to 1024. in logical switches L17 SW1 up AND SW2 up, in special functions L17 adjusts G2 to -1024.  in mixes CH12 is set to G2)
-- add special function `SW6 playtrk vtx`
+- add special function `SW1down ply trk fsact`, `SW2down ply trk poshold` `SW5up ply trk ready`, `SW6down ply trk recsrt`
 
 ## ESCs configuration
 - [ESC Configurator](https://esc-configurator.com/) or [run it locally]({% post_url 2025-11-23-bf-local %})
