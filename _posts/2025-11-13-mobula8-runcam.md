@@ -8,7 +8,7 @@ published: true
 ---
 
 
-I want to build the smallest quad possible that **can carry a 4K camera onboard, have prop guards and have enough thrust to be able to do light freestyle**. Here's how I built a cinewhoop using ~~Mobula8 frame~~ 2.5 inch frame and Runcam Thumb 2. I decided to build it on a FC with fast modern MCU from [ArteryTek](https://oscarliang.com/at32-flight-controllers/) and new industry standard gyro [ICM42688P](https://invensense.tdk.com/wp-content/uploads/2022/12/DS-000347-ICM-42688-P-v1.7.pdf). the Runcam camera will act as ~~both the fpv camera and~~ the 4K video camera. having a live `preview` in the goggles is super convenient for dialing in Runcam's manual exposure settings. also useful for checking if I lost the action camera (or its ND filter) in a crash or not, by switching to the camera feed. **highlights of the build**: live switching between the cameras, Runcam camera recording start/stop from the radio, VTX power level adjustment on a pot, turtle mode without arming, RHCP antenna for VTX, whip-style antenna for RX, low esr capacitor.
+I want to build the smallest quad possible that **can carry a 4K camera onboard, have prop guards and have enough thrust to be able to do light freestyle**. Here's how I built a cinewhoop using ~~Mobula8 frame~~ 2.5 inch frame and Runcam Thumb 2. I decided to build it on a FC with fast modern MCU from [ArteryTek](https://oscarliang.com/at32-flight-controllers/) and new industry standard gyro [ICM42688P](https://invensense.tdk.com/wp-content/uploads/2022/12/DS-000347-ICM-42688-P-v1.7.pdf). the Runcam camera will act as ~~both the fpv camera and~~ the 4K video camera. having a live `preview` in the goggles is super convenient for dialing in Runcam's manual exposure settings. also useful for checking if I lost the action camera (or its ND filter) in a crash or not, by switching to the camera feed. **highlights of the build**: live switching between the cameras, Runcam camera recording start/stop from the radio, VTX power level adjustment on a pot, turtle mode without arming, RHCP antenna for VTX, whip-style antenna for RX, low esr capacitor, GPS rescue, position and altitude hold (without a magnetometer so it needs a calibration flight each time before use).
 
 > read the updates! the quad ended up being very different. the "smallest" part is not the case anymore since it means very poor (borderline unusable) flight performance.
 {: .prompt-warning }
@@ -49,6 +49,10 @@ I want to build the smallest quad possible that **can carry a 4K camera onboard,
 - Happymodel Crown LDS antenna breaks very easly, the traces with the soldering joint are ripped from the antenna's body. ~~I used linear polarized dipole temporarily.~~
 - flight time 4 m 40 sec, max current 24A
 - because there are not enough UARTs on this AIO and [softserial was implemented only for STM32 MCUs](https://github.com/betaflight/betaflight/issues/15058#issuecomment-4184127886) and is not available for ArteryTek MCUs, I had to disable camera control using UART in favor of running the GPS module. camera control will be implemented using the PWM input in the socket on the back of the camera, connected to ~~SCL pad (can not use SCL or SDA, because both resources must be mapped to the I2C bus in order for the barometer to work)~~ BZ- on the AIO, which will be remapped to PINIO1. it is also possible to use servo output instead of PINIO.
+
+## update 5
+
+- because of my poor piloting skills I was going through ND filters way too fast and was worried that sooner or later I will destroy the Runcam's lens itself. so I decided to print [the shell](https://www.thingiverse.com/thing:6830398) from black TPU, and attach it to the same seat of [the original Runcam Thumb 2 mount](https://www.thingiverse.com/thing:6807624).
 
 
 ## todo
@@ -135,22 +139,22 @@ I want to build the smallest quad possible that **can carry a 4K camera onboard,
 
 - [Carbonfly 25 V3](https://astrorc.net/products/cf25).
 - LANNRC 1404 4600kv
- - motors spec:
- ```
-  4600KV 
-  Configuration: 9N12P
-  Stator diameter: 14mm
-  Stator Length:4mm
-  Staft Diameter:2mm
-  Size: Φ19.3*14.8mm
-  Weight:10.3g
-  Idle current (10) @10V: ≤0.72A
-  No. of cells (Lipo): 3~4S
-  Max continuous power (W) 60S: 287.8W
-  Internal Resistance: 159mΩ
-  Max current(60S): 17.99A
-  Cable: 22AWG # 150mm Cable
- ```
+    - motor spec:
+      ```
+        4600KV 
+        Configuration: 9N12P
+        Stator diameter: 14mm
+        Stator Length:4mm
+        Staft Diameter:2mm
+        Size: Φ19.3*14.8mm
+        Weight:10.3g
+        Idle current (10) @10V: ≤0.72A
+        No. of cells (Lipo): 3~4S
+        Max continuous power (W) 60S: 287.8W
+        Internal Resistance: 159mΩ
+        Max current(60S): 17.99A
+        Cable: 22AWG # 150mm Cable
+      ```
 
 - HQprop DT63mmX3V2 props (pitch 1.5), eight M2x6 screws
 - 高能 720 mAh 4S 100C HV, XT30
@@ -192,7 +196,7 @@ I want to build the smallest quad possible that **can carry a 4K camera onboard,
 | yellow     | RX3  (through the frame PCB)          | TX          |     
 | white     | TX3  (through the frame PCB)          | RX          |      
 
-
+- 4.5V pad is powered from USB as well
 
 - use rosin-free flux paste and 63% tin soldering thread (melts at around 183 degrees), clean the board with isopropyl alcohol after soldering. apply `P-1025` conformal coating to the FC and VTX boards. add `Kafuter K-705` silicon sealant (mechanically weak and easily removed) or `B-7000` (strong glue) to the places where wires are soldered to the FC pads, U.FL connectors on FC and VTX. apply blue `Loctite-243` onto last threads of the motor screws.
 
@@ -207,6 +211,11 @@ UART5: VTX (IRC Tramp)
 - solder the frame PCB wiring +5v(red),tx3(yellow),rx3(black) to the FC. GPS is connected to the frame PCB pads. gnd is connected through the battery lead. BZ- pad is connected to the Runcam's PWM.
 
 - Caddx Ant camera settings (using OSD menu board): AE mode to BLC=3, brightness=35, contrast auto, saturation manual=20
+
+## ArteryTek drivers
+
+- [usb virtual com port driver](https://www.arterychip.com/file/download/1702)
+- [DFU mode driver](https://www.arterychip.com/file/download/1682)
 
 ## soft serial for Runcam (not using)
 
@@ -351,7 +360,7 @@ set pid_process_denom = 1
 set baro_i2c_address = 118
 set baro_i2c_device = 2
 set baro_hardware = DPS310
-set altitude_source = DEFAULT
+set altitude_source = BARO_ONLY
 set altitude_prefer_baro = 100
 resource I2C_SCL 2 H02
 resource I2C_SDA 2 H03
@@ -478,7 +487,7 @@ set thrust_linear = 20
 set feedforward_averaging = OFF
 set feedforward_smooth_factor = 30
 set feedforward_jitter_factor = 9
-set dyn_idle_min_rpm = 80
+set dyn_idle_min_rpm = 40
 set simplified_d_max_gain = 0
 set simplified_feedforward_gain = 80
 set simplified_pitch_d_gain = 130
@@ -515,14 +524,16 @@ set dshot_bitbang = AUTO
 set motor_pwm_protocol = DSHOT600
 set motor_poles = 12
 set bat_capacity = 720
-set vbat_max_cell_voltage = 440
+set vbat_max_cell_voltage = 435
 set vbat_full_cell_voltage = 420
 set vbat_min_cell_voltage = 320
 set vbat_warning_cell_voltage = 340
 set beeper_dshot_beacon_tone = 3
 set small_angle = 180
 set dshot_edt = ON
-set force_battery_cell_count = 2
+set force_battery_cell_count = 4
+
+set osd_cap_alarm = 720
 ```
 
 **props off**, check that [Extended DSHOT Telemetry](https://github.com/bird-sanctuary/bluejay/wiki/Setup#extended-dshot-telemetry---edt) is working:
@@ -544,7 +555,7 @@ set osd_rssi_alarm = 20
 set osd_link_quality_alarm = 80
 set osd_rssi_dbm_alarm = -90
 set osd_rsnr_alarm = 4
-set osd_cap_alarm = 550
+set osd_cap_alarm = 720
 set osd_alt_alarm = 120
 set osd_distance_alarm = 0
 set osd_esc_temp_alarm = 0
@@ -559,12 +570,12 @@ set osd_logo_on_arming_duration = 5
 set osd_arming_logo = 0
 set osd_tim1 = 2560
 set osd_tim2 = 2561
-set osd_vbat_pos = 4524
+set osd_vbat_pos = 428
 set osd_rssi_pos = 6592
 set osd_link_quality_pos = 6629
 set osd_link_tx_power_pos = 6597
 set osd_rssi_dbm_pos = 6624
-set osd_rsnr_pos = 6560
+set osd_rsnr_pos = 416
 set osd_tim_1_pos = 385
 set osd_tim_2_pos = 14839
 set osd_remaining_time_estimate_pos = 4536
@@ -572,7 +583,7 @@ set osd_flymode_pos = 6643
 set osd_anti_gravity_pos = 341
 set osd_g_force_pos = 375
 set osd_throttle_pos = 6611
-set osd_vtx_channel_pos = 4128
+set osd_vtx_channel_pos = 4096
 set osd_crosshairs_pos = 237
 set osd_ah_sbar_pos = 238
 set osd_ah_pos = 110
@@ -585,23 +596,23 @@ set osd_pilot_name_pos = 341
 set osd_gps_speed_pos = 227
 set osd_gps_lon_pos = 17
 set osd_gps_lat_pos = 0
-set osd_gps_sats_pos = 6528
-set osd_home_dir_pos = 4206
-set osd_home_dist_pos = 4172
+set osd_gps_sats_pos = 6560
+set osd_home_dir_pos = 6190
+set osd_home_dist_pos = 6156
 set osd_flight_dist_pos = 407
 set osd_compass_bar_pos = 42
-set osd_altitude_pos = 16630
+set osd_altitude_pos = 20729
 set osd_pid_roll_pos = 341
 set osd_pid_pitch_pos = 341
 set osd_pid_yaw_pos = 341
 set osd_debug_pos = 321
 set osd_debug2_pos = 352
-set osd_power_pos = 341
+set osd_power_pos = 435
 set osd_pidrate_profile_pos = 13
 set osd_warnings_pos = 14729
 set osd_avg_cell_voltage_pos = 14796
 set osd_pit_ang_pos = 341
-set osd_rol_ang_pos = 341
+set osd_rol_ang_pos = 309
 set osd_battery_usage_pos = 393
 set osd_disarmed_pos = 14603
 set osd_nheading_pos = 397
@@ -609,12 +620,12 @@ set osd_up_down_reference_pos = 252
 set osd_ready_mode_pos = 14508
 set osd_nvario_pos = 278
 set osd_esc_tmp_pos = 54
-set osd_esc_rpm_pos = 288
+set osd_esc_rpm_pos = 96
 set osd_esc_rpm_freq_pos = 341
 set osd_rtc_date_time_pos = 0
 set osd_adjustment_range_pos = 341
 set osd_flip_arrow_pos = 14574
-set osd_core_temp_pos = 4150
+set osd_core_temp_pos = 4118
 set osd_log_status_pos = 341
 set osd_stick_overlay_left_pos = 258
 set osd_stick_overlay_right_pos = 276
@@ -639,7 +650,7 @@ set osd_sys_warnings_pos = 341
 set osd_sys_vtx_temp_pos = 407
 set osd_sys_fan_speed_pos = 341
 set osd_stat_bitmask = 8521444
-set osd_profile = 1
+set osd_profile = 2
 set osd_profile_1_name = -
 set osd_profile_2_name = -
 set osd_profile_3_name = -
@@ -720,6 +731,7 @@ set gps_rescue_initial_climb = 5
 set gps_rescue_disarm_threshold = 30
 set gps_rescs = 5
 set gps_rescue_allow_arming_without_fix = ON
+set gps_ublox_use_galileo = ON
 
 set pos_hold_without_mag = ON
 

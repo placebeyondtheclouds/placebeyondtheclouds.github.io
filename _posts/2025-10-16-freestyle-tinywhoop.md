@@ -35,13 +35,17 @@ the ELRS receiver on the AIO died after a week or so. ~~Update: using another VT
 
 ## update 2
 
-- with a dedicated VTX and added ELRS receiver the quad became too heavy and feels very underpowered now. so I decided to swap it into Mobula8 2 inch frame (85 mm motorpost to motorpost), swap motors to 1103 11000KV, props gemfan 2023 or 2023s. run on 1s pairs first, then resolder xt30 to the FC and use a proper 2s battery GNB 550mAh 2s 100C HV XT30
-- dry weight: 51.2 g, with two 1s batteries: 77.6 g
-- flight time 5 min, max total current 24A
+- with a dedicated VTX and added ELRS receiver the quad became too heavy and feels very underpowered now. so I decided to swap it into Mobula8 2 inch frame (85 mm motorpost to motorpost), swap motors to 1103 11000KV, props gemfan 2023 or 2023s. resolder xt30 to the FC and use a proper 2s battery ~~GNB 550mAh 2s 100C HV XT30~~ 高能 (GNB) 70C 350mAh LiHV 2S XT30
+- dry weight: 50.8 g, with two 1s batteries: 68.7 g
+- flight time around 3 min, max total current --A
+
+## update 3
+
+- there is this problem when the quad hangs in the air with zero throttle, the `washout` problem with ducted frames described [here](https://www.youtube.com/watch?v=7GweG0RnCfc). changed props out to props in, PID profile mode was set to `RP`, bumped P and I from 90 to 100 and FF to 150. problem solved
 
 ## components
 
-- 津航电子 (JHEMCU) G474ELRS - 1s-2s, 4 UARTS, 12A bluejay, STM32G474: 170MHz core 512KB flash 128KB RAM, 8MB blackbox, BETAFPV 2.4GHz Lite RX (serial) IPEX gen1
+- 津航电子 (JHEMCU) G474ELRS - 1s-2s, 4 UARTS, 12A bluejay, STM32G474: 170MHz core 512KB flash 128KB RAM, 8MB blackbox, BETAFPV 2.4GHz Lite RX (serial) IPEX gen1, no baro
 - 衢州市云端智能科技 (Happymodel) [5.8G Crown LDS antenna RHCP](https://www.happymodel.cn/index.php/2025/08/07/happymodel-5-8g-crown-lds-antenna-rhcp-lhcp-for-micro-fpv-whoops/), [3.5dBi, 5500-6000MHz](https://www.happymodel.cn/wp-content/uploads/2025/08/5.8G-Crown-antenna-RHCP-testing-data.xls.pdf), IPEX gen1
 - 卡德克斯技术 (Caddx) Ant lite (f/2.5 lens). Update: swapped to Caddx Ant (f/1.2 lens), not in the pictures
 - ~~Mobula7 frame (80mm clone) - 45mm props, 80mm base, 47mm ducts~~
@@ -123,9 +127,10 @@ UART4: external ELRS RX
 
 - Caddx Ant camera settings (using OSD menu board): AE mode to BLC=3, brightness=35, contrast auto, saturation manual=20
 
-- flash betaflight v2025.12, target `JHEG474`, analog OSD, add features: camera control. restore the original backup
+- flash betaflight v2025.12, target `JHEG474`, analog OSD. restore the original backup
+  - [can be built locally]({% post_url 2025-11-23-bf-local %}). local build command: `make JHEG474 EXTRA_FLAGS=" -D'RELEASE_NAME=2025.12.2' -DCLOUD_BUILD -DUSE_ACRO_TRAINER -DUSE_DSHOT -DUSE_LED_STRIP -DUSE_OSD -DUSE_OSD_SD -DUSE_PINIO -DUSE_SERIALRX -DUSE_SERIALRX_CRSF -DUSE_TELEMETRY -DUSE_TELEMETRY_CRSF -DUSE_VTX" -j`
 
-- reflash bluejay, target `Z-H-30`, PWM 48kHz (I get runaways on 96kHz for some reason), adjust the direction of the motors (props out)
+- reflash bluejay, target `Z-H-30`, PWM 48kHz (I get runaways on 96kHz for some reason)
 ```
 startup sliders to the max
 rampup x3
@@ -146,10 +151,12 @@ beacon delay 1 min
 set ibata_scale = 487
 ```
 
-- in motors tab, turn on _motor direction is reversed_ for the props out configuration. it makes the mixer to expect that motors 1 and 2 are reversed (spinning clockwise)
+- in motors tab, turn off _motor direction is reversed_ for the **props in** configuration. it makes the mixer to expect that motors 1 and 2 are not reversed (spinning counterclockwise). 
 ```
-set yaw_motors_reversed = ON
+set yaw_motors_reversed = OFF
 ```
+
+use `motor direction` to adjust motors rotation direction individually. this changes settings of the ESCs
 
 ## radio setup
 
@@ -160,9 +167,9 @@ set yaw_motors_reversed = ON
 - ch7 - turtle mode
 - ch8 (aux4), S2 - VTX power switching
 - ch9 - SD - buzzer
-- ch10 - SW2 2pos - aux6 
+- ch10 - aux6 
 - CH11 (AUX7), S1 - OSD profile switching
-- ch12 - SW3 toggle - aux8 
+- ch12 - aux8 
 
 ## restore my settings
 
@@ -339,7 +346,7 @@ set f_yaw = 28
 set d_max_roll = 52
 set d_max_pitch = 60
 set d_max_advance = 0
-set auto_profile_cell_count = 1
+set auto_profile_cell_count = 0
 set launch_control_mode = NORMAL
 set thrust_linear = 20
 set feedforward_averaging = OFF
@@ -396,12 +403,13 @@ set dshot_bitbang = AUTO
 set motor_pwm_protocol = DSHOT300
 set motor_poles = 12
 set bat_capacity = 550
-set vbat_max_cell_voltage = 440
+set vbat_max_cell_voltage = 435
 set vbat_full_cell_voltage = 420
 set vbat_min_cell_voltage = 320
 set vbat_warning_cell_voltage = 340
 set beeper_dshot_beacon_tone = 3
 set small_angle = 180
+set force_battery_cell_count = 2
 ```
 
 - OSD. if BF is set to NTSC and the camera outputs PAL, the osd elements will not be visible
