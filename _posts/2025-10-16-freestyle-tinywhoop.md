@@ -19,9 +19,9 @@ Camera - [Caddx Ant](https://caddxfpv.com/collections/caddxfpv-tiny-camera/produ
 
 batteries: batches of 高能 (GNB) 100C 550mAh LiHV 1S A30 and 格氏 (Tattu) 95C 550mAh 1S LiHV (resoldered A30).
 
-**Highlights of this build's configuration**: 1s, PAL analog, OSD profile change on a pot, VTX power change on a pot, turtle mode without arming, full weather protection, battry crash protection, RHCP antenna for VTX, whip-style antenna for RX, buzzer, 220uf 16v cap, tuned filters.
+**Highlights of this build's final configuration**: 
 
-dry weight: 39.8 grams.
+2s, PAL analog, OSD profile change on a pot, VTX power change on a pot, turtle mode without arming, full weather protection, RHCP antenna for VTX, whip-style antenna for RX, buzzer, 220uf 16v cap. VTX is set to whatever power setting S2 pot at the moment the RX connects to the radio, but VTX keeps low power before the first arm. Crash recovery enabled. Logs are manually erased (through stick commands OSD or the app) and written after arming until the memory is full.
 
 
 > read the updates! the quad ended up being very different 
@@ -31,17 +31,23 @@ dry weight: 39.8 grams.
 
 ## update 1
 
-the ELRS receiver on the AIO died after a week or so. ~~Update: using another VTX (ZENCHANSI 棕熊 W007 400mw) temporarily~~
+the ELRS receiver on the AIO died after a week or so. ~~Update: using another VTX (ZENCHANSI 棕熊 W007 400mw) temporarily~~ dry weight before: 39.8 grams.
 
 ## update 2
 
 - with a dedicated VTX and added ELRS receiver the quad became too heavy and feels very underpowered now. so I decided to swap it into Mobula8 2 inch frame (85 mm motorpost to motorpost), swap motors to 1103 11000KV, props gemfan 2023 or 2023s. resolder xt30 to the FC and use a proper 2s battery ~~GNB 550mAh 2s 100C HV XT30~~ 高能 (GNB) 70C 350mAh LiHV 2S XT30
 - dry weight: 50.8 g, with two 1s batteries: 68.7 g
-- flight time around 3 min, max total current --A
+
 
 ## update 3
 
 - there is this problem when the quad hangs in the air with zero throttle, the `washout` problem with ducted frames described [here](https://www.youtube.com/watch?v=7GweG0RnCfc). changed props out to props in, PID profile mode was set to `RP`, bumped P and I from 90 to 100 and FF to 150. problem solved
+
+## update 4
+
+- changed to a bit smaller and lighter gemfan 2023s-3 props. dry weight: 50.3 g
+- hover at 3.15A 30% throttle. 
+- flight time to 3.4v is around 3-5 minutes at 13 degrees ambient, max current 24A
 
 ## components
 
@@ -60,11 +66,12 @@ the ELRS receiver on the AIO died after a week or so. ~~Update: using another VT
 ## components (mobula8 85mm frame)
 
 - ‌衢州市云端智能科技 (Happymodel) [Mobula8 2inch frame](https://www.happymodel.cn/index.php/2023/04/28/mobula8-frame-85mm-brushless-whoop-frame/) (85mm base, 51mm props, 3 or 4 hole motor mounts)
-- props 乾丰 (Gemfan) [2023](https://www.gemfanhobby.com/2023-hurricane-pc-3-blade.html) 2 inch (52.17mm), pitch 2.3 inch, 3-blade (1.5mm shaft)
+- ~~props 乾丰 (Gemfan) [2023](https://www.gemfanhobby.com/2023-hurricane-pc-3-blade.html) 2 inch (52.17mm), pitch 2.3 inch, 3-blade (M2x6 screws, 1.5mm shaft)~~
 - ‌衢州市云端智能科技 (Happymodel) [EX1103 11000KV 2S](https://www.happymodel.cn/index.php/2022/09/05/bassline-spare-part-ex1103-kv11000-brushless-motor/) motors. the blueprint says the motor mounting holes are for M1.4 screws, but the actual size is M1.6x4
 - ~~高能 (GNB) 100C 550mAh LiHV 2S XT30, 18mmX12mmX69mm (GNB5502S100AHV), 29g~~
 - 高能 (GNB) 70C 350mAh LiHV 2S XT30, 16mmX12mmX49mm (GNB3502S70AHV), 18g
 - 18AWG leads, XT30 male connector
+- 乾丰 (Gemfan) [2023S props](https://www.gemfanhobby.com/2023s-hurricane-pc-3-blade.html) (50.8mm, pitch 2inch, 3-blade, 1.5mm shaft only)
 
 ## pictures
 
@@ -84,7 +91,10 @@ the ELRS receiver on the AIO died after a week or so. ~~Update: using another VT
 
 | - | - | - |
 | ![1](/assets/images/rebuild16.jpg) | ![2](/assets/images/rebuild17.jpg) |![3](/assets/images/rebuild18.jpg) |
-| ![1](/assets/images/rebuild19.jpg) | - | - |
+| ![1](/assets/images/rebuild19.jpg) | ![1](/assets/images/rebuild20.png) | ![1](/assets/images/rebuild21.png) |
+
+
+
 
 ## the process
 
@@ -313,9 +323,10 @@ the radio reporting current VTX power level with audio messages can be set up li
 - PIDs
 
 ```
-profile 0
+profile 2
 
-set profile_name = working
+# profile 2
+set profile_name = mob85mm
 set dterm_lpf1_dyn_min_hz = 82
 set dterm_lpf1_dyn_max_hz = 165
 set dterm_lpf1_static_hz = 82
@@ -335,34 +346,31 @@ set throttle_boost = 0
 set p_pitch = 87
 set i_pitch = 157
 set d_pitch = 44
-set f_pitch = 35
+set f_pitch = 89
 set p_roll = 70
 set i_roll = 124
 set d_roll = 39
-set f_roll = 28
-set p_yaw = 70
-set i_yaw = 124
-set f_yaw = 28
+set f_roll = 71
+set p_yaw = 100
+set i_yaw = 100
+set f_yaw = 150
 set d_max_roll = 52
 set d_max_pitch = 60
 set d_max_advance = 0
-set auto_profile_cell_count = 0
 set launch_control_mode = NORMAL
 set thrust_linear = 20
 set feedforward_averaging = OFF
 set feedforward_smooth_factor = 30
 set feedforward_jitter_factor = 9
-set dyn_idle_min_rpm = 75
+set dyn_idle_min_rpm = 60
+set simplified_pids_mode = RP
 set simplified_master_multiplier = 120
 set simplified_d_gain = 110
 set simplified_pi_gain = 130
-set simplified_feedforward_gain = 20
+set simplified_feedforward_gain = 50
 set simplified_pitch_pi_gain = 120
+set simplified_dterm_filter = OFF
 set simplified_dterm_filter_multiplier = 110
-set tpa_rate = 80
-set tpa_breakpoint = 1500
-
-set motor_output_limit = 100
 ```
 
 - rates 
@@ -379,19 +387,24 @@ set pitch_srate = 90
 set yaw_srate = 90
 ```
 
-- filters (adjusted for this build):
+- filters:
 
 ```
+
+# master
 set gyro_lpf1_static_hz = 0
 set gyro_lpf2_static_hz = 1000
-set dyn_notch_q = 500
+set dyn_notch_count = 2
 set dyn_notch_min_hz = 119
 set dyn_notch_max_hz = 370
 set gyro_lpf1_dyn_min_hz = 0
+
 set rc_smoothing_auto_factor = 25
 set rc_smoothing_auto_factor_throttle = 25
+
+
 set rpm_filter_weights = 100,20,20
-set rpm_filter_min_hz = 119
+set rpm_filter_min_hz = 122
 set rpm_filter_fade_range_hz = 0
 ```
 
@@ -402,7 +415,7 @@ set dshot_bidir = ON
 set dshot_bitbang = AUTO
 set motor_pwm_protocol = DSHOT300
 set motor_poles = 12
-set bat_capacity = 550
+set bat_capacity = 350
 set vbat_max_cell_voltage = 435
 set vbat_full_cell_voltage = 420
 set vbat_min_cell_voltage = 320
@@ -410,6 +423,8 @@ set vbat_warning_cell_voltage = 340
 set beeper_dshot_beacon_tone = 3
 set small_angle = 180
 set force_battery_cell_count = 2
+
+
 ```
 
 - OSD. if BF is set to NTSC and the camera outputs PAL, the osd elements will not be visible
@@ -421,7 +436,7 @@ set osd_rssi_alarm = 20
 set osd_link_quality_alarm = 80
 set osd_rssi_dbm_alarm = -90
 set osd_rsnr_alarm = 4
-set osd_cap_alarm = 550
+set osd_cap_alarm = 350
 set osd_alt_alarm = 120
 set osd_distance_alarm = 0
 set osd_esc_temp_alarm = 0
