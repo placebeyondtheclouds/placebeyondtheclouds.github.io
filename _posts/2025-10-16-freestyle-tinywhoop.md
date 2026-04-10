@@ -49,6 +49,10 @@ the ELRS receiver on the AIO died after a week or so. ~~Update: using another VT
 - hover at 3.15A 30% throttle. 
 - flight time to 3.4v is around 3-5 minutes at 13 degrees ambient, max current 24A
 
+## update 5
+
+- the VTX was placed between the battery and the FC and the video feed had white washout pulsations. I moved the VTX to the place ubder the canopy behind the camera, shortened the VTX and camera wires, moved the VTX GND to the pad near the camera GND, placed the RX below the FC where the VTX was before. now there are no washouts.
+
 ## components
 
 - 津航电子 (JHEMCU) G474ELRS - 1s-2s, 4 UARTS, 12A bluejay, STM32G474: 170MHz core 512KB flash 128KB RAM, 8MB blackbox, BETAFPV 2.4GHz Lite RX (serial) IPEX gen1, no baro

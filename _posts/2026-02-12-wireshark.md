@@ -13,11 +13,10 @@ I use this approach for troubleshooting, watching traffic on a remote machine lo
 
 `remote` machine is running any Linux distribution with tcpdump binary (Debian in my case) and I have privileged `admin` user credentials.
 
-install tcpdump, change the capabilities to allow creating and using raw sockets and network administration without superuser privileges:
+install tcpdump:
 
 ```bash
 sudo apt install tcpdump
-sudo setcap cap_net_raw,cap_net_admin=eip /usr/bin/tcpdump
 ```
 
 limit running tcpdump to the admin user (if the remote machine is a multiuser environment):
@@ -27,6 +26,12 @@ sudo groupadd pcap
 sudo usermod -aG pcap admin
 sudo chown root:pcap /usr/bin/tcpdump
 sudo chmod 750 /usr/bin/tcpdump
+```
+
+change the capabilities to allow creating and using raw sockets and network administration without superuser privileges:
+
+```bash
+sudo setcap cap_net_raw,cap_net_admin=eip /usr/bin/tcpdump
 ```
 
 ## local machine

@@ -54,7 +54,7 @@ I want to build the smallest quad possible that **can carry a 4K camera onboard,
 
 ## update 5
 
-- because of my poor piloting skills I was going through ND filters way too fast and was worried that sooner or later I will destroy the Runcam's lens itself. so I decided to print [the shell](https://www.thingiverse.com/thing:6830398) from black TPU, and attach it to the same seat of [the original Runcam Thumb 2 mount](https://www.thingiverse.com/thing:6807624).
+- because of my poor piloting skills I was going through ND filters way too fast and was worried that sooner or later I will destroy the Runcam's lens itself. so I decided to print [the shell](https://www.thingiverse.com/thing:6830398) from black TPU, and attach it to the same seat of [the original Runcam Thumb 2 mount](https://www.thingiverse.com/thing:6807624). the shell weights 14.9 g.
 
 
 ## todo
@@ -279,13 +279,13 @@ this maps LED_STRIP pad (it is also possible to use the SDA pad) resource to the
 - ADC Filter OFF
 - send radio's RTC data to the flight controller to have correct time in blackbox files and on the OSD: go to special functions, add `ON Lua bfbkgd On` and turn the checkmark on
 - ch5 inverted, SB - arm
-- ch6 inverted, SA - air / acro / angle 
+- ch6 inverted, SA inverted (change the weight(mixes) to -100%)  - left 3-pos: air (low) / alt hold + pos hold (mid) / angle(high)
 - ch7 - turtle mode
 - ch8 (aux4 is 3 in vtx CLI command), S2 - VTX power control
-- ch9 - SW5 toggle, no group (aux5 servo1) - switch between the cameras
+- ch9 - SW5 toggle, no group (aux5 servo0) - switch between the cameras
 - ch10, SW6 toggle, no group (aux6) - Runcam button
 - CH11 SD (aux7) beeper
-- CH12 SW1 2pos (aux8) failsafe 1500, SW2 pos hold and alt hold 2000 (SW1 and SW2 are in group 1. in special functions SW1 down adjust global variable G2 to 0, SW2 down adjust G2 to 1024. in logical switches L17 SW1 up AND SW2 up, in special functions L17 adjusts G2 to -1024.  in mixes CH12 is set to G2)
+- CH12 SW1 2pos (aux8) failsafe 1500, SW2 gps rescue 2000 (SW1 and SW2 are in group 1. in special functions SW1 down adjust global variable G2 to 0, SW2 down adjust G2 to 1024. in logical switches L17 SW1 up AND SW2 up, in special functions L17 adjusts G2 to -1024.  in mixes CH12 is set to G2)
 - add special function `SW1down ply trk fsact`, `SW2down ply trk poshold` `SW5up ply trk ready`, `SW6down ply trk recsrt`
 
 ## ESCs configuration
