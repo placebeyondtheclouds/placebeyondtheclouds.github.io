@@ -95,8 +95,8 @@ the ELRS receiver on the AIO died after a week or so. ~~Update: using another VT
 
 | - | - | - |
 | ![1](/assets/images/rebuild16.jpg) | ![2](/assets/images/rebuild17.jpg) |![3](/assets/images/rebuild18.jpg) |
-| ![1](/assets/images/rebuild19.jpg) | ![1](/assets/images/rebuild20.png) | ![1](/assets/images/rebuild21.png) |
-
+| ![4](/assets/images/rebuild19.jpg) | ![5](/assets/images/rebuild20.png) | ![6](/assets/images/rebuild21.png) |
+| ![7](/assets/images/rebuild22.jpg) | ![8](/assets/images/rebuild23.jpg) | ![9](/assets/images/rebuild24.jpg) |
 
 
 
