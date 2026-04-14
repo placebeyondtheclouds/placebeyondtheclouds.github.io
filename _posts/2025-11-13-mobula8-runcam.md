@@ -10,7 +10,7 @@ published: true
 
 I want to build the smallest quad possible that **can carry a 4K camera onboard, have prop guards and have enough thrust to be able to do light freestyle**. Here's how I built a cinewhoop using ~~Mobula8 frame~~ 2.5 inch frame and Runcam Thumb 2. I decided to build it on a FC with fast modern MCU from [ArteryTek](https://oscarliang.com/at32-flight-controllers/) and new industry standard gyro [ICM42688P](https://invensense.tdk.com/wp-content/uploads/2022/12/DS-000347-ICM-42688-P-v1.7.pdf). the Runcam camera will act as ~~both the fpv camera and~~ the 4K video camera. having a live `preview` in the goggles is super convenient for dialing in Runcam's manual exposure settings. also useful for checking if I lost the action camera (or its ND filter) in a crash or not, by switching to the camera feed. 
 
-**highlights of the final build**: live switching between the cameras, Runcam camera recording start/stop from the radio, VTX power level adjustment on a pot, turtle mode without arming, RHCP antenna for VTX, whip-style antenna for RX, low esr capacitor, GPS rescue, position and altitude hold (without a magnetometer so it needs a calibration flight each time before use). VTX is set to whatever power setting S2 pot at the moment the RX connects to the radio, but VTX keeps low power before the first arm. Crash recovery enabled. Location-related information in the ELRS telemetry is disabled as an OPSEC measure. Logs are manually erased (through stick commands OSD or the app) and written after arming until the memory is full.
+**highlights of the final build**: live switching between the cameras, Runcam camera recording start/stop from the radio, VTX power level adjustment on a pot, turtle mode without arming, RHCP antenna for VTX, whip-style antenna for RX, low esr capacitor~~, GPS rescue, position and altitude hold (without a magnetometer so it needs a calibration flight each time before use)~~. VTX is set to whatever power setting S2 pot at the moment the RX connects to the radio, but VTX keeps low power before the first arm. Crash recovery enabled. ~~Location-related information in the ELRS telemetry is disabled as an OPSEC measure.~~ Logs are manually erased (through stick commands OSD or the app) and written after arming until the memory is full.
 
 > read the updates! the quad ended up being very different. the "smallest" part is not the case anymore since it means very poor (borderline unusable) flight performance.
 {: .prompt-warning }
@@ -47,23 +47,27 @@ I want to build the smallest quad possible that **can carry a 4K camera onboard,
 ## update 4: 2.5 inch frame transplant
 
 - got tired of lack of thrust. decided to **transplant the project into a 2.5" frame**, AstroRC Carbonfly 25 V3. [frame assembly tutorial for v2](https://www.youtube.com/watch?v=BBmyJonWY08). solder gps to UART3. ~~recompile the firmware with softserial support, turn on the feature, remap the resources of SCL and SDA pads to softserial1, resolder runcam `tx3->scl` and `rx3->sda` and change in the settings `camera control` from uart3 to softseral1,  bz- is not suitable for use with softserial because the pad has an npn transistor in the circuit.~~ but bz- can be used for PINIO, solder bz- pad to PWM input on the Runcam. if 20A ESCs would not hold, I will replace the AIO with GH743AIO (480MHz, 7 UARTS, AM32 40A ESCs, 3s-6s, 16AWG lead). the motor screws that came with the motors are M2x6 and are too long for this frame, must use M2x4.5. The frame set was missing 4 M2x16 screws for the FC. M2x6 screws for the props. also removed 5V BEC used for the Runcam, because with 4s battery there is no voltage sag now.
-- 180.7 g without the battery, 247.3 g with the 4s 720mah battery.
+- weight with camera 180.7 g, 247.3 g with the 4s 720mah battery.
 - Happymodel Crown LDS antenna breaks very easly, the traces with the soldering joint are ripped from the antenna's body. ~~I used linear polarized dipole temporarily.~~
 - flight time 4 m 40 sec, max current 24A
 - because there are not enough UARTs on this AIO and [softserial was implemented only for STM32 MCUs](https://github.com/betaflight/betaflight/issues/15058#issuecomment-4184127886) and is not available for ArteryTek MCUs, I had to disable camera control using UART in favor of running the GPS module. camera control will be implemented using the PWM input in the socket on the back of the camera, connected to ~~SCL pad (can not use SCL or SDA, because both resources must be mapped to the I2C bus in order for the barometer to work)~~ BZ- on the AIO, which will be remapped to PINIO1. it is also possible to use servo output instead of PINIO.
 
 ## update 5
 
-- because of my poor piloting skills I was going through ND filters way too fast and was worried that sooner or later I will destroy the Runcam's lens itself. so I decided to print [the shell](https://www.thingiverse.com/thing:6830398) from black TPU, and attach it to the same seat of [the original Runcam Thumb 2 mount](https://www.thingiverse.com/thing:6807624). the shell weights 14.9 g.
+- because of my poor piloting skills I was going through ND filters way too fast and was worried that sooner or later I will destroy the Runcam's lens itself. so I decided to print [the shell](https://www.thingiverse.com/thing:6830398) from black TPU, cut out the part around the lens and attached it (using the friction by putting a tiny EVA foam patch between the camera and the cutout) to the camera that is already secured to the frame using [the original Runcam Thumb 2 mount](https://www.thingiverse.com/thing:6807624). the shell weights 14.9 g, the cutout is around a half of that weight.
+- `set crash_recovery = DISARM` to save (others from) the props
+- ungodly amount of zipties
+- gps rescue and pos hold are kinda useless on this quad, so I removed the GPS module
+- weight with the camera and the shell(cutout): 182.2 g. weight with the camera, the shell and the battery:  248.8 g
 
 
 ## todo
 
-- [ ] tune filters
+- [x] tune filters
 - [ ] tune PIDs
-- [ ] adjust the current sensor calibration value
+- [x] adjust the current sensor calibration value
 
-## initial build video
+## initial build video (mobula8 frame)
 
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/w96JuggRIIU" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
@@ -111,7 +115,8 @@ I want to build the smallest quad possible that **can carry a 4K camera onboard,
 | ![55](/assets/images/not-mobula8-55.jpg) | ![56](/assets/images/not-mobula8-56.jpg) |  ![57](/assets/images/not-mobula8-57.jpg) |
 | ![58](/assets/images/not-mobula8-58.jpg) | ![59](/assets/images/not-mobula8-59.jpg) |  ![60](/assets/images/not-mobula8-60.jpg) |
 | ![61](/assets/images/not-mobula8-61.jpg) | ![62](/assets/images/not-mobula8-62.jpg) |  ![63](/assets/images/not-mobula8-63.jpg) |
-| ![64](/assets/images/not-mobula8-64.jpg) | - |  - |
+| ![64](/assets/images/not-mobula8-64.jpg) | ![65](/assets/images/not-mobula8-65.jpg) |  ![66](/assets/images/not-mobula8-66.jpg) |
+| ![67](/assets/images/not-mobula8-67.jpg) | - |  - |
 
 ## parts list (mobula8 frame)
 
@@ -191,14 +196,14 @@ I want to build the smallest quad possible that **can carry a 4K camera onboard,
 | purple     | TX5           | RX             |
 
 
-| wire color | GHF435AIO pad                  |       gps    |  
+| wire color | GHF435AIO pad                  |       ~~gps~~    |  
 |------------|------------------------------|----------------|
 | red        | 4.5V (through the frame PCB)            | 5V         |    
 | black      | GND  (through the frame PCB)          | GND       |     
 | yellow     | RX3  (through the frame PCB)          | TX          |     
 | white     | TX3  (through the frame PCB)          | RX          |      
 
-- 4.5V pad is powered from USB as well
+- +4V5 pad is powered from the USB as well
 
 - use rosin-free flux paste and 63% tin soldering thread (melts at around 183 degrees), clean the board with isopropyl alcohol after soldering. apply `P-1025` conformal coating to the FC and VTX boards. add `Kafuter K-705` silicon sealant (mechanically weak and easily removed) or `B-7000` (strong glue) to the places where wires are soldered to the FC pads, U.FL connectors on FC and VTX. apply blue `Loctite-243` onto last threads of the motor screws.
 
@@ -206,11 +211,11 @@ I want to build the smallest quad possible that **can carry a 4K camera onboard,
 ```
 UART1: SBUS
 UART2: onboard ELRS
-UART3: GPS
+UART3: 
 UART5: VTX (IRC Tramp)
 ```
 
-- solder the frame PCB wiring +5v(red),tx3(yellow),rx3(black) to the FC. GPS is connected to the frame PCB pads. gnd is connected through the battery lead. BZ- pad is connected to the Runcam's PWM.
+- solder the frame PCB wiring +5v(red),tx3(yellow),rx3(black) to the FC. ~~GPS is connected to the frame PCB pads.~~ gnd is connected through the battery lead. BZ- pad is connected to the Runcam's PWM.
 
 - Caddx Ant camera settings (using OSD menu board): AE mode to BLC=3, brightness=35, contrast auto, saturation manual=20
 
@@ -279,14 +284,14 @@ this maps LED_STRIP pad (it is also possible to use the SDA pad) resource to the
 - ADC Filter OFF
 - send radio's RTC data to the flight controller to have correct time in blackbox files and on the OSD: go to special functions, add `ON Lua bfbkgd On` and turn the checkmark on
 - ch5 inverted, SB - arm
-- ch6 inverted, SA inverted (change the weight(mixes) to -100%)  - left 3-pos: air (low) / alt hold + pos hold (mid) / angle(high)
+- ch6 inverted, SA inverted (change the weight(mixes) to -100%)  - left 3-pos: air (low) / acro (mid) / angle(high)
 - ch7 - turtle mode
 - ch8 (aux4 is 3 in vtx CLI command), S2 - VTX power control
 - ch9 - SW5 toggle, no group (aux5 servo0) - switch between the cameras
 - ch10, SW6 toggle, no group (aux6) - Runcam button
 - CH11 SD (aux7) beeper
-- CH12 SW1 2pos (aux8) failsafe 1500, SW2 gps rescue 2000 (SW1 and SW2 are in group 1. in special functions SW1 down adjust global variable G2 to 0, SW2 down adjust G2 to 1024. in logical switches L17 SW1 up AND SW2 up, in special functions L17 adjusts G2 to -1024.  in mixes CH12 is set to G2)
-- add special function `SW1down ply trk fsact`, `SW2down ply trk poshold` `SW5up ply trk ready`, `SW6down ply trk recsrt`
+- CH12 - S1 -  (aux8)- OSD profile switching  ~~SW1 2pos (aux8) failsafe 1500, SW2 gps rescue 2000 (SW1 and SW2 are in group 1. in special functions SW1 down adjust global variable G2 to 0, SW2 down adjust G2 to 1024. in logical switches L17 SW1 up AND SW2 up, in special functions L17 adjusts G2 to -1024.  in mixes CH12 is set to G2)~~
+- add special function ~~`SW1down ply trk fsact`, `SW2down ply trk poshold`~~ `SW5up ply trk ready`, `SW6down ply trk recsrt`
 
 ## ESCs configuration
 - [ESC Configurator](https://esc-configurator.com/) or [run it locally]({% post_url 2025-11-23-bf-local %})
@@ -362,7 +367,7 @@ set pid_process_denom = 1
 set baro_i2c_address = 118
 set baro_i2c_device = 2
 set baro_hardware = DPS310
-set altitude_source = BARO_ONLY
+set altitude_source = DEFAULT
 set altitude_prefer_baro = 100
 resource I2C_SCL 2 H02
 resource I2C_SDA 2 H03
@@ -427,7 +432,13 @@ the radio reporting current VTX power level with audio messages can be set up li
 | ![29](/assets/images/not-mobula8-29.png) |   ![30](/assets/images/not-mobula8-30.png) | ![34](/assets/images/not-mobula8-34.png) |
 
 
-- filters for mobula8 frame and gemfan 2023 props. [gyro low pass 2 can be disabled](https://youtu.be/E3s5XYk3M74?si=tRDyE5hmXNsq65gD&t=344) because the PID loop frequency is equal to the gyro update rate (8KHz), there is no antialiasing needed. also set these parameters to be profile-independent (`set simplified_gyro_filter = ON` and `set simplified_dterm_filter = OFF`):
+- in-flight OSD profile switching on a pot. I use S1, set it to CH12 (AUX8 in BF)
+
+```
+adjrange 0 0 7 900 2100 29 7 0 0
+```
+
+- ~~filters for mobula8 frame and gemfan 2023 props.~~ [gyro low pass 2 can be disabled](https://youtu.be/E3s5XYk3M74?si=tRDyE5hmXNsq65gD&t=344) because the PID loop frequency is equal to the gyro update rate (8KHz), there is no antialiasing needed. also set these parameters to be profile-independent (`set simplified_gyro_filter = ON` and `set simplified_dterm_filter = OFF`):
 
 ```
 set rpm_filter_weights = 100,20,20
@@ -446,14 +457,30 @@ set dterm_lpf1_static_hz = 82
 set dterm_lpf2_static_hz = 165
 ```
 
-- changes to the rpm filters for Carbonfly80 frame and gemfan 45mm-3 props
+- ~~changes to the rpm filters for Carbonfly80 frame and gemfan 45mm-3 props~~
 
 ```
 set rpm_filter_min_hz = 160
 set rpm_filter_fade_range_hz = 40
 ```
 
-- PIDs. dynamic idle value is based on the prop size/pitch, [here](https://oscarliang.com/how-to-enable-and-configure-betaflight-dynamic-idle/) and [here](https://youtu.be/1oYoVE4xu1U?si=yH7NVtL8CJaB1tvT&t=798)
+- filters  for the **carbonfly 25 frame**.
+
+```
+# master
+set simplified_gyro_filter = ON
+set gyro_lpf1_static_hz = 0
+set gyro_lpf2_static_hz = 0
+set dyn_notch_count = 1
+set dyn_notch_q = 500
+set gyro_lpf1_dyn_min_hz = 0
+
+set rpm_filter_weights = 100,20,20
+set rpm_filter_min_hz = 160
+set rpm_filter_fade_range_hz = 40
+```
+
+- PIDs for the **carbonfly 25 frame**. dynamic idle value is based on the prop size/pitch, [here](https://oscarliang.com/how-to-enable-and-configure-betaflight-dynamic-idle/) and [here](https://youtu.be/1oYoVE4xu1U?si=yH7NVtL8CJaB1tvT&t=798)
 
 ```
 profile 0
@@ -470,7 +497,7 @@ set crash_dthreshold = 80
 set crash_gthreshold = 600
 set crash_setpoint_threshold = 500
 set crash_recovery_rate = 150
-set crash_recovery = ON
+set crash_recovery = DISARM
 set iterm_relax_type = GYRO
 set iterm_windup = 85
 set pidsum_limit = 1000
