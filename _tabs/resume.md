@@ -8,6 +8,7 @@ tags: [en]
 ## Socials:
 
 - <img src="/assets/images/image.png" alt="" width="30%"/><br>
+- [TryHackMe](https://tryhackme.com/p/horizont?tab=completed-rooms)
 - [LinkedIn](https://linkedin.com/in/aleksandrvm)
 - [Github](https://github.com/placebeyondtheclouds)
 - [Youtube channel](https://www.youtube.com/@movedToChinaForStudies)
