@@ -220,7 +220,6 @@ feature OSD
 beacon RX_LOST
 beacon RX_SET
 set baro_hardware = NONE
-set pidsum_limit_yaw = 1000
 ```
 
 - modes (for my radio setup)

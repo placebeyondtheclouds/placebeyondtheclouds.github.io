@@ -290,8 +290,8 @@ this maps LED_STRIP pad (it is also possible to use the SDA pad) resource to the
 - ch9 - SW5 toggle, no group (aux5 servo0) - switch between the cameras
 - ch10, SW6 toggle, no group (aux6) - Runcam button
 - CH11 SD (aux7) beeper
-- CH12 - S1 -  (aux8)- OSD profile switching  ~~SW1 2pos (aux8) failsafe 1500, SW2 gps rescue 2000 (SW1 and SW2 are in group 1. in special functions SW1 down adjust global variable G2 to 0, SW2 down adjust G2 to 1024. in logical switches L17 SW1 up AND SW2 up, in special functions L17 adjusts G2 to -1024.  in mixes CH12 is set to G2)~~
-- add special function ~~`SW1down ply trk fsact`, `SW2down ply trk poshold`~~ `SW5up ply trk ready`, `SW6down ply trk recsrt`
+- CH12 - S1 - (aux8)- OSD profile switching  
+- add special function `SW5up ply trk ready`, `SW6down ply trk recsrt`
 
 ## ESCs configuration
 - [ESC Configurator](https://esc-configurator.com/) or [run it locally]({% post_url 2025-11-23-bf-local %})
@@ -349,7 +349,7 @@ set ibata_scale = 400
 set yaw_motors_reversed = ON
 ```
 
-- `pid_process_denom = 1` means we run PID loop at the same frequency as the gyro refresh rate (no aliasing). `pidsum_limit_yaw` sets PID authority to 100% on yaw axis.
+- `pid_process_denom = 1` means we run PID loop at the same frequency as the gyro refresh rate (no aliasing).
 
 ```
 feature -AIRMODE
@@ -357,7 +357,6 @@ feature TELEMETRY
 feature OSD
 beacon RX_LOST
 beacon RX_SET
-set pidsum_limit_yaw = 1000
 set pid_process_denom = 1
 ```
 
@@ -438,7 +437,7 @@ the radio reporting current VTX power level with audio messages can be set up li
 adjrange 0 0 7 900 2100 29 7 0 0
 ```
 
-- ~~filters for mobula8 frame and gemfan 2023 props.~~ [gyro low pass 2 can be disabled](https://youtu.be/E3s5XYk3M74?si=tRDyE5hmXNsq65gD&t=344) because the PID loop frequency is equal to the gyro update rate (8KHz), there is no antialiasing needed. also set these parameters to be profile-independent (`set simplified_gyro_filter = ON` and `set simplified_dterm_filter = OFF`):
+- ~~filters for mobula8 frame and gemfan 2023 props.~~ [gyro low pass 2 can be disabled](https://youtu.be/E3s5XYk3M74?si=tRDyE5hmXNsq65gD&t=344) because the PID loop frequency (8KHz) is equal (`pid_process_denom = 1`) to the gyro update rate (8KHz), there is no antialiasing needed. also set these parameters to be profile-independent (`set simplified_gyro_filter = ON` and `set simplified_dterm_filter = OFF`):
 
 ```
 set rpm_filter_weights = 100,20,20
@@ -480,7 +479,9 @@ set rpm_filter_min_hz = 160
 set rpm_filter_fade_range_hz = 40
 ```
 
-- PIDs for the **carbonfly 25 frame**. dynamic idle value is based on the prop size/pitch, [here](https://oscarliang.com/how-to-enable-and-configure-betaflight-dynamic-idle/) and [here](https://youtu.be/1oYoVE4xu1U?si=yH7NVtL8CJaB1tvT&t=798)
+- PIDs for the **carbonfly 25 frame**. dynamic idle value is based on the prop size/pitch, [here](https://oscarliang.com/how-to-enable-and-configure-betaflight-dynamic-idle/) and [here](https://youtu.be/1oYoVE4xu1U?si=yH7NVtL8CJaB1tvT&t=798).
+
+ `pidsum_limit` sets PID authority to 100%.
 
 ```
 profile 0
