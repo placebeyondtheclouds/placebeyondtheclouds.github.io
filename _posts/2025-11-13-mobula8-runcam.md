@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "4K analog 2 (2.5)-inch 2S (4S) cinewhoop build start to finish"
+title:  "4K analog cinewhoop build start to finish"
 lang: en
 tags: [en, 2s, cinewhoop, quad, fpv, diy, 85mm, analog, 4k, 2inch, 2.5inch, 4s]
 category: tutorial
@@ -10,7 +10,7 @@ published: true
 
 I want to build the smallest quad possible that **can carry a 4K camera onboard, have prop guards and have enough thrust to be able to do light freestyle**. Here's how I built a cinewhoop using ~~Mobula8 frame~~ 2.5 inch frame and Runcam Thumb 2. I decided to build it on a FC with fast modern MCU from [ArteryTek](https://oscarliang.com/at32-flight-controllers/) and new industry standard gyro [ICM42688P](https://invensense.tdk.com/wp-content/uploads/2022/12/DS-000347-ICM-42688-P-v1.7.pdf). the Runcam camera will act as ~~both the fpv camera and~~ the 4K video camera. having a live `preview` in the goggles is super convenient for dialing in Runcam's manual exposure settings. also useful for checking if I lost the action camera (or its ND filter) in a crash or not, by switching to the camera feed. 
 
-**highlights of the final build**: live switching between the cameras, Runcam camera recording start/stop from the radio, VTX power level adjustment on a pot, turtle mode without arming, RHCP antenna for VTX, whip-style antenna for RX, low esr capacitor~~, GPS rescue, position and altitude hold (without a magnetometer so it needs a calibration flight each time before use)~~. VTX is set to whatever power setting S2 pot at the moment the RX connects to the radio, but VTX keeps low power before the first arm. Crash recovery enabled. ~~Location-related information in the ELRS telemetry is disabled as an OPSEC measure.~~ Logs are manually erased (through stick commands OSD or the app) and written after arming until the memory is full.
+**highlights of the final build**: live switching between the cameras, Runcam camera recording start/stop from the radio, VTX power level adjustment on a pot, turtle mode without arming, RHCP antenna for VTX, whip-style antenna for RX, low esr capacitor~~, GPS rescue, position and altitude hold (without a magnetometer so it needs a calibration flight each time before use)~~. VTX is set to whatever power setting S2 pot at the moment the RX connects to the radio, but VTX keeps low power before the first arm. ~~Crash recovery enabled.~~ ~~Location-related information in the ELRS telemetry is disabled as an OPSEC measure.~~ Logs are manually erased (through stick commands OSD or the app) and written after arming until the memory is full.
 
 > read the updates! the quad ended up being very different. the "smallest" part is not the case anymore since it means very poor (borderline unusable) flight performance.
 {: .prompt-warning }
@@ -64,7 +64,7 @@ I want to build the smallest quad possible that **can carry a 4K camera onboard,
 ## todo
 
 - [x] tune filters
-- [ ] tune PIDs
+- [x] tune PIDs
 - [x] adjust the current sensor calibration value
 
 ## initial build video (mobula8 frame)

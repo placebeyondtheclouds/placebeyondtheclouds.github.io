@@ -1,28 +1,27 @@
 ---
 layout: post
-title:  "Re-building 1S (2S) 80mm (85mm) freestyle quad"
+title:  "Re-building freestyle tinywhoop"
 lang: en
 tags: [en, 1s, tinywhoop, quad, fpv, diy, 80mm, analog, 85mm, 2s ]
 category: tutorial
 published: true
 ---
 
+Originally I was flying Meteor75 Pro, which was gradually rebuilt into this: 2-inch 2s tinywhoop. The following are my notes on the process.
 
+~~I damaged ESC #2 on the 1S Matrix AIO (Meteor75 Pro), either by running a motor with damaged windings or from a voltage spike in a crash. It's overheating, not giving full power to the motor, and the video feed has white washouts during high throttle. So I'm replacing the AIO with JHEMCU G474ELRS and HGLRC Zeuz nano 350mw VTX. ~~
 
+~~Meteor75 frame is scraping the battery and motor screws against the ground, so I am replacing it with a clone of Mobula7 but for 45mm props (80mm base and 47mm ducts instead of 75mm and 43mm respectively). It has 2S battery tray, and with 1S battery the whoop will land on the lower part of the frame without the battery or motor screws touching the ground. Another solution to the problem would be keep the meteor75pro frame and printing [the battery bumper](https://www.thingiverse.com/thing:7056235).~~
 
-I damaged ESC #2 on the 1S Matrix AIO (Meteor75 Pro), either by running a motor with damaged windings or from a voltage spike in a crash. It's overheating, not giving full power to the motor, and the video feed has white washouts during high throttle. So I'm replacing the AIO with JHEMCU G474ELRS and HGLRC Zeuz nano 350mw VTX. 
+~~The battery is mounted using rubber bands with zip ties, occupying the lower part of the 2S holder and pressing the 1S battery to the frame.~~
 
-Meteor75 frame is scraping the battery and motor screws against the ground, so I am replacing it with a clone of Mobula7 but for 45mm props (80mm base and 47mm ducts instead of 75mm and 43mm respectively). It has 2S battery tray, and with 1S battery the whoop will land on the lower part of the frame without the battery or motor screws touching the ground. Another solution to the problem would be keep the meteor75pro frame and printing [the battery bumper](https://www.thingiverse.com/thing:7056235).
+~~Camera - [Caddx Ant](https://caddxfpv.com/collections/caddxfpv-tiny-camera/products/caddx-ant-analog-camera) with f/1.2 lens or [Caddx Ant Lite](https://caddxfpv.com/products/caddxfpv-ant-lite-4-3-fpvcycle-edition) with f/2.5 lens. [the canopy for the Ant Lite](https://www.thingiverse.com/thing:6201941) is 3D printed, needs to be modified for the regular Ant edition. the motors are 1102 22000kv left from the Meteor75. the props are 乾丰 (gemfan) 45mm-3 (1.5mm shaft). 20AVG battery lead. ~~
 
-The battery is mounted using rubber bands with zip ties, occupying the lower part of the 2S holder and pressing the 1S battery to the frame.
-
-Camera - [Caddx Ant](https://caddxfpv.com/collections/caddxfpv-tiny-camera/products/caddx-ant-analog-camera) with f/1.2 lens or [Caddx Ant Lite](https://caddxfpv.com/products/caddxfpv-ant-lite-4-3-fpvcycle-edition) with f/2.5 lens. [the canopy for the Ant Lite](https://www.thingiverse.com/thing:6201941) is 3D printed, needs to be modified for the regular Ant edition. the motors are 1102 22000kv left from the Meteor75. the props are 乾丰 (gemfan) 45mm-3 (1.5mm shaft). 20AVG battery lead. 
-
-batteries: batches of 高能 (GNB) 100C 550mAh LiHV 1S A30 and 格氏 (Tattu) 95C 550mAh 1S LiHV (resoldered A30).
+~~batteries: batches of 高能 (GNB) 100C 550mAh LiHV 1S A30 and 格氏 (Tattu) 95C 550mAh 1S LiHV (resoldered A30).~~
 
 **Highlights of this build's final configuration**: 
 
-2s, PAL analog, OSD profile change on a pot, VTX power change on a pot, turtle mode without arming, full weather protection, RHCP antenna for VTX, whip-style antenna for RX, buzzer, 220uf 16v cap. VTX is set to whatever power setting S2 pot at the moment the RX connects to the radio, but VTX keeps low power before the first arm. Crash recovery enabled. Logs are manually erased (through stick commands OSD or the app) and written after arming until the memory is full.
+2s, PAL analog, OSD profile change on a pot, VTX power change on a pot, turtle mode without arming, full weather protection, RHCP antenna for VTX, whip-style antenna for RX, buzzer, 220uf 16v cap. VTX is set to whatever power setting S2 pot at the moment the RX connects to the radio, but VTX keeps low power before the first arm. Crash recovery enabled. 
 
 
 > read the updates! the quad ended up being very different 
@@ -52,11 +51,11 @@ the ELRS receiver on the AIO died after a week or so. ~~Update: using another VT
 
 ## update 5
 
-- the VTX was placed between the battery and the FC and the video feed had white washout pulsations. I moved the VTX to the place ubder the canopy behind the camera, shortened the VTX and camera wires, moved the VTX GND to the pad near the camera GND, placed the RX below the FC where the VTX was before. now there are no washouts.
+- the VTX was placed between the battery and the FC and the video feed had white washout pulsations. I moved the VTX to the place under the canopy behind the camera, shortened the VTX and camera wires, moved the VTX GND to the pad near the camera GND, placed the RX below the FC where the VTX was before. now there are no washouts.
 
 ## components
 
-- 津航电子 (JHEMCU) G474ELRS - 1s-2s, 4 UARTS, 12A bluejay, STM32G474: 170MHz core 512KB flash 128KB RAM, 8MB blackbox, BETAFPV 2.4GHz Lite RX (serial) IPEX gen1, no baro
+- 津航电子 (JHEMCU) G474ELRS - 1s-2s, 4 UARTS, 12A bluejay DSHOT300 ESCs, STM32G474: 170MHz core 512KB flash 128KB RAM, 8MB blackbox, BETAFPV 2.4GHz Lite RX (serial) IPEX gen1, no baro
 - 衢州市云端智能科技 (Happymodel) [5.8G Crown LDS antenna RHCP](https://www.happymodel.cn/index.php/2025/08/07/happymodel-5-8g-crown-lds-antenna-rhcp-lhcp-for-micro-fpv-whoops/), [3.5dBi, 5500-6000MHz](https://www.happymodel.cn/wp-content/uploads/2025/08/5.8G-Crown-antenna-RHCP-testing-data.xls.pdf), IPEX gen1
 - 卡德克斯技术 (Caddx) Ant lite (f/2.5 lens). Update: swapped to Caddx Ant (f/1.2 lens), not in the pictures
 - ~~Mobula7 frame (80mm clone) - 45mm props, 80mm base, 47mm ducts~~
@@ -535,7 +534,7 @@ set blackbox_disable_debug = ON
 
 ## Update on the AIO's RX failure
 
-after a week or so flying, the RSSI suddenly got way too low, like there is no antenna connected. the flight before it was normal, I changed the battery for a fresh one and RSSI was low. I removed the ELRS antenna's IPEX connector from the AIO board and soldered the antenna directly, but it didn't help. reflashing also did nothing. I don't know if it's a result of a crash or a faulty AIO board. now I need to disable the integrated RX by shorting the two pads located between the battery's negative pad and the ELRS WiFi antenna, then connect an external RX to the UART3 pads located between battery's positive pad and motor 3 pads, the pad closer to the edge of the board being the R3 pad. Update: turns out these tiny pads are very fragile and one came off of the board after I tried to solder the wire to it. So I had to use UART4 to connect the new RX. No GPS for this build will be possible, except for if I remap the resources of SCL and SDA pads to UART3 RX and TX, or use soft serial. like this:
+after a week or so flying, the RSSI suddenly got way too low, like there is no antenna connected. the flight before it was normal, I changed the battery for a fresh one and RSSI was low. I removed the ELRS antenna's IPEX connector from the AIO board and soldered the antenna directly, but it didn't help. reflashing also did nothing. I don't know if it's a result of a crash or a faulty AIO board. now I need to disable the integrated RX by shorting the two pads located between the battery's negative pad and the ELRS WiFi antenna, then connect an external RX to the UART3 pads located between battery's positive pad and motor 3 pads, the pad closer to the edge of the board being the R3 pad. Update: turns out these tiny pads are very fragile and one came off of the board after I tried to solder the wire to it. So I had to use UART4 to connect the new RX. No GPS for this build will be possible, except for if I remap the resources of SCL and SDA pads to UART3 RX and TX, or use soft serial. if the FC has other devices (like a barometer) using I2C, **they will stop working after remapping** scl and sda:
 
 the original mapping:
 ```
