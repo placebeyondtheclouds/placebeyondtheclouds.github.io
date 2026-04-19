@@ -173,6 +173,12 @@ set yaw_motors_reversed = OFF
 
 use `motor direction` to adjust motors rotation direction individually. this changes settings of the ESCs
 
+- [overclock](https://oscarliang.com/overclock-fc-betaflight/) the MCU from 170 MHz to 192MHz
+
+```
+set cpu_overclock = 192MHZ
+```
+
 ## radio setup
 
 - ADC Filter OFF
@@ -320,58 +326,41 @@ the radio reporting current VTX power level with audio messages can be set up li
 | - | - | - |
 | ![29](/assets/images/not-mobula8-29.png) |   ![30](/assets/images/not-mobula8-30.png) | ![34](/assets/images/not-mobula8-34.png) |
 
-- PIDs
+- PIDs tuned with PIDtoolbox using [this method](https://www.youtube.com/watch?v=ehvQm8Rqrzk)
 
-if there is wobble in windy conditions, lower the iterm gain from 100 to `set simplified_i_gain = 70`
 
 ```
-profile 2
+profile 3
 
-# profile 2
-set profile_name = mob85mm
+# profile 3
+set profile_name = tune
 set dterm_lpf1_dyn_min_hz = 82
 set dterm_lpf1_dyn_max_hz = 165
 set dterm_lpf1_static_hz = 82
 set dterm_lpf2_static_hz = 165
-set vbat_sag_compensation = 100
-set anti_gravity_gain = 40
-set crash_dthreshold = 80
-set crash_gthreshold = 600
-set crash_setpoint_threshold = 500
-set crash_recovery_rate = 150
-set crash_recovery = ON
 set iterm_relax_type = GYRO
-set iterm_windup = 85
-set pidsum_limit = 1000
-set pidsum_limit_yaw = 1000
-set throttle_boost = 0
-set p_pitch = 87
-set i_pitch = 110
-set d_pitch = 44
-set f_pitch = 89
-set p_roll = 70
-set i_roll = 87
-set d_roll = 39
-set f_roll = 71
-set p_yaw = 100
-set i_yaw = 100
-set f_yaw = 150
-set d_max_roll = 52
-set d_max_pitch = 60
-set d_max_advance = 0
-set launch_control_mode = NORMAL
-set thrust_linear = 20
+set p_pitch = 56
+set i_pitch = 100
+set d_pitch = 51
+set f_pitch = 149
+set p_roll = 53
+set i_roll = 95
+set d_roll = 50
+set f_roll = 143
+set p_yaw = 53
+set i_yaw = 95
+set f_yaw = 143
+set d_max_roll = 50
+set d_max_pitch = 51
 set feedforward_averaging = OFF
 set feedforward_smooth_factor = 30
 set feedforward_jitter_factor = 9
 set dyn_idle_min_rpm = 80
 set simplified_pids_mode = RP
 set simplified_master_multiplier = 120
-set simplified_i_gain = 70
-set simplified_d_gain = 110
-set simplified_pi_gain = 130
-set simplified_feedforward_gain = 50
-set simplified_pitch_pi_gain = 120
+set simplified_d_gain = 140
+set simplified_d_max_gain = 0
+set simplified_pitch_d_gain = 90
 set simplified_dterm_filter = OFF
 set simplified_dterm_filter_multiplier = 110
 ```
@@ -398,20 +387,17 @@ filters are super important. `set dyn_notch_count = 1` gives me a flyaway in air
 
 # master
 set gyro_lpf1_static_hz = 0
-set gyro_lpf2_static_hz = 500
-set dyn_notch_count = 3
-set dyn_notch_q = 500
+set dyn_notch_q = 350
 set dyn_notch_min_hz = 119
-set dyn_notch_max_hz = 370
 set gyro_lpf1_dyn_min_hz = 0
+set acc_trim_pitch = 1
+set acc_trim_roll = 4
+set acc_calibration = -17,-45,37,1
 
-set rc_smoothing_auto_factor = 25
-set rc_smoothing_auto_factor_throttle = 25
-
-
-set rpm_filter_weights = 100,20,80
+set rpm_filter_weights = 100,20,100
 set rpm_filter_min_hz = 122
 set rpm_filter_fade_range_hz = 0
+set rpm_filter_q = 1000
 ```
 
 - motors (important) and battery:
