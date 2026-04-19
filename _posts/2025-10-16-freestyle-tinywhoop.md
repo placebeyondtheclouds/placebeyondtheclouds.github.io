@@ -392,7 +392,7 @@ set yaw_srate = 90
 
 - filters:
 
-filters are super important. `set dyn_notch_count = 1` gives me a flyaway in air mode. because 1 notch is not enough to filter the frame resonance, unfiltered gyro signal in combination of full PID loop autority in air mode causes PID rampup. this build needs `3` notches
+filters are super important. `set dyn_notch_count = 1` gives me a flyaway in air mode. because 1 notch is not enough to filter the frame resonance, unfiltered gyro signal in combination of full control autority over the PID loop in air mode causes PID rampup. this build needs `3` notches
 
 ```
 
@@ -530,6 +530,8 @@ adjrange 0 0 6 900 2100 29 6 0 0
 
 
 - blackbox for filter tuning
+
+[debug modes](https://betaflight.com/docs/wiki/guides/current/Debug-Modes). `GYRO_SAMPLE` is useful for tuning filters as it allows to observe filtering at different stages and see the effects of different groups of filters
 
 ```
 set blackbox_sample_rate = 1/2
