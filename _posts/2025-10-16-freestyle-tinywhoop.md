@@ -9,6 +9,7 @@ published: true
 
 
 
+
 I damaged ESC #2 on the 1S Matrix AIO (Meteor75 Pro), either by running a motor with damaged windings or from a voltage spike in a crash. It's overheating, not giving full power to the motor, and the video feed has white washouts during high throttle. So I'm replacing the AIO with JHEMCU G474ELRS and HGLRC Zeuz nano 350mw VTX. 
 
 Meteor75 frame is scraping the battery and motor screws against the ground, so I am replacing it with a clone of Mobula7 but for 45mm props (80mm base and 47mm ducts instead of 75mm and 43mm respectively). It has 2S battery tray, and with 1S battery the whoop will land on the lower part of the frame without the battery or motor screws touching the ground. Another solution to the problem would be keep the meteor75pro frame and printing [the battery bumper](https://www.thingiverse.com/thing:7056235).
@@ -192,10 +193,7 @@ use `motor direction` to adjust motors rotation direction individually. this cha
 - UARTs:
 
 ```
-serial VCP 1 115200 57600 0 115200
-serial UART1 0 115200 57600 0 115200
 serial UART2 8192 115200 57600 0 115200
-serial UART3 0 115200 57600 0 115200
 serial UART4 64 115200 57600 0 115200
 ```
 
@@ -216,6 +214,7 @@ set camera_control_ref_voltage = 330
 ```
 feature -AIRMODE
 feature TELEMETRY
+feature -LED_STRIP
 feature OSD
 beacon RX_LOST
 beacon RX_SET
@@ -230,10 +229,8 @@ aux 0 0 0 1900 2100 0 0
 aux 1 0 2 1900 2100 0 0
 aux 2 1 1 1900 2100 0 0
 aux 3 13 4 1900 2100 0 0
-aux 4 26 5 1900 2100 0 0
-aux 5 28 1 900 1100 0 0
-aux 6 31 7 1900 2100 0 0
-aux 7 35 2 1925 2100 0 0
+aux 4 28 1 900 1100 0 0
+aux 5 35 2 1925 2100 0 0
 ```
 
 
@@ -325,6 +322,8 @@ the radio reporting current VTX power level with audio messages can be set up li
 
 - PIDs
 
+if there is wobble in windy conditions, lower the iterm gain from 100 to `set simplified_i_gain = 70`
+
 ```
 profile 2
 
@@ -347,11 +346,11 @@ set pidsum_limit = 1000
 set pidsum_limit_yaw = 1000
 set throttle_boost = 0
 set p_pitch = 87
-set i_pitch = 157
+set i_pitch = 110
 set d_pitch = 44
 set f_pitch = 89
 set p_roll = 70
-set i_roll = 124
+set i_roll = 87
 set d_roll = 39
 set f_roll = 71
 set p_yaw = 100
@@ -365,9 +364,10 @@ set thrust_linear = 20
 set feedforward_averaging = OFF
 set feedforward_smooth_factor = 30
 set feedforward_jitter_factor = 9
-set dyn_idle_min_rpm = 70
+set dyn_idle_min_rpm = 80
 set simplified_pids_mode = RP
 set simplified_master_multiplier = 120
+set simplified_i_gain = 70
 set simplified_d_gain = 110
 set simplified_pi_gain = 130
 set simplified_feedforward_gain = 50
@@ -392,12 +392,14 @@ set yaw_srate = 90
 
 - filters:
 
+filters are super important. `set dyn_notch_count = 1` gives me a flyaway in air mode. because 1 notch is not enough to filter the frame resonance, unfiltered gyro signal in combination of full PID loop autority in air mode causes PID rampup. this build needs `3` notches
+
 ```
 
 # master
 set gyro_lpf1_static_hz = 0
-set gyro_lpf2_static_hz = 1000
-set dyn_notch_count = 1
+set gyro_lpf2_static_hz = 500
+set dyn_notch_count = 3
 set dyn_notch_q = 500
 set dyn_notch_min_hz = 119
 set dyn_notch_max_hz = 370
@@ -407,7 +409,7 @@ set rc_smoothing_auto_factor = 25
 set rc_smoothing_auto_factor_throttle = 25
 
 
-set rpm_filter_weights = 100,20,20
+set rpm_filter_weights = 100,20,80
 set rpm_filter_min_hz = 122
 set rpm_filter_fade_range_hz = 0
 ```
@@ -434,64 +436,46 @@ set force_battery_cell_count = 2
 - OSD. if BF is set to NTSC and the camera outputs PAL, the osd elements will not be visible
 
 ```
-set osd_units = METRIC
 set osd_warn_bitmask = 270335
-set osd_rssi_alarm = 20
-set osd_link_quality_alarm = 80
 set osd_rssi_dbm_alarm = -90
-set osd_rsnr_alarm = 4
 set osd_cap_alarm = 350
 set osd_alt_alarm = 120
-set osd_distance_alarm = 0
-set osd_esc_temp_alarm = 0
-set osd_esc_rpm_alarm = -1
-set osd_esc_current_alarm = -1
-set osd_core_temp_alarm = 70
-set osd_ah_max_pit = 20
-set osd_ah_max_rol = 40
-set osd_ah_invert = OFF
-set osd_logo_on_arming = OFF
-set osd_logo_on_arming_duration = 5
-set osd_arming_logo = 0
-set osd_tim1 = 2560
-set osd_tim2 = 2561
-set osd_vbat_pos = 396
-set osd_rssi_pos = 448
+set osd_vbat_pos = 6611
+set osd_rssi_pos = 6592
 set osd_link_quality_pos = 6629
-set osd_link_tx_power_pos = 4549
+set osd_link_tx_power_pos = 6597
 set osd_rssi_dbm_pos = 6624
-set osd_rsnr_pos = 64
+set osd_rsnr_pos = 448
 set osd_tim_1_pos = 385
-set osd_tim_2_pos = 6647
-set osd_remaining_time_estimate_pos = 472
+set osd_tim_2_pos = 14839
+set osd_remaining_time_estimate_pos = 6584
 set osd_flymode_pos = 6643
 set osd_anti_gravity_pos = 341
 set osd_g_force_pos = 375
-set osd_throttle_pos = 289
+set osd_throttle_pos = 6579
 set osd_vtx_channel_pos = 4128
 set osd_crosshairs_pos = 237
-set osd_ah_sbar_pos = 4334
-set osd_ah_pos = 4206
+set osd_ah_sbar_pos = 238
+set osd_ah_pos = 110
 set osd_current_pos = 6635
 set osd_mah_drawn_pos = 6616
 set osd_wh_drawn_pos = 341
 set osd_motor_diag_pos = 341
 set osd_craft_name_pos = 394
 set osd_pilot_name_pos = 341
-set osd_gps_speed_pos = 4323
+set osd_gps_speed_pos = 227
 set osd_gps_lon_pos = 17
 set osd_gps_lat_pos = 0
-set osd_gps_sats_pos = 6592
-set osd_home_dir_pos = 4206
-set osd_home_dist_pos = 4172
+set osd_gps_sats_pos = 416
+set osd_home_dir_pos = 110
+set osd_home_dist_pos = 76
 set osd_flight_dist_pos = 407
 set osd_compass_bar_pos = 42
-set osd_altitude_pos = 20726
+set osd_altitude_pos = 247
 set osd_pid_roll_pos = 341
 set osd_pid_pitch_pos = 341
 set osd_pid_yaw_pos = 341
 set osd_debug_pos = 385
-set osd_debug2_pos = 234
 set osd_power_pos = 341
 set osd_pidrate_profile_pos = 341
 set osd_warnings_pos = 14729
@@ -501,20 +485,19 @@ set osd_rol_ang_pos = 341
 set osd_battery_usage_pos = 393
 set osd_disarmed_pos = 14603
 set osd_nheading_pos = 397
-set osd_up_down_reference_pos = 4348
+set osd_up_down_reference_pos = 252
 set osd_ready_mode_pos = 14508
-set osd_nvario_pos = 4374
-set osd_esc_tmp_pos = 4150
+set osd_nvario_pos = 278
+set osd_esc_tmp_pos = 54
 set osd_esc_rpm_pos = 288
 set osd_esc_rpm_freq_pos = 341
-set osd_rtc_date_time_pos = 341
+set osd_rtc_date_time_pos = 0
 set osd_adjustment_range_pos = 341
 set osd_flip_arrow_pos = 14574
-set osd_core_temp_pos = 4118
+set osd_core_temp_pos = 4150
 set osd_log_status_pos = 341
-set osd_stick_overlay_left_pos = 341
-set osd_stick_overlay_right_pos = 341
-set osd_stick_overlay_radio_mode = 2
+set osd_stick_overlay_left_pos = 258
+set osd_stick_overlay_right_pos = 276
 set osd_rate_profile_name_pos = 20
 set osd_pid_profile_name_pos = 374
 set osd_profile_name_pos = 341
@@ -535,22 +518,7 @@ set osd_sys_warnings_pos = 341
 set osd_sys_vtx_temp_pos = 407
 set osd_sys_fan_speed_pos = 341
 set osd_stat_bitmask = 8521444
-set osd_profile = 1
-set osd_profile_1_name = -
-set osd_profile_2_name = -
-set osd_profile_3_name = -
-set osd_gps_sats_show_pdop = OFF
-set osd_displayport_device = AUTO
-set osd_rcchannels = -1,-1,-1,-1
-set osd_camera_frame_width = 24
-set osd_camera_frame_height = 11
-set osd_stat_avg_cell_value = OFF
-set osd_framerate_hz = 12
-set osd_menu_background = TRANSPARENT
-set osd_aux_channel = 1
-set osd_aux_scale = 200
-set osd_aux_symbol = 65
-set osd_craftname_msgs = OFF
+set osd_profile = 3
 ```
 
 - in-flight OSD profile switching on a pot. I use S1, set it to CH11 (AUX7 in BF)
@@ -564,24 +532,13 @@ adjrange 0 0 6 900 2100 29 6 0 0
 - blackbox for filter tuning
 
 ```
-blackbox_sample_rate = 1/2
-blackbox_device = SPIFLASH
-blackbox_disable_pids = OFF
-blackbox_disable_rc = ON
-blackbox_disable_setpoint = OFF
-blackbox_disable_bat = ON
-blackbox_disable_alt = ON
-blackbox_disable_rssi = ON
-blackbox_disable_gyro = OFF
-blackbox_disable_gyrounfilt = OFF
-blackbox_disable_acc = ON
-blackbox_disable_attitude = ON
-blackbox_disable_debug = OFF
-blackbox_disable_motors = OFF
-blackbox_disable_rpm = OFF
-blackbox_disable_gps = ON
-blackbox_mode = NORMAL
-blackbox_high_resolution = OFF
+set blackbox_sample_rate = 1/2
+set blackbox_disable_bat = ON
+set blackbox_disable_alt = ON
+set blackbox_disable_rssi = ON
+set blackbox_disable_acc = ON
+set blackbox_disable_attitude = ON
+set blackbox_disable_debug = ON
 ```
 
 ## testing
