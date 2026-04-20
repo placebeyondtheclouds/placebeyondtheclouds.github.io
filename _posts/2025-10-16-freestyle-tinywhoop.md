@@ -374,6 +374,7 @@ set dterm_lpf1_dyn_min_hz = 82
 set dterm_lpf1_dyn_max_hz = 165
 set dterm_lpf1_static_hz = 82
 set dterm_lpf2_static_hz = 165
+set vbat_sag_compensation = 100
 set iterm_relax_type = GYRO
 set p_pitch = 56
 set i_pitch = 100
@@ -388,6 +389,7 @@ set i_yaw = 95
 set f_yaw = 143
 set d_max_roll = 50
 set d_max_pitch = 57
+set thrust_linear = 20
 set feedforward_averaging = OFF
 set feedforward_smooth_factor = 30
 set feedforward_jitter_factor = 9
@@ -398,7 +400,7 @@ set simplified_d_gain = 140
 set simplified_d_max_gain = 0
 set simplified_feedforward_gain = 80
 set simplified_dterm_filter = OFF
-set simplified_dterm_filter_multiplier = 110
+set simplified_dterm_filter_multiplier = 11
 ```
 
 - motors (important) and battery:
