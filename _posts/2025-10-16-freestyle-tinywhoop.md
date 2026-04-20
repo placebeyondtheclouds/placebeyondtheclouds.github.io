@@ -172,7 +172,7 @@ set yaw_motors_reversed = OFF
 
 use `motor direction` to adjust motors rotation direction individually. this changes settings of the ESCs
 
-- [overclock](https://oscarliang.com/overclock-fc-betaflight/) the MCU from 170 MHz to 192MHz
+- (not using) [overclock](https://oscarliang.com/overclock-fc-betaflight/) the MCU from 170 MHz to 192MHz
 
 ```
 set cpu_overclock = 192MHZ
@@ -191,9 +191,11 @@ set cpu_overclock = 192MHZ
 - CH11 (AUX7), S1 - OSD profile switching
 - ch12 - aux8 
 
+set elrs 150Hz, telemetry std, switch mode: wide, link mode: normal, model match: **ID:3**, tx power dyn 500mw
+
 ## restore my settings
 
-- load elrs 150Hz rate profile (although some of the values will be replaced with the filters tuning later)
+- load elrs 150Hz rate profile (although some of the values will be replaced with the filters tuning later). 
 
 - UARTs:
 
