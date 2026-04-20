@@ -355,6 +355,7 @@ set yaw_motors_reversed = ON
 feature -AIRMODE
 feature TELEMETRY
 feature OSD
+beeper -ON_USB
 beacon RX_LOST
 beacon RX_SET
 set pid_process_denom = 1

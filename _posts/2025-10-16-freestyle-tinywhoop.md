@@ -221,6 +221,7 @@ feature -AIRMODE
 feature TELEMETRY
 feature -LED_STRIP
 feature OSD
+beeper -ON_USB
 beacon RX_LOST
 beacon RX_SET
 set baro_hardware = NONE
