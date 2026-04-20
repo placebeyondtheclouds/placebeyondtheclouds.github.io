@@ -325,44 +325,7 @@ the radio reporting current VTX power level with audio messages can be set up li
 | - | - | - |
 | ![29](/assets/images/not-mobula8-29.png) |   ![30](/assets/images/not-mobula8-30.png) | ![34](/assets/images/not-mobula8-34.png) |
 
-- PIDs tuned with PIDtoolbox using [this method](https://www.youtube.com/watch?v=ehvQm8Rqrzk)
 
-
-```
-profile 3
-
-# profile 3
-set profile_name = tune
-set dterm_lpf1_dyn_min_hz = 82
-set dterm_lpf1_dyn_max_hz = 165
-set dterm_lpf1_static_hz = 82
-set dterm_lpf2_static_hz = 165
-set iterm_relax_type = GYRO
-set p_pitch = 56
-set i_pitch = 100
-set d_pitch = 51
-set f_pitch = 149
-set p_roll = 53
-set i_roll = 95
-set d_roll = 50
-set f_roll = 143
-set p_yaw = 53
-set i_yaw = 95
-set f_yaw = 143
-set d_max_roll = 50
-set d_max_pitch = 51
-set feedforward_averaging = OFF
-set feedforward_smooth_factor = 30
-set feedforward_jitter_factor = 9
-set dyn_idle_min_rpm = 80
-set simplified_pids_mode = RP
-set simplified_master_multiplier = 120
-set simplified_d_gain = 140
-set simplified_d_max_gain = 0
-set simplified_pitch_d_gain = 90
-set simplified_dterm_filter = OFF
-set simplified_dterm_filter_multiplier = 110
-```
 
 - rates 
 
@@ -397,6 +360,45 @@ set rpm_filter_weights = 100,20,100
 set rpm_filter_min_hz = 122
 set rpm_filter_fade_range_hz = 0
 set rpm_filter_q = 1000
+```
+
+- PIDs tuned with PIDtoolbox using [this method](https://www.youtube.com/watch?v=ehvQm8Rqrzk)
+
+
+```
+profile 3
+
+# profile 3
+set profile_name = tune
+set dterm_lpf1_dyn_min_hz = 82
+set dterm_lpf1_dyn_max_hz = 165
+set dterm_lpf1_static_hz = 82
+set dterm_lpf2_static_hz = 165
+set iterm_relax_type = GYRO
+set p_pitch = 56
+set i_pitch = 100
+set d_pitch = 57
+set f_pitch = 119
+set p_roll = 53
+set i_roll = 95
+set d_roll = 50
+set f_roll = 115
+set p_yaw = 53
+set i_yaw = 95
+set f_yaw = 143
+set d_max_roll = 50
+set d_max_pitch = 57
+set feedforward_averaging = OFF
+set feedforward_smooth_factor = 30
+set feedforward_jitter_factor = 9
+set dyn_idle_min_rpm = 80
+set simplified_pids_mode = RP
+set simplified_master_multiplier = 120
+set simplified_d_gain = 140
+set simplified_d_max_gain = 0
+set simplified_feedforward_gain = 80
+set simplified_dterm_filter = OFF
+set simplified_dterm_filter_multiplier = 110
 ```
 
 - motors (important) and battery:

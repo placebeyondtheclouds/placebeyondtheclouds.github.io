@@ -480,9 +480,7 @@ set rpm_filter_min_hz = 160
 set rpm_filter_fade_range_hz = 40
 ```
 
-- PIDs for the **carbonfly 25 frame**, tuned with PIDtoolbox using [this method](https://www.youtube.com/watch?v=ehvQm8Rqrzk). dynamic idle value is based on the prop size/pitch, [here](https://oscarliang.com/how-to-enable-and-configure-betaflight-dynamic-idle/) and [here](https://youtu.be/1oYoVE4xu1U?si=yH7NVtL8CJaB1tvT&t=798).
-
- `pidsum_limit` sets PID authority to 100%.
+- PIDs for the **carbonfly 25 frame**, tuned with PIDtoolbox using [this method](https://www.youtube.com/watch?v=ehvQm8Rqrzk). dynamic idle value is based on the prop size/pitch, [here](https://oscarliang.com/how-to-enable-and-configure-betaflight-dynamic-idle/) and [here](https://youtu.be/1oYoVE4xu1U?si=yH7NVtL8CJaB1tvT&t=798). `pidsum_limit` sets PID authority to 100%. if there is a slow bounceback after a roll or a flip, lower I term gain to `set simplified_i_gain = 100`
 
 ```
 profile 3
@@ -523,7 +521,7 @@ set feedforward_smooth_factor = 30
 set feedforward_jitter_factor = 9
 set dyn_idle_min_rpm = 100
 set simplified_master_multiplier = 160
-set simplified_i_gain = 120
+set simplified_i_gain = 100
 set simplified_d_gain = 140
 set simplified_d_max_gain = 0
 set simplified_pitch_d_gain = 90
