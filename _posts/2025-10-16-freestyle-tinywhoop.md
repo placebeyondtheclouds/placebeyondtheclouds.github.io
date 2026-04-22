@@ -82,14 +82,12 @@ the ELRS receiver on the AIO died after a week or so. ~~Update: using another VT
 
 | - | - | - |
 | ![1](/assets/images/rebuild01.jpg) | ![2](/assets/images/rebuild02.jpg) |![3](/assets/images/rebuild03.jpg) |
-| - | - | - |
 |  ![4](/assets/images/rebuild04.jpg) |![5](/assets/images/rebuild05.jpg) |  ![6](/assets/images/rebuild06.jpg) |
-| - | - | - |
 | ![7](/assets/images/rebuild07.jpg) | ![8](/assets/images/rebuild08.jpg) | ![9](/assets/images/rebuild09.jpg) |
-| - | - | - |
 | ![10](/assets/images/rebuild10.jpg) |![11](/assets/images/rebuild11.jpg) | ![12](/assets/images/rebuild12.jpg) |
-| - | - | - |
 | ![13](/assets/images/rebuild13.jpg) | ![14](/assets/images/rebuild14.jpg) |![15](/assets/images/rebuild15.jpg) |
+| ![29](/assets/images/not-mobula8-29.png) |   ![30](/assets/images/not-mobula8-30.png) | ![34](/assets/images/not-mobula8-34.png) |
+
 
 ## mobula 8 85mm transplant
 
@@ -97,7 +95,7 @@ the ELRS receiver on the AIO died after a week or so. ~~Update: using another VT
 | ![1](/assets/images/rebuild16.jpg) | ![2](/assets/images/rebuild17.jpg) |![3](/assets/images/rebuild18.jpg) |
 | ![4](/assets/images/rebuild19.jpg) | ![5](/assets/images/rebuild20.png) | ![6](/assets/images/rebuild21.png) |
 | ![7](/assets/images/rebuild22.jpg) | ![8](/assets/images/rebuild23.jpg) | ![9](/assets/images/rebuild24.jpg) |
-
+| ![10](/assets/images/rebuild-25.png) |   ![11](/assets/images/rebuild-26.png) | - |
 
 
 ## the process
@@ -352,6 +350,7 @@ filters are super important. `set dyn_notch_count = 1` gives me a flyaway in air
 
 # master
 set gyro_lpf1_static_hz = 0
+set dyn_notch_count = 3
 set dyn_notch_q = 350
 set dyn_notch_min_hz = 119
 set gyro_lpf1_dyn_min_hz = 0

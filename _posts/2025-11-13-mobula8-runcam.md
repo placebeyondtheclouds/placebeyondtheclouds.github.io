@@ -10,7 +10,7 @@ published: true
 
 I want to build the smallest quad possible that **can carry a 4K camera onboard, have prop guards and have enough thrust to be able to do light freestyle**. Here's how I built a cinewhoop using ~~Mobula8 frame~~ 2.5 inch frame and Runcam Thumb 2. I decided to build it on a FC with fast modern MCU from [ArteryTek](https://oscarliang.com/at32-flight-controllers/) and new industry standard gyro [ICM42688P](https://invensense.tdk.com/wp-content/uploads/2022/12/DS-000347-ICM-42688-P-v1.7.pdf). the Runcam camera will act as ~~both the fpv camera and~~ the 4K video camera. having a live `preview` in the goggles is super convenient for dialing in Runcam's manual exposure settings. also useful for checking if I lost the action camera (or its ND filter) in a crash or not, by switching to the camera feed. 
 
-**highlights of the final build**: live switching between the cameras, Runcam camera recording start/stop from the radio, VTX power level adjustment on a pot, turtle mode without arming, RHCP antenna for VTX, whip-style antenna for RX, low esr capacitor~~, GPS rescue, position and altitude hold (without a magnetometer so it needs a calibration flight each time before use)~~. VTX is set to whatever power setting S2 pot at the moment the RX connects to the radio, but VTX keeps low power before the first arm. ~~Crash recovery enabled.~~ ~~Location-related information in the ELRS telemetry is disabled as an OPSEC measure.~~ Logs are manually erased (through stick commands OSD or the app) and written after arming until the memory is full.
+**highlights of the final build**: live switching between the cameras, Runcam camera recording start/stop from the radio, VTX power level adjustment on a pot, turtle mode without arming, RHCP antenna for VTX, whip-style antenna for RX, low esr capacitor~~, GPS rescue, position and altitude hold (without a magnetometer so it needs a calibration flight each time before use)~~. VTX is set to whatever power setting S2 pot at the moment the RX connects to the radio, but VTX keeps low power before the first arm. ~~Crash recovery enabled.~~ ~~Location-related information in the ELRS telemetry is disabled as an OPSEC measure.~~ OSD profile switching using S1.
 
 > read the updates! the quad ended up being very different. the "smallest" part is not the case anymore since it means very poor (borderline unusable) flight performance.
 {: .prompt-warning }
@@ -46,7 +46,7 @@ I want to build the smallest quad possible that **can carry a 4K camera onboard,
 
 ## update 4: 2.5 inch frame transplant
 
-- got tired of lack of thrust. decided to **transplant the project into a 2.5" frame**, AstroRC Carbonfly 25 V3. [frame assembly tutorial for v2](https://www.youtube.com/watch?v=BBmyJonWY08). solder gps to UART3. ~~recompile the firmware with softserial support, turn on the feature, remap the resources of SCL and SDA pads to softserial1, resolder runcam `tx3->scl` and `rx3->sda` and change in the settings `camera control` from uart3 to softseral1,  bz- is not suitable for use with softserial because the pad has an npn transistor in the circuit.~~ but bz- can be used for PINIO, solder bz- pad to PWM input on the Runcam. if 20A ESCs would not hold, I will replace the AIO with GH743AIO (480MHz, 7 UARTS, AM32 40A ESCs, 3s-6s, 16AWG lead). the motor screws that came with the motors are M2x6 and are too long for this frame, must use M2x4.5. The frame set was missing 4 M2x16 screws for the FC. M2x6 screws for the props. also removed 5V BEC used for the Runcam, because with 4s battery there is no voltage sag now.
+- got tired of lack of thrust. decided to **transplant the project into a 2.5" frame**, AstroRC Carbonfly 25 V3. [frame assembly tutorial for v2](https://www.youtube.com/watch?v=BBmyJonWY08). changed the motors to **LANNRC 1404 4600kv**, props **HQprop DT63mmX3V2** are the same that come with this frame in BNF version. ~~solder gps to UART3.~~ ~~recompile the firmware with softserial support, turn on the feature, remap the resources of SCL and SDA pads to softserial1, resolder runcam `tx3->scl` and `rx3->sda` and change in the settings `camera control` from uart3 to softseral1,  bz- is not suitable for use with softserial because the pad has an npn transistor in the circuit.~~ but bz- can be used for PINIO, solder bz- pad to PWM input on the Runcam. if 20A ESCs would not hold, I will replace the AIO with GH743AIO (480MHz, 7 UARTS, AM32 40A ESCs, 3s-6s, 16AWG lead). the motor screws that came with the motors are M2x6 and are too long for this frame, must use M2x4.5. The frame set was missing 4 M2x16 screws for the FC. M2x6 screws for the props. also removed 5V BEC used for the Runcam, because with 4s battery there is no voltage sag now.
 - weight with camera 180.7 g, 247.3 g with the 4s 720mah battery.
 - Happymodel Crown LDS antenna breaks very easly, the traces with the soldering joint are ripped from the antenna's body. ~~I used linear polarized dipole temporarily.~~
 - flight time 4 m 40 sec, max current 24A
@@ -54,17 +54,17 @@ I want to build the smallest quad possible that **can carry a 4K camera onboard,
 
 ## update 5
 
-- because of my poor piloting skills I was going through ND filters way too fast and was worried that sooner or later I will destroy the Runcam's lens itself. so I decided to print [the shell](https://www.thingiverse.com/thing:6830398) from black TPU, cut out the part around the lens and attached it (using the friction by putting a tiny EVA foam patch between the camera and the cutout) to the camera that is already secured to the frame using [the original Runcam Thumb 2 mount](https://www.thingiverse.com/thing:6807624). the shell weights 14.9 g, the cutout is around a half of that weight.
+- because of my poor piloting skills I was going through ND filters way too fast and was worried that sooner or later I will destroy the Runcam's lens itself. so I decided to print [the shell](https://www.thingiverse.com/thing:6830398) from black TPU, cut out the part around the lens and attach it (using the friction by putting a tiny EVA foam patch between the camera and the cutout) to the camera that is already secured to the frame using [the original Runcam Thumb 2 mount](https://www.thingiverse.com/thing:6807624). the shell weights 14.9 g, the cutout is around a half of that weight.
 - `set crash_recovery = DISARM` to save (others from) the props
 - ungodly amount of zipties
 - gps rescue and pos hold are kinda useless on this quad, so I removed the GPS module
-- weight with the camera and the shell(cutout): 182.2 g. weight with the camera, the shell and the battery:  248.8 g
+- weight with the camera mount but without the camera and the shell 150.4 g. weight with the camera and the shell(cutout): 182.2 g. weight with the camera, the shell and the battery:  248.8 g
 
 
 ## todo
 
 - [x] tune filters
-- [x] tune PIDs
+- [x] tune PIDs (with PIDtoolbox)
 - [x] adjust the current sensor calibration value
 
 ## initial build video (mobula8 frame)
@@ -163,7 +163,7 @@ I want to build the smallest quad possible that **can carry a 4K camera onboard,
         Cable: 22AWG # 150mm Cable
       ```
 
-- HQprop DT63mmX3V2 props (pitch 1.5), eight M2x6 screws
+- [HQprop DT63mmX3V2](https://www.hqprop.com/hq-durable-prop-t63mmx3v2-grey-2cw2ccw-poly-carbonate-p0386.html) props (pitch 1.5), eight M2x6 screws
 - 高能 720 mAh 4S 100C HV, XT30
 - Mayatech Redbean gen4 RHCP antenna, 5.2-6GHz (lowest VSWR is at 5.7GHz), 3dBi gain, IPEX gen1 with 150mm cable
 - 220 uf 35v solid state capacitor
@@ -291,7 +291,7 @@ this maps LED_STRIP pad (it is also possible to use the SDA pad) resource to the
 - ch10, SW6 toggle, no group (aux6) - Runcam button
 - CH11 SD (aux7) beeper
 - CH12 - S1 - (aux8)- OSD profile switching  
-- add special function `SW5up ply trk ready`, `SW6down ply trk recsrt`
+- add special function `SW5up ply trk ready`, `SW6down ply trk recsrt`, etc
 
 ## ESCs configuration
 - [ESC Configurator](https://esc-configurator.com/) or [run it locally]({% post_url 2025-11-23-bf-local %})
@@ -481,7 +481,7 @@ set rpm_filter_min_hz = 160
 set rpm_filter_fade_range_hz = 40
 ```
 
-- PIDs for the **carbonfly 25 frame**, tuned with PIDtoolbox using [this method](https://www.youtube.com/watch?v=ehvQm8Rqrzk). dynamic idle value is based on the prop size/pitch, [here](https://oscarliang.com/how-to-enable-and-configure-betaflight-dynamic-idle/) and [here](https://youtu.be/1oYoVE4xu1U?si=yH7NVtL8CJaB1tvT&t=798). `pidsum_limit` sets PID authority to 100%. if there is a slow bounceback after a roll or a flip, lower I term gain to `set simplified_i_gain = 100`
+- PIDs for the **carbonfly 25 frame**, tuned with PIDtoolbox using [this method](https://www.youtube.com/watch?v=ehvQm8Rqrzk). dynamic idle value is based on the prop size/pitch, [here](https://oscarliang.com/how-to-enable-and-configure-betaflight-dynamic-idle/) and [here](https://youtu.be/1oYoVE4xu1U?si=yH7NVtL8CJaB1tvT&t=798). the two `pidsum_limit` set PID authority to 100%. if there is a slow bounceback after a roll or a flip, lower I term gain to `set simplified_i_gain = 100`
 
 ```
 profile 3
@@ -531,7 +531,6 @@ set simplified_dterm_filter_multiplier = 110
 
 ```
 
-[use master multiplier](https://www.youtube.com/watch?v=u74tDug6lpc) to adjust overall aggressiveness (sluggish, unpredictable <==> twitchy, motor heat, motor noise).
 
 - rates 
 
@@ -577,7 +576,7 @@ motor 255 1060
 dshot_telemetry_info
 ```
 
-can enable temperature protection in the ESCs if the temperature readings are sane (there were none in my case)
+do not enable temperature protection in the ESCs, even if the temperature readings are sane (there were none in my case)
 
 - OSD. if BF is set to NTSC and the camera outputs PAL, the osd elements will not be visible
 
@@ -731,7 +730,7 @@ set debug_mode = GYRO_RAW
 I set `debug_mode = BATTERY` midway through the first part of the build to debug the voltage sag problem
 
 
-- GPS rescue, position hold and alt hold
+- (not using) GPS rescue, position hold and alt hold
 
 just for fun, configure pos+alt hold, needs `pos_hold_without_mag = ON`, and then a calibration flight (a straight line for 10 meters) each time
 
@@ -817,3 +816,4 @@ set motor_output_reordering = 2,3,0,1,4,5,6,7
 - https://store-m8o52p.mybigcommerce.com/product_images/img_runcam_thumb2/runcam_thumb2_manual_en.pdf
 - https://flying-rabbit-fpv.com/2020/11/07/creating-a-betaflight-target/
 - https://github.com/bird-sanctuary/bluejay/wiki/Setup
+- https://oscarliang.com/best-2inch-2-5inch-props/
