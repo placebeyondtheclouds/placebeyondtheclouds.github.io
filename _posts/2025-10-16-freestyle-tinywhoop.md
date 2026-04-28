@@ -55,7 +55,7 @@ the ELRS receiver on the AIO died after a week or so. ~~Update: using another VT
 
 ## components
 
-- 津航电子 (JHEMCU) G474ELRS - 1s-2s, 4 UARTS, 12A bluejay DSHOT300 ESCs, STM32G474: 170MHz core 512KB flash 128KB RAM, 8MB blackbox, BETAFPV 2.4GHz Lite RX (serial) IPEX gen1, no baro
+- 津航电子 (JHEMCU) G474ELRS - 1s-2s, 4 UARTS, 12A bluejay DSHOT300 ESCs, STM32G474: 170MHz core 512KB flash 128KB RAM, 8MB blackbox, BETAFPV 2.4GHz Lite RX (serial) IPEX gen1, no baro - ELRS died
 - 衢州市云端智能科技 (Happymodel) [5.8G Crown LDS antenna RHCP](https://www.happymodel.cn/index.php/2025/08/07/happymodel-5-8g-crown-lds-antenna-rhcp-lhcp-for-micro-fpv-whoops/), [3.5dBi, 5500-6000MHz](https://www.happymodel.cn/wp-content/uploads/2025/08/5.8G-Crown-antenna-RHCP-testing-data.xls.pdf), IPEX gen1
 - 卡德克斯技术 (Caddx) Ant lite (f/2.5 lens). Update: swapped to Caddx Ant (f/1.2 lens), not in the pictures
 - ~~Mobula7 frame (80mm clone) - 45mm props, 80mm base, 47mm ducts~~
@@ -522,8 +522,7 @@ adjrange 0 0 6 900 2100 29 6 0 0
 
 - blackbox for filter tuning
 
-[debug modes](https://betaflight.com/docs/wiki/guides/current/Debug-Modes). `GYRO_SAMPLE` is useful for tuning filters as it allows to observe filtering at different stages and see the effects of different groups of filters
-
+[debug modes](https://betaflight.com/docs/wiki/guides/current/Debug-Modes). `GYRO_SAMPLE` is useful for tuning filters as it allows to observe filtering at different stages and see the effects of different groups of filters. `AC_ERROR` shows Absolute Control Error by each axis in debug1. `FFT_FREQ` shows center frequency for the 3 dynamic notches.
 ```
 set blackbox_sample_rate = 1/2
 set blackbox_disable_bat = ON
@@ -577,3 +576,4 @@ Firmware Rev. 3.5.3 (40555e) ISM2G4
 - https://speedybee.zendesk.com/hc/en-us/articles/18769825525531-Experiencing-a-Runaway-takeoff-During-Drone-s-First-Flight
 - https://www.team-blacksheep.com/media/files/vtx-table-for-betaflight.txt
 - https://www.betaflight.com/docs/wiki/guides/current/VTX-CLI-Settings
+- https://oscarliang.com/f1-f3-f4-flight-controller/

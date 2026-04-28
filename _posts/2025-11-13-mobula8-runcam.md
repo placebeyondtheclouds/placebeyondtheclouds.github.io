@@ -46,20 +46,31 @@ I want to build the smallest quad possible that **can carry a 4K camera onboard,
 
 ## update 4: 2.5 inch frame transplant
 
-- got tired of lack of thrust. decided to **transplant the project into a 2.5" frame**, AstroRC Carbonfly 25 V3. [frame assembly tutorial for v2](https://www.youtube.com/watch?v=BBmyJonWY08). changed the motors to **LANNRC 1404 4600kv**, props **HQprop DT63mmX3V2** are the same that come with this frame in BNF version. ~~solder gps to UART3.~~ ~~recompile the firmware with softserial support, turn on the feature, remap the resources of SCL and SDA pads to softserial1, resolder runcam `tx3->scl` and `rx3->sda` and change in the settings `camera control` from uart3 to softseral1,  bz- is not suitable for use with softserial because the pad has an npn transistor in the circuit.~~ but bz- can be used for PINIO, solder bz- pad to PWM input on the Runcam. if 20A ESCs would not hold, I will replace the AIO with GH743AIO (480MHz, 7 UARTS, AM32 40A ESCs, 3s-6s, 16AWG lead). the motor screws that came with the motors are M2x6 and are too long for this frame, must use M2x4.5. The frame set was missing 4 M2x16 screws for the FC. M2x6 screws for the props. also removed 5V BEC used for the Runcam, because with 4s battery there is no voltage sag now.
+- got tired of lack of thrust. decided to **transplant the project into a 2.5" frame**, AstroRC Carbonfly 25 V3. [frame assembly tutorial for v2](https://www.youtube.com/watch?v=BBmyJonWY08). changed the motors to **LANNRC 1404 4600kv**, props **HQprop DT63mmX3V2** are the same that come with this frame in BNF version. ~~solder gps to UART3.~~ ~~recompile the firmware with softserial support, turn on the feature, remap the resources of SCL and SDA pads to softserial1, resolder runcam `tx3->scl` and `rx3->sda` and change in the settings `camera control` from uart3 to softseral1,  bz- is not suitable for use with softserial because the pad has an npn transistor in the circuit.~~ but bz- can be used for PINIO, solder bz- pad to PWM input on the Runcam. if 20A ESCs would not hold, I will replace the AIO with GH743AIO (480MHz, 7 UARTS, 40A ESCs, 3s-6s, 16AWG lead). the motor screws that came with the motors are M2x6 and are too long for this frame, must use M2x4.5. The frame set was missing 4 M2x16 screws for the FC. M2x6 screws for the props. also removed 5V BEC used for the Runcam, because with 4s battery there is no voltage sag now.
 - weight with camera 180.7 g, 247.3 g with the 4s 720mah battery.
 - Happymodel Crown LDS antenna breaks very easly, the traces with the soldering joint are ripped from the antenna's body. ~~I used linear polarized dipole temporarily.~~
 - flight time 4 m 40 sec, max current 24A
 - because there are not enough UARTs on this AIO and [softserial was implemented only for STM32 MCUs](https://github.com/betaflight/betaflight/issues/15058#issuecomment-4184127886) and is not available for ArteryTek MCUs, I had to disable camera control using UART in favor of running the GPS module. camera control will be implemented using the PWM input in the socket on the back of the camera, connected to ~~SCL pad (can not use SCL or SDA, because both resources must be mapped to the I2C bus in order for the barometer to work)~~ BZ- on the AIO, which will be remapped to PINIO1. it is also possible to use servo output instead of PINIO.
 
+
 ## update 5
 
-- because of my poor piloting skills I was going through ND filters way too fast and was worried that sooner or later I will destroy the Runcam's lens itself. so I decided to print [the shell](https://www.thingiverse.com/thing:6830398) from black TPU, cut out the part around the lens and attach it (using the friction by putting a tiny EVA foam patch between the camera and the cutout) to the camera that is already secured to the frame using [the original Runcam Thumb 2 mount](https://www.thingiverse.com/thing:6807624). the shell weights 14.9 g, the cutout is around a half of that weight.
+- because of my poor piloting skills I was going through ND filters way too fast and was worried that sooner or later I will destroy the Runcam's lens itself. so I decided to print [the shell](https://www.thingiverse.com/thing:6830398) from black TPU~~, cut out the part around the lens and attach it (using the friction by putting a tiny EVA foam patch between the camera and the cutout) to the camera that is already secured to the frame using [the original Runcam Thumb 2 mount](https://www.thingiverse.com/thing:6807624). the shell weights 14.9 g, the cutout is around a half of that weight.~~
 - `set crash_recovery = DISARM` to save (others from) the props
 - ungodly amount of zipties
 - gps rescue and pos hold are kinda useless on this quad, so I removed the GPS module
-- weight with the camera mount but without the camera and the shell 150.4 g. weight with the camera and the shell(cutout): 182.2 g. weight with the camera, the shell and the battery:  248.8 g
+~~- weight with the camera mount but without the camera and the shell 150.4 g. weight with the camera and the shell(cutout): 182.2 g. weight with the camera, the shell and the battery:  248.8 g~~
+- `HQprop DT63mmX3V2` hover at 18000 rpm, 35%, 3.97A (without the camera, weight with the battery 216.8 g)
 
+## update 6
+
+- `HQprop DT63mmX3V2` props blow up into pieces on any contact with other objects. decided to change the props to gemfan 2512 (1.2 inch pitch). I should get higher rpm with 2512 since it has lower pitch angle. then try 2520-3 (2 inch pitch).
+- `gemfan 2520-3` hover at 22000 rpm, 40%, 3.87A (without the camera, weight with the battery 216.8 g). 5m~7m down to 3.4v. will go with these props for now.
+- `gemfan 2512-3` hover at 28000 rpm, 47%, 3.9A (without the camera, weight with the battery 216.8 g). 7m15s to 3.4v. very weak thrust.
+
+## update 7
+
+- the camera shell cutout is not secure
 
 ## todo
 
@@ -167,6 +178,8 @@ I want to build the smallest quad possible that **can carry a 4K camera onboard,
 - 高能 720 mAh 4S 100C HV, XT30
 - Mayatech Redbean gen4 RHCP antenna, 5.2-6GHz (lowest VSWR is at 5.7GHz), 3dBi gain, IPEX gen1 with 150mm cable
 - 220 uf 35v solid state capacitor
+- [gemfan 2512-3](https://www.gfprops.com/products/gemfan-2512-3-toothpick-props.html), 1.2 inch pitch. need M2x6 screws
+- [gemfan 2520-3](https://www.gemfanhobby.com/2520-hurricane-pc-3-blade.html), 2 inch pitch. need M2x8 screws
 
 ## wiring and assembly
 
@@ -817,3 +830,4 @@ set motor_output_reordering = 2,3,0,1,4,5,6,7
 - https://flying-rabbit-fpv.com/2020/11/07/creating-a-betaflight-target/
 - https://github.com/bird-sanctuary/bluejay/wiki/Setup
 - https://oscarliang.com/best-2inch-2-5inch-props/
+- https://oscarliang.com/at32-flight-controllers/
