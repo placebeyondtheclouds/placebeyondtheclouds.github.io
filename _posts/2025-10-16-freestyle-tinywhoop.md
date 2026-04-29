@@ -188,6 +188,9 @@ set cpu_overclock = 192MHZ
 - ch10 - aux6 
 - CH11 (AUX7), S1 - OSD profile switching
 - ch12 - aux8 
+- add logical switch `L04 a>x tpwr 0mw`, add special function `L04 playval tpwr - enable`
+- add logical switch `L05 a<x rxbt 3.4V duration 1`, add special function `L05 playval rxbt 5 enable`
+
 
 set elrs 150Hz, telemetry std, switch mode: wide, link mode: normal, model match: **ID:3**, tx power dyn 500mw
 

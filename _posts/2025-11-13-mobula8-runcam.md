@@ -292,7 +292,7 @@ servo 0 1000 2000 1500 100 8
 this maps LED_STRIP pad (it is also possible to use the SDA pad) resource to the first servo (servo0). servo0 is activated with AUX5 (`8` here, count from 1 with 1-4 being the stick axes, 5 being AUX1 and so on). mode value 2000 on the CH10 (toggle on the radio) sets LED_STRIP pad to HIGH (3.3V). this will tell the video channel switcher to switch to VIDEO2 (runcam). the other state is LOW, which means the fpv camera (VIDEO1) will be connected to the FC by default.
 
 
-## radio/modes setup
+## radio setup
 
 - ADC Filter OFF
 - send radio's RTC data to the flight controller to have correct time in blackbox files and on the OSD: go to special functions, add `ON Lua bfbkgd On` and turn the checkmark on
@@ -304,7 +304,9 @@ this maps LED_STRIP pad (it is also possible to use the SDA pad) resource to the
 - ch10, SW6 toggle, no group (aux6) - Runcam button
 - CH11 SD (aux7) beeper
 - CH12 - S1 - (aux8)- OSD profile switching  
-- add special function `SW5up ply trk ready`, `SW6down ply trk recsrt`, etc
+- add special function `SW5up ply trk ready`, `SW6down ply trk recsrt`
+- add logical switch `L04 a>x tpwr 0mw`, add special function `L04 playval tpwr - enable`
+- add logical switch `L05 a<x rxbt 3.4V duration 1`, add special function `L05 playval rxbt 5 enable`
 
 ## ESCs configuration
 - [ESC Configurator](https://esc-configurator.com/) or [run it locally]({% post_url 2025-11-23-bf-local %})
