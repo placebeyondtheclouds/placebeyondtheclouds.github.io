@@ -3,7 +3,7 @@ layout: post
 title:  "4K analog cinewhoop build start to finish"
 lang: en
 tags: [en, 2s, cinewhoop, quad, fpv, diy, 85mm, analog, 4k, 2inch, 2.5inch, 4s]
-category: tutorial
+category: notes
 published: true
 ---
 
@@ -56,7 +56,7 @@ I want to build the smallest quad possible that **can carry a 4K camera onboard,
 ## update 5
 
 - because of my poor piloting skills I was going through ND filters way too fast and was worried that sooner or later I will destroy the Runcam's lens itself. so I decided to print [the shell](https://www.thingiverse.com/thing:6830398) from black TPU~~, cut out the part around the lens and attach it (using the friction by putting a tiny EVA foam patch between the camera and the cutout) to the camera that is already secured to the frame using [the original Runcam Thumb 2 mount](https://www.thingiverse.com/thing:6807624). the shell weights 14.9 g, the cutout is around a half of that weight.~~
-- `set crash_recovery = DISARM` to save (others from) the props
+- `set crash_recovery = DISARM` to save (others from) the props. also, `crash_recovery = ON` increases the risk of burning an ESC.
 - ungodly amount of zipties
 - gps rescue and pos hold are kinda useless on this quad, so I removed the GPS module
 ~~- weight with the camera mount but without the camera and the shell 150.4 g. weight with the camera and the shell(cutout): 182.2 g. weight with the camera, the shell and the battery:  248.8 g~~
@@ -479,7 +479,9 @@ set rpm_filter_min_hz = 160
 set rpm_filter_fade_range_hz = 40
 ```
 
-- filters  for the **carbonfly 25 frame**.
+- [filters and PID tuning]({% post_url 2026-05-10-filters-pid-tuning %})
+
+- filters  for the **carbonfly 25 frame**. [about filter weights](https://www.youtube.com/watch?v=h9etDDhyNHw)
 
 ```
 # master
@@ -494,9 +496,11 @@ set acc_calibration = 42,-10,-21,1
 set rpm_filter_weights = 100,20,80
 set rpm_filter_min_hz = 160
 set rpm_filter_fade_range_hz = 40
+set rpm_filter_q = 500
 ```
 
-- PIDs for the **carbonfly 25 frame**, tuned with PIDtoolbox using [this method](https://www.youtube.com/watch?v=ehvQm8Rqrzk). dynamic idle value is based on the prop size/pitch, [here](https://oscarliang.com/how-to-enable-and-configure-betaflight-dynamic-idle/) and [here](https://youtu.be/1oYoVE4xu1U?si=yH7NVtL8CJaB1tvT&t=798). the two `pidsum_limit` set PID authority to 100%. if there is a slow bounceback after a roll or a flip, lower I term gain to `set simplified_i_gain = 100`
+- PIDs for the **carbonfly 25 frame**, tuned with PIDtoolbox using [this method](https://www.youtube.com/watch?v=ehvQm8Rqrzk). 
+
 
 ```
 profile 3
@@ -553,6 +557,7 @@ set simplified_dterm_filter_multiplier = 110
 rateprofile 0
 
 set rateprofile_name = sasha
+rates_type = ACTUAL
 set roll_rc_rate = 16
 set pitch_rc_rate = 16
 set yaw_rc_rate = 16

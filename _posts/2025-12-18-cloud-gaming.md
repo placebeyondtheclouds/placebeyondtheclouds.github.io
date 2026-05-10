@@ -3,7 +3,7 @@ layout: post
 title:  "Local cloud gaming (or any 3D accelerated app)"
 lang: en
 tags: [en, proxmox, cloud, gpu, sunshine, moonlight]
-category: tutorial
+category: notes
 published: false
 ---
 

@@ -3,7 +3,7 @@ layout: post
 title:  "Re-building freestyle tinywhoop"
 lang: en
 tags: [en, 1s, tinywhoop, quad, fpv, diy, 80mm, analog, 85mm, 2s ]
-category: tutorial
+category: notes
 published: true
 ---
 
@@ -317,11 +317,21 @@ set vcd_video_system = PAL
 
 - in-flight VTX power switching on a pot, used S2 (BF:aux4, radio:ch8). 0 means no change. `<index> <aux_channel> <vtx_band> <vtx_channel> <vtx_power> <start_range> <end_range>`.
 
+
+four levels:
 ```
 vtx 0 3 0 0 1 900 1249
 vtx 1 3 0 0 2 1250 1499
 vtx 2 3 0 0 3 1500 1749
 vtx 3 3 0 0 4 1750 2100
+```
+
+three levels:
+```
+vtx 0 3 0 0 1 900 1249
+vtx 1 3 0 0 2 1250 1499
+vtx 2 3 0 0 3 1500 1749
+vtx 3 3 0 0 3 1750 2100
 ```
 
 the radio reporting current VTX power level with audio messages can be set up like this: 
@@ -337,6 +347,7 @@ the radio reporting current VTX power level with audio messages can be set up li
 rateprofile 0
 
 set rateprofile_name = sasha
+rates_type = ACTUAL
 set roll_rc_rate = 16
 set pitch_rc_rate = 16
 set yaw_rc_rate = 16
@@ -345,9 +356,11 @@ set pitch_srate = 90
 set yaw_srate = 90
 ```
 
+- [filters and PID tuning]({% post_url 2026-05-10-filters-pid-tuning %})
+
 - filters:
 
-filters are super important. `set dyn_notch_count = 1` gives me a flyaway in air mode. because 1 notch is not enough to filter the frame resonance, unfiltered gyro signal in combination of full control autority over the PID loop in air mode causes PID rampup. this build needs `3` notches
+filters are super important. [tuning for performance](https://www.youtube.com/watch?v=TiwaQEkOdyo). `set dyn_notch_count = 1` gives me a flyaway in air mode. because 1 notch is not enough to filter the frame resonance, unfiltered gyro signal in combination of full control autority over the PID loop in air mode causes PID rampup. this build needs `3` notches
 
 ```
 
@@ -364,10 +377,10 @@ set acc_calibration = -17,-45,37,1
 set rpm_filter_weights = 100,20,100
 set rpm_filter_min_hz = 122
 set rpm_filter_fade_range_hz = 0
-set rpm_filter_q = 1000
+set rpm_filter_q = 500
 ```
 
-- PIDs tuned with PIDtoolbox using [this method](https://www.youtube.com/watch?v=ehvQm8Rqrzk)
+- PIDs tuned with PIDtoolbox using [this method](https://www.youtube.com/watch?v=ehvQm8Rqrzk). set `pidsum_limit` before tuning. also about [tuning](https://oscarliang.com/fpv-drone-tuning/) and [about pids](https://oscarliang.com/pid/). [about](https://www.youtube.com/watch?v=7GweG0RnCfc) the `washout` problem with ducted frames
 
 
 ```
@@ -389,8 +402,8 @@ set p_roll = 53
 set i_roll = 95
 set d_roll = 50
 set f_roll = 115
-set p_yaw = 53
-set i_yaw = 95
+set p_yaw = 100
+set i_yaw = 100
 set f_yaw = 143
 set d_max_roll = 50
 set d_max_pitch = 57
@@ -521,6 +534,7 @@ set osd_profile = 3
 adjrange 0 0 6 900 2100 29 6 0 0
 ```
 
+- `set crash_recovery = OFF`. `crash_recovery = ON` increases the risk of burning an ESC.
 
 
 - blackbox for filter tuning
