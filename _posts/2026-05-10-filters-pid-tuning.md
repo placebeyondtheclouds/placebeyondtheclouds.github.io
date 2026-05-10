@@ -25,13 +25,13 @@ How I tune filters and PIDs in Betaflight using PIDtoolbox pro (a musthave)
 - https://esc-configurator.com or https://am32.ca, or [locally]({% post_url 2025-11-23-bf-local %})
 - for 2,5-inch and smaller set PWM frequency to 48 kHz, for larger quads set it to 24 kHz
 - set type to 2S+ if it is not 1S FC, disable temperature protection
-- motor settings in am32 must be set close to the actual ones
+- motor settings in am32 must be set close to the actual ones. manual protocol selection `DSHOT`
 
 ## Betaflight preparation
 
 - backup previous config (`dump` and `diff all showdefaults`), flash the latest version of Betaflight using [online app](https://app.betaflight.com/) or [locally]({% post_url 2025-11-23-bf-local %})
 - load ELRS profile, racing preset
-- load `defaults: tune + filters` profile, if available for the current version
+- load `defaults: tune + filters` profile, if available for the current BF version
 - enable bidirectional dshot, set correct dynamic idle value is based on the prop size/pitch, [here](https://oscarliang.com/how-to-enable-and-configure-betaflight-dynamic-idle/) and [here](https://youtu.be/1oYoVE4xu1U?si=yH7NVtL8CJaB1tvT&t=798)
 - the two `pidsum_limit` can be used to set PID authority to 100% from 50% default (**do not** change this after PID tuning). 
 ```
@@ -39,7 +39,7 @@ set pidsum_limit = 1000
 set pidsum_limit_yaw = 1000
 ```
 
-- if MCU has enough compute power, set `pid_process_denom = 1` and disable gyro low pass 2
+- if MCU has enough compute power, set ESCs to DSHOT600, `set pid_process_denom = 1` and disable gyro low pass 2
 - `motor_poles` must be set correctly (usually 12 for small motors and 14 for large motors)
 - set blackbox to 2 kHz
 
@@ -62,10 +62,10 @@ set rpm_filter_q = 500
 - the process
   - on the default PIDs, record hover
   - use blackbox explorer and PIDtoolbox to adjust the filters
-  - set ff and dmax to zero, ff to 0.2
-  - in angle mode, record wiggle with dterms 0.6-1.8 step 0.2, set the best curve without overshoot (to have a headroom for mm)
+  - set ff and dmax to zero, iterm gain to 0.2
+  - in angle mode, record wiggle with dterm gain 0.6-1.8 step 0.2, set the best curve without overshoot (to have a headroom for mm)
   - in angle mode, record wiggle with master multiplier 0.6-1.8 step 0.2, choose loweset latency, compare roll and pitch latency and adjust roll:pitch balance
-  - in acro mode, record iterm 0.5-2 step 0.5, choose the lowest latency between setpoint and gyro
+  - in acro mode, record iterm gain 0.5-2 step 0.5, choose the lowest latency between setpoint and gyro
 
 - if there is a slow bounceback after a roll or a flip, lower I term gain 
 - iterm https://www.youtube.com/watch?v=Sq_DFjmvVDE
