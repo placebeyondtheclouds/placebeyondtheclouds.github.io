@@ -74,8 +74,10 @@ set rpm_filter_q = 500
 
 ## after tuning
 
-- turn on anti-gravity, voltage sag compensation (depends on `vbat_warning_cell_voltage`), [thrust linearization](https://oscarliang.com/fpv-drone-tuning/#Thrust-Linearization)
+- turn on anti-gravity 5, voltage sag compensation (depends on `vbat_warning_cell_voltage`), [thrust linearization](https://oscarliang.com/fpv-drone-tuning/#Thrust-Linearization)
 - `set motor_output_limit = 90` for a 5-inch
+- do hover, punchouts, forward flight, test for propwash (split-s, sharp 180 turns, dives), throttle chops to test antigravity (nose dives - bump up, throbbles - lower)
+- watch for motor temperature
 
 ## problems
 
