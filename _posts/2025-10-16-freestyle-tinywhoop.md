@@ -366,18 +366,18 @@ filters are super important. [tuning for performance](https://www.youtube.com/wa
 
 # master
 set gyro_lpf1_static_hz = 0
-set dyn_notch_count = 3
-set dyn_notch_q = 350
-set dyn_notch_min_hz = 119
+set dyn_notch_count = 4
+set dyn_notch_q = 300
+set dyn_notch_min_hz = 110
 set gyro_lpf1_dyn_min_hz = 0
 set acc_trim_pitch = 1
-set acc_trim_roll = 4
+set acc_trim_roll = 5
 set acc_calibration = -17,-45,37,1
 
-set rpm_filter_weights = 100,20,100
-set rpm_filter_min_hz = 122
+set rpm_filter_weights = 100,80,40
+set rpm_filter_q = 400
+set rpm_filter_min_hz = 180
 set rpm_filter_fade_range_hz = 0
-set rpm_filter_q = 500
 ```
 
 - PIDs tuned with PIDtoolbox using [this method](https://www.youtube.com/watch?v=ehvQm8Rqrzk). set `pidsum_limit` before tuning. also about [tuning](https://oscarliang.com/fpv-drone-tuning/) and [about pids](https://oscarliang.com/pid/). [about](https://www.youtube.com/watch?v=7GweG0RnCfc) the `washout` problem with ducted frames
@@ -416,9 +416,9 @@ set simplified_pids_mode = RP
 set simplified_master_multiplier = 120
 set simplified_d_gain = 140
 set simplified_d_max_gain = 0
-set simplified_feedforward_gain = 80
+set simplified_feedforward_gain = 120
 set simplified_dterm_filter = OFF
-set simplified_dterm_filter_multiplier = 11
+set simplified_dterm_filter_multiplier = 110
 ```
 
 - motors (important) and battery:

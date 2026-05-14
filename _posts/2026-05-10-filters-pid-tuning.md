@@ -7,7 +7,7 @@ category: notes
 published: true
 ---
 
-How I tune filters and PIDs in Betaflight using PIDtoolbox pro (a musthave)
+How I tune filters and PIDs in Betaflight using PIDtoolbox pro (a musthave, current v.0.93)
 
 ## radio
 
@@ -30,8 +30,7 @@ How I tune filters and PIDs in Betaflight using PIDtoolbox pro (a musthave)
 ## Betaflight preparation
 
 - backup previous config (`dump` and `diff all showdefaults`), flash the latest version of Betaflight using [online app](https://app.betaflight.com/) or [locally]({% post_url 2025-11-23-bf-local %})
-- load ELRS profile, racing preset
-- load `defaults: tune + filters` profile, if available for the current BF version
+- load ELRS profile, RC smoothing should fit the flying style. less smoothing will result in hotter motors when the tune is pushed to extremes
 - enable bidirectional dshot, set correct dynamic idle value is based on the prop size/pitch, [here](https://oscarliang.com/how-to-enable-and-configure-betaflight-dynamic-idle/) and [here](https://youtu.be/1oYoVE4xu1U?si=yH7NVtL8CJaB1tvT&t=798)
 - the two `pidsum_limit` can be used to set PID authority to 100% from 50% default (**do not** change this after PID tuning). 
 ```
@@ -56,13 +55,14 @@ set rpm_filter_q = 500
 
 ## PID
 
+- https://www.youtube.com/watch?v=FsJNHI2HWlg
 - https://www.youtube.com/watch?v=sqT4MACi3d8
 - https://www.youtube.com/watch?v=ehvQm8Rqrzk
-- set angle to 100
-- trim logs each time to remove takeoff and landing
+- if needed, set linear rates, angle strength 50, angle limit 30
+- for tuning filters only (stepresponse tool ignores any movement less than 20 degrees per second): trim logs each time to remove takeoff and landing
 - the process
   - on the default PIDs, record hover
-  - use blackbox explorer and PIDtoolbox to adjust the filters
+  - use PIDtoolbox to adjust the filters (rpm filter weights, q, dynamic notches count, q). keep the noise under -40 db (the noise is meaningless below -30). turn off gyro lowpass 1 if there is no noise after 500hz
   - set ff and dmax to zero, iterm gain to 0.2
   - in angle mode, record wiggle with **dterm** gain 0.6-1.8 step 0.2, in step response tool find **the best curve without overshoot** (to have a headroom for mm)
   - in angle mode, record wiggle with **master** multiplier 0.6-1.8 step 0.2, choose **the lowest latency before oscillations begin** in step response tool, compare roll and pitch latency and adjust roll:pitch balance
