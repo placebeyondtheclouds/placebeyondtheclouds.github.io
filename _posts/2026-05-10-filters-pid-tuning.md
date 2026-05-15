@@ -42,18 +42,8 @@ set pidsum_limit_yaw = 1000
 - `motor_poles` must be set correctly (usually 12 for small motors and 14 for large motors)
 - set blackbox to 2 kHz, debug fft_freq
 
-## Filters
 
-- https://www.youtube.com/watch?v=E3s5XYk3M74
-- UAVTech's workspace for blackbox viewer is [here](https://theuavtech.com/wp-content/uploads/2024/10/UAVtech-BF-BBE-4.0-Version.json)
-- adjust
-```
-set rpm_filter_weights = 100,20,20
-set rpm_filter_fade_range_hz = 0
-set rpm_filter_q = 500
-```
-
-## PID
+## PID and filter tuning process
 
 - https://www.youtube.com/watch?v=FsJNHI2HWlg
 - https://www.youtube.com/watch?v=sqT4MACi3d8
@@ -62,7 +52,13 @@ set rpm_filter_q = 500
 - for tuning filters only (stepresponse tool ignores any movement less than 20 degrees per second): trim logs each time to remove takeoff and landing
 - the process
   - on the default PIDs, record hover
-  - use PIDtoolbox to adjust the filters (rpm filter weights, q, dynamic notches count, q). keep the noise under -40 db (the noise is meaningless below -30). turn off gyro lowpass 1 if there is no noise after 500hz
+  - use PIDtoolbox to adjust the filters (rpm filter weights, q, dynamic notches count, q). keep the noise under -40 db (the noise is mostly meaningless below -30). turn off gyro lowpass 1 if there is no noise after 500hz
+    - adjust
+      ```
+      set rpm_filter_weights = 100,100,100
+      set rpm_filter_fade_range_hz = 50
+      set rpm_filter_q = 500
+      ```
   - set ff and dmax to zero, iterm gain to 0.2
   - in angle mode, record wiggle with **dterm** gain 0.6-1.8 step 0.2, in step response tool find **the best curve without overshoot** (to have a headroom for mm)
   - in angle mode, record wiggle with **master** multiplier 0.6-1.8 step 0.2, choose **the lowest latency before oscillations begin** in step response tool, compare roll and pitch latency and adjust roll:pitch balance
@@ -71,6 +67,13 @@ set rpm_filter_q = 500
 
 - if there is a slow bounceback after a roll or a flip, lower I term gain 
 - iterm https://www.youtube.com/watch?v=Sq_DFjmvVDE
+
+
+## (optional) use blackbox explorer to adjust filters
+
+- https://www.youtube.com/watch?v=E3s5XYk3M74
+- UAVTech's workspace for blackbox viewer is [here](https://theuavtech.com/wp-content/uploads/2024/10/UAVtech-BF-BBE-4.0-Version.json)
+
 
 ## after tuning
 
@@ -82,7 +85,7 @@ set rpm_filter_q = 500
 ## problems
 
 - [about](https://www.youtube.com/watch?v=7GweG0RnCfc) the `washout` problem with ducted frames, when quad not descending with lowered throttle
-- hot motors [1](https://www.youtube.com/watch?v=fU7P90sKScA) [2](https://www.youtube.com/watch?v=omat80ZiGHA) . [Too Much D-Term, Too Little Filtering, or Both](https://oscarliang.com/fpv-drone-motors-get-hot/#Too-Much-D-Term-Too-Little-Filtering-or-Both)
+- hot motors [1](https://www.youtube.com/watch?v=fU7P90sKScA) [2](https://www.youtube.com/watch?v=omat80ZiGHA) . [Too Much D-Term, Too Little Filtering, or Both](https://oscarliang.com/fpv-drone-motors-get-hot/#Too-Much-D-Term-Too-Little-Filtering-or-Both). hot motors might be caused by RC smoothing being too low for the tune
 - [wobbles](https://www.youtube.com/watch?v=YaHpP1YEhX0)
 
 ## references
