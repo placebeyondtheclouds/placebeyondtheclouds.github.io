@@ -67,7 +67,7 @@ set rpm_filter_q = 500
   - in angle mode, record wiggle with **dterm** gain 0.6-1.8 step 0.2, in step response tool find **the best curve without overshoot** (to have a headroom for mm)
   - in angle mode, record wiggle with **master** multiplier 0.6-1.8 step 0.2, choose **the lowest latency before oscillations begin** in step response tool, compare roll and pitch latency and adjust roll:pitch balance
   - in acro mode, record **iterm** gain 0.5-2 step 0.5, choose  **the best curve without overshoot or oscillations** in step response tool
-  - in acro mode, record **ff** gain 0.5-2 step 0.5, choose the lowest latency (shortest period) between setpoint and gyro in the main window plots
+  - in acro mode, record **ff** gain 0.5-2 step 0.5, choose the closest following curve without overshoot, lowest latency (shortest period) between setpoint and gyro in the main window plots.
 
 - if there is a slow bounceback after a roll or a flip, lower I term gain 
 - iterm https://www.youtube.com/watch?v=Sq_DFjmvVDE

@@ -314,10 +314,10 @@ this maps LED_STRIP pad (it is also possible to use the SDA pad) resource to the
 - **connect the battery**, reflash bluejay, target `G-H-30`, PWM 96kHz, version `v0.21.1-RC1`
 
 ```
-startup boost min 1025, max 1050
+startup boost min 1050, max 1100
 rampup x3
 motor timing  22.5 degrees
-beep strength 80
+beep strength 40
 beacon strength 80
 ESC power rating 2S+
 force EDT arm OFF
