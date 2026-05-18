@@ -42,6 +42,16 @@ set pidsum_limit_yaw = 1000
 - `motor_poles` must be set correctly (usually 12 for small motors and 14 for large motors)
 - set blackbox to 2 kHz, debug fft_freq
 
+## dterm filters, [Chris Rosser AOS](https://www.youtube.com/watch?v=E3s5XYk3M74&list=PLFPBjpbd5xKQAzyblBStGKYtNdP9FCpRe&index=1)
+
+```
+# -- Dterm filtering --
+set dterm_lpf1_dyn_min_hz = 80
+set dterm_lpf1_dyn_max_hz = 110
+set dterm_lpf1_type = BIQUAD
+set dterm_lpf2_static_hz = 0
+set simplified_dterm_filter = OFF
+```
 
 ## PID and filter tuning process
 
@@ -78,18 +88,26 @@ set pidsum_limit_yaw = 1000
 ## after tuning
 
 - turn on anti-gravity 5, voltage sag compensation (depends on `vbat_warning_cell_voltage`), [thrust linearization](https://oscarliang.com/fpv-drone-tuning/#Thrust-Linearization)
-- `set motor_output_limit = 90` for a 5-inch
-- do hover, punchouts, forward flight, test for propwash (split-s, sharp 180 turns, dives), throttle chops to test antigravity (nose dives - bump up, throbbles - lower)
+- `set motor_output_limit = 90` for a 5-inch to protect the ESCs
+- do hover, slow rampup punchouts, forward flight, test for propwash (split-s, sharp 180 turns, dives), throttle chops to test antigravity (nose dives - bump up, throbbles - lower), rolls, flips, then analyze in PIDtoolbox
 - watch for motor temperature
 
 ## problems
 
 - [about](https://www.youtube.com/watch?v=7GweG0RnCfc) the `washout` problem with ducted frames, when quad not descending with lowered throttle
-- hot motors [1](https://www.youtube.com/watch?v=fU7P90sKScA) [2](https://www.youtube.com/watch?v=omat80ZiGHA) . [Too Much D-Term, Too Little Filtering, or Both](https://oscarliang.com/fpv-drone-motors-get-hot/#Too-Much-D-Term-Too-Little-Filtering-or-Both). hot motors might be caused by RC smoothing being too low for the tune
+- hot motors,  [1](https://www.youtube.com/watch?v=fU7P90sKScA) [2](https://www.youtube.com/watch?v=omat80ZiGHA) . [Too Much D-Term, Too Little Filtering, or Both](https://oscarliang.com/fpv-drone-motors-get-hot/#Too-Much-D-Term-Too-Little-Filtering-or-Both). d-term oscillations caused by [too much d gain](https://www.youtube.com/watch?v=rYpX6d6_66Q). hot motors might be caused by RC smoothing being too low for the tune
 - [wobbles](https://www.youtube.com/watch?v=YaHpP1YEhX0)
+- propwash - [increase MM](https://www.youtube.com/watch?v=sdfVoUyXRMU)
+
+## other tools for log analysis
+
+- https://github.com/KoffeinFlummi/bucksaw
+- PIDtoolbox fork using Octave https://github.com/dzikus/PIDscope
+- https://skypulse.ua/pidpulse/
 
 ## references
 
 - https://oscarliang.com/fpv-drone-tuning/
 - https://oscarliang.com/pid/
+- https://www.youtube.com/playlist?list=PLycwhvl4h5nNbqRvcVB8y6fSPAgMbBo8p
 - https://www.youtube.com/playlist?list=PLFPBjpbd5xKQAzyblBStGKYtNdP9FCpRe

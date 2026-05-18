@@ -306,12 +306,14 @@ this maps LED_STRIP pad (it is also possible to use the SDA pad) resource to the
 - CH12 - S1 - (aux8)- OSD profile switching  
 - add special function `SW5up ply trk ready`, `SW6down ply trk recsrt`
 - add logical switch `L04 a>x tpwr 0mw`, add special function `L04 playval tpwr - enable`
-- add logical switch `L05 a<x rxbt 3.4V duration 1`, add special function `L05 playval rxbt 5 enable`
+- add logical switch `L05 a<x rxbt 3.4V AND SB1up delay 1`, add special function `L05 playval rxbt 5 enable`
 
 ## ESCs configuration
+
+
 - [ESC Configurator](https://esc-configurator.com/) or [run it locally]({% post_url 2025-11-23-bf-local %})
 
-- **connect the battery**, reflash bluejay, target `G-H-30`, PWM 96kHz, version `v0.21.1-RC1`
+- **connect the battery**, reflash bluejay, target `G-H-30`, PWM 48kHz, version `v0.21.0`
 
 ```
 startup boost min 1050, max 1100
@@ -329,7 +331,7 @@ beacon delay 1 min
 
 ## RX
 
-- reflash the RX with the latest ELRS 3.6 `BETAFPV 2.4GHz Lite RX` (Unified_ESP8285_2400_RX). set up model match.
+- reflash the RX with the latest ELRS 3.x.x `BETAFPV 2.4GHz Lite RX` (Unified_ESP8285_2400_RX). set up model match.
 
 ## FC Betaflight configuration
 
@@ -338,7 +340,7 @@ beacon delay 1 min
 - `status`: GYRO=ICM42688P, ACC=ICM42688P, BARO=DPS310
 - find out the firmware target: `JHEF435`. 
 - build and flash betaflight v2025.12, analog OSD, add features: camera control.
-  - [can be built locally]({% post_url 2025-11-23-bf-local %}). local build command: `make JHEF435 EXTRA_FLAGS=" -D'RELEASE_NAME=2025.12.0-RC2' -DCLOUD_BUILD -DUSE_ACRO_TRAINER -DUSE_CAMERA_CONTROL -DUSE_DSHOT -DUSE_GPS -DUSE_GPS_PLUS_CODES -DUSE_LED_STRIP -DUSE_OSD -DUSE_OSD_SD -DUSE_PINIO -DUSE_SERIALRX -DUSE_SERIALRX_CRSF -DUSE_TELEMETRY -DUSE_TELEMETRY_CRSF -DUSE_VTX -DUSE_SERVOS -DUSE_ALTITUDE_HOLD -DUSE_POSITION_HOLD" -j`
+  - [can be built locally]({% post_url 2025-11-23-bf-local %}). local build command: `make JHEF435 EXTRA_FLAGS=" -D'RELEASE_NAME=2025.12.2' -DCLOUD_BUILD -DUSE_ACRO_TRAINER -DUSE_CAMERA_CONTROL -DUSE_DSHOT -DUSE_GPS -DUSE_GPS_PLUS_CODES -DUSE_LED_STRIP -DUSE_OSD -DUSE_OSD_SD -DUSE_PINIO -DUSE_SERIALRX -DUSE_SERIALRX_CRSF -DUSE_TELEMETRY -DUSE_TELEMETRY_CRSF -DUSE_VTX -DUSE_SERVOS -DUSE_ALTITUDE_HOLD -DUSE_POSITION_HOLD" -j`
 - calibrate the accelerometer. fly in angle mode and use [the stick commands](https://oscarliang.com/stick-commands/) to adjust trim: disarm, throttle up with yaw in the center and use the right stick to add roll or pitch trim iteratively with test flights until the quad hovers level.
 - load elrs 150Hz rate profile
 - UARTS:
