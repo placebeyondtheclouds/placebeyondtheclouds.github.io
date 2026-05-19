@@ -90,20 +90,36 @@ set simplified_dterm_filter = OFF
 - turn on anti-gravity 5, voltage sag compensation (depends on `vbat_warning_cell_voltage`), [thrust linearization](https://oscarliang.com/fpv-drone-tuning/#Thrust-Linearization)
 - `set motor_output_limit = 90` for a 5-inch to protect the ESCs
 - do hover, slow rampup punchouts, forward flight, test for propwash (split-s, sharp 180 turns, dives), throttle chops to test antigravity (nose dives - bump up, throbbles - lower), rolls, flips, then analyze in PIDtoolbox
-- watch for motor temperature
+- lower dterm gain by 0.1 and set dmax to 0.5 (0.2 dgain equals 0.5 dmax)
+- watch for hot motors or overshoot on sharp moves in logs
+
 
 ## problems
 
 - [about](https://www.youtube.com/watch?v=7GweG0RnCfc) the `washout` problem with ducted frames, when quad not descending with lowered throttle
 - hot motors,  [1](https://www.youtube.com/watch?v=fU7P90sKScA) [2](https://www.youtube.com/watch?v=omat80ZiGHA) . [Too Much D-Term, Too Little Filtering, or Both](https://oscarliang.com/fpv-drone-motors-get-hot/#Too-Much-D-Term-Too-Little-Filtering-or-Both). d-term oscillations caused by [too much d gain](https://www.youtube.com/watch?v=rYpX6d6_66Q). hot motors might be caused by RC smoothing being too low for the tune
 - [wobbles](https://www.youtube.com/watch?v=YaHpP1YEhX0)
-- propwash - [increase MM](https://www.youtube.com/watch?v=sdfVoUyXRMU)
+- propwash - [increase MM](https://www.youtube.com/watch?v=sdfVoUyXRMU), increase dynamic idle. also [throttle control and lower pitch props](https://www.youtube.com/watch?v=O8WygMNakqQ)
+- insufficient filtering coupled with `pidsum_limit = 1000` and/or AIRMODE can cause a flyaway
 
 ## other tools for log analysis
 
 - https://github.com/KoffeinFlummi/bucksaw
 - PIDtoolbox fork using Octave https://github.com/dzikus/PIDscope
 - https://skypulse.ua/pidpulse/
+
+## betaflight chirp tuning
+
+build the firmware with ` -DUSE_CHIRP`, enable chirp injection (mode 55) on a switch, in this instance it is on aux3
+
+
+set blackbox debug to chirp
+
+```
+set debug_mode = CHIRP
+
+```
+
 
 ## references
 

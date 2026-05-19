@@ -298,12 +298,12 @@ this maps LED_STRIP pad (it is also possible to use the SDA pad) resource to the
 - send radio's RTC data to the flight controller to have correct time in blackbox files and on the OSD: go to special functions, add `ON Lua bfbkgd On` and turn the checkmark on
 - ch5 inverted, SB - arm
 - ch6 inverted, SA inverted (change the weight(mixes) to -100%)  - left 3-pos: air (low) / acro (mid) / angle(high)
-- ch7 - turtle mode
+- ch7 - aux3 - turtle mode
 - ch8 (aux4 is 3 in vtx CLI command), S2 - VTX power control
-- ch9 - SW5 toggle, no group (aux5 servo0) - switch between the cameras
+- ch9 - SW5 toggle, no group (aux5 servo0) - switch between the cameras + chirp
 - ch10, SW6 toggle, no group (aux6) - Runcam button
-- CH11 SD (aux7) beeper
-- CH12 - S1 - (aux8)- OSD profile switching  
+- CH11 (aux7) - bat profile switching
+- CH12 - S1 - (aux8) - OSD profile switching  
 - add special function `SW5up ply trk ready`, `SW6down ply trk recsrt`
 - add logical switch `L04 a>x tpwr 0mw`, add special function `L04 playval tpwr - enable`
 - add logical switch `L05 a<x rxbt 3.4V AND SB1up delay 1`, add special function `L05 playval rxbt 5 enable`
@@ -340,7 +340,7 @@ beacon delay 1 min
 - `status`: GYRO=ICM42688P, ACC=ICM42688P, BARO=DPS310
 - find out the firmware target: `JHEF435`. 
 - build and flash betaflight v2025.12, analog OSD, add features: camera control.
-  - [can be built locally]({% post_url 2025-11-23-bf-local %}). local build command: `make JHEF435 EXTRA_FLAGS=" -D'RELEASE_NAME=2025.12.2' -DCLOUD_BUILD -DUSE_ACRO_TRAINER -DUSE_CAMERA_CONTROL -DUSE_DSHOT -DUSE_GPS -DUSE_GPS_PLUS_CODES -DUSE_LED_STRIP -DUSE_OSD -DUSE_OSD_SD -DUSE_PINIO -DUSE_SERIALRX -DUSE_SERIALRX_CRSF -DUSE_TELEMETRY -DUSE_TELEMETRY_CRSF -DUSE_VTX -DUSE_SERVOS -DUSE_ALTITUDE_HOLD -DUSE_POSITION_HOLD" -j`
+  - [can be built locally]({% post_url 2025-11-23-bf-local %}). local build command: `make JHEF435 EXTRA_FLAGS=" -D'RELEASE_NAME=2025.12.2' -DCLOUD_BUILD -DUSE_ACRO_TRAINER -DUSE_CAMERA_CONTROL -DUSE_DSHOT -DUSE_GPS -DUSE_GPS_PLUS_CODES -DUSE_LED_STRIP -DUSE_OSD -DUSE_OSD_SD -DUSE_PINIO -DUSE_SERIALRX -DUSE_SERIALRX_CRSF -DUSE_TELEMETRY -DUSE_TELEMETRY_CRSF -DUSE_VTX -DUSE_SERVOS -DUSE_ALTITUDE_HOLD -DUSE_POSITION_HOLD -DUSE_CHIRP" -j`
 - calibrate the accelerometer. fly in angle mode and use [the stick commands](https://oscarliang.com/stick-commands/) to adjust trim: disarm, throttle up with yaw in the center and use the right stick to add roll or pitch trim iteratively with test flights until the quad hovers level.
 - load elrs 150Hz rate profile
 - UARTS:
@@ -398,13 +398,11 @@ resource I2C_SDA 2 H03
 aux 0 0 0 1900 2100 0 0
 aux 1 0 2 1900 2100 0 0
 aux 2 1 1 1900 2100 0 0
-aux 3 3 7 1900 2100 0 0
-aux 4 27 7 1375 1600 0 0
-aux 5 11 7 1875 2100 0 0
-aux 6 13 6 1900 2100 0 0
-aux 7 28 1 900 1100 0 0
-aux 8 35 2 1925 2100 0 0
-aux 9 40 5 1850 2100 0 0
+aux 3 13 6 1900 2100 0 0
+aux 4 28 1 900 1100 0 0
+aux 5 35 2 1700 2100 0 0
+aux 6 40 5 1850 2100 0 0
+aux 7 55 2 1700 2100 0 0
 ```
 
 
@@ -453,6 +451,38 @@ the radio reporting current VTX power level with audio messages can be set up li
 
 ```
 adjrange 0 0 7 900 2100 29 7 0 0
+```
+
+- in-flight battery profile switching. I use SW4 toggle on CH11 (AUX7 in BF)
+
+
+```
+adjrange 1 0 6 900 2100 33 6 0 0
+```
+
+- battery profiles:
+
+```
+battery_profile 0
+
+# battery_profile 0
+set battery_profile_name = LiHV
+set bat_capacity = 720
+set vbat_max_cell_voltage = 435
+set vbat_full_cell_voltage = 420
+set vbat_min_cell_voltage = 320
+set vbat_warning_cell_voltage = 340
+set force_battery_cell_count = 4
+
+battery_profile 2
+
+# battery_profile 2
+set battery_profile_name = Li-ion
+set vbat_min_cell_voltage = 250
+set vbat_warning_cell_voltage = 270
+set bat_capacity = 3000
+set force_battery_cell_count = 4
+
 ```
 
 - ~~filters for mobula8 frame and gemfan 2023 props.~~ [gyro low pass 2 can be disabled](https://youtu.be/E3s5XYk3M74?si=tRDyE5hmXNsq65gD&t=344) because the PID loop frequency (8KHz) is equal (`pid_process_denom = 1`) to the gyro update rate (8KHz), there is no antialiasing needed. also set these parameters to be profile-independent (`set simplified_gyro_filter = ON` and `set simplified_dterm_filter = OFF`):
