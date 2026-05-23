@@ -18,13 +18,15 @@ How I tune filters and PIDs in Betaflight using PIDtoolbox pro (a musthave, curr
 
 - must have a capacitor
 - must have new props installed, all screws tightened, no dangling antennas or XT60
+- stack bolts must be secured to the frame with nuts first
 
 ## ESC
 
 - [ESC tuning](https://www.youtube.com/watch?v=EhYKeZfSQIw&list=PLFPBjpbd5xKT9eCWvtuFJ-qe3BxTDFvad)
 - https://esc-configurator.com or https://am32.ca, or [locally]({% post_url 2025-11-23-bf-local %})
 - for 2,5-inch and smaller set PWM frequency to 48 kHz, for larger quads set it to 24 kHz
-- set type to 2S+ if it is not 1S FC, disable temperature protection
+- set type to 2S+ if it is not a 1S AIO, disable temperature protection
+- set motor timing to 15 degrees (go back to the default 22.5 in case if there are any desyncs)
 - motor settings in am32 must be set close to the actual ones. manual protocol selection `DSHOT`
 
 ## Betaflight preparation
@@ -32,7 +34,7 @@ How I tune filters and PIDs in Betaflight using PIDtoolbox pro (a musthave, curr
 - backup previous config (`dump` and `diff all showdefaults`), flash the latest version of Betaflight using [online app](https://app.betaflight.com/) or [locally]({% post_url 2025-11-23-bf-local %})
 - load ELRS profile, RC smoothing should fit the flying style. less smoothing will result in hotter motors when the tune is pushed to extremes
 - enable bidirectional dshot, set correct dynamic idle value is based on the prop size/pitch, [here](https://oscarliang.com/how-to-enable-and-configure-betaflight-dynamic-idle/) and [here](https://youtu.be/1oYoVE4xu1U?si=yH7NVtL8CJaB1tvT&t=798)
-- the two `pidsum_limit` can be used to set PID authority to 100% from 50% default (**do not** change this after PID tuning). 
+- set PID authority to 100% from 50% default (**do not** change this after PID tuning). 
 ```
 set pidsum_limit = 1000
 set pidsum_limit_yaw = 1000
@@ -50,9 +52,9 @@ set pidsum_limit_yaw = 1000
 - https://www.youtube.com/watch?v=ehvQm8Rqrzk
 - if needed, set linear rates, angle strength 50, angle limit 30
 - for tuning filters only (stepresponse tool ignores any movement less than 20 degrees per second): trim logs each time to remove takeoff and landing
-- the process
+- **the process:**
   - on the default PIDs, record hover
-  - use PIDtoolbox to adjust the filters. use all the means: static notches, dynamic notches, filter weights and q to filter all the noise *while* keeping the delay low, balance filter strength and delay caused by the filters. keep the noise under -40 db (the noise is mostly meaningless below -30). turn off gyro lowpass 1 if there is no noise after 500hz
+  - use PIDtoolbox to adjust the filters. use all the means available: static notches (cutoff is less than the center), dynamic notches, filter weights and q to filter all the noise *while* keeping the delay low, balance filter strength and delay caused by the filters. keep the noise under -40 db (the noise is mostly meaningless below -30). turn off gyro lowpass 1 if there is no noise after 500hz
     - adjust
       ```
       set rpm_filter_weights = 100,100,100
@@ -61,12 +63,10 @@ set pidsum_limit_yaw = 1000
       ```
   - set ff and dmax to zero, iterm gain to 0.2
   - in angle mode, record wiggle with **dterm** gain 0.6-1.8 step 0.2, in step response tool find **the best curve without overshoot** (to have a headroom for mm)
-  - in angle mode, record wiggle with **master** multiplier 0.6-1.8 step 0.2, choose **the lowest latency before oscillations begin** in step response tool, compare roll and pitch latency and adjust roll:pitch balance
+  - in angle mode, record wiggle with **master** multiplier 0.6-1.8 step 0.2, choose **the lowest latency before oscillations begin** in step response tool, compare roll and pitch latency and adjust pitch:roll balance (increase pitch damping/tracking if there is more delay on pitch, until the delay on pitch and roll is about the same)
   - in acro mode, record **iterm** gain 0.5-2 step 0.5, choose  **the best curve without overshoot or oscillations** in step response tool
   - in acro mode, record **ff** gain 0.5-2 step 0.5, choose the closest following curve without overshoot, lowest latency (shortest period) between setpoint and gyro in the main window plots.
-
-- if there is a slow bounceback after a roll or a flip, lower I term gain 
-- iterm https://www.youtube.com/watch?v=Sq_DFjmvVDE
+  - iterm https://www.youtube.com/watch?v=Sq_DFjmvVDE
 
 
 ## (optional) use blackbox explorer to adjust filters
@@ -94,6 +94,7 @@ set pidsum_limit_yaw = 1000
 - [13inch filters](https://www.youtube.com/watch?v=GNpOuF7zCMw)
 - [frame resonance noise - lower filters, lower mm](https://www.youtube.com/watch?v=baRxtGTq9W8)
 - [low freq frame noise](https://youtu.be/GNpOuF7zCMw?si=ZGqJurkVuNihE0rO&t=520)
+- if there is a slow bounceback after a roll or a flip, lower I term gain 
 
 ## other tools for log analysis
 
