@@ -42,16 +42,6 @@ set pidsum_limit_yaw = 1000
 - `motor_poles` must be set correctly (usually 12 for small motors and 14 for large motors)
 - set blackbox to 2 kHz, debug fft_freq
 
-## dterm filters, [Chris Rosser AOS](https://www.youtube.com/watch?v=E3s5XYk3M74&list=PLFPBjpbd5xKQAzyblBStGKYtNdP9FCpRe&index=1)
-
-```
-# -- Dterm filtering --
-set dterm_lpf1_dyn_min_hz = 80
-set dterm_lpf1_dyn_max_hz = 110
-set dterm_lpf1_type = BIQUAD
-set dterm_lpf2_static_hz = 0
-set simplified_dterm_filter = OFF
-```
 
 ## PID and filter tuning process
 
@@ -62,7 +52,7 @@ set simplified_dterm_filter = OFF
 - for tuning filters only (stepresponse tool ignores any movement less than 20 degrees per second): trim logs each time to remove takeoff and landing
 - the process
   - on the default PIDs, record hover
-  - use PIDtoolbox to adjust the filters (rpm filter weights, q, dynamic notches count, q). keep the noise under -40 db (the noise is mostly meaningless below -30). turn off gyro lowpass 1 if there is no noise after 500hz
+  - use PIDtoolbox to adjust the filters. use all the means: static notches, dynamic notches, filter weights and q to filter all the noise *while* keeping the delay low, balance filter strength and delay caused by the filters. keep the noise under -40 db (the noise is mostly meaningless below -30). turn off gyro lowpass 1 if there is no noise after 500hz
     - adjust
       ```
       set rpm_filter_weights = 100,100,100
@@ -88,9 +78,9 @@ set simplified_dterm_filter = OFF
 ## after tuning
 
 - turn on anti-gravity 5, voltage sag compensation (depends on `vbat_warning_cell_voltage`), [thrust linearization](https://oscarliang.com/fpv-drone-tuning/#Thrust-Linearization)
-- `set motor_output_limit = 90` for a 5-inch to protect the ESCs
+- `set motor_output_limit = 95` for a 5-inch to protect the ESCs
 - do hover, slow rampup punchouts, forward flight, test for propwash (split-s, sharp 180 turns, dives), throttle chops to test antigravity (nose dives - bump up, throbbles - lower), rolls, flips, then analyze in PIDtoolbox
-- lower dterm gain by 0.1 and set dmax to 0.5 (0.2 dgain equals 0.5 dmax)
+- lower dterm gain by 0.2 and set dmax to 0.5
 - watch for hot motors or overshoot on sharp moves in logs
 
 
@@ -99,8 +89,11 @@ set simplified_dterm_filter = OFF
 - [about](https://www.youtube.com/watch?v=7GweG0RnCfc) the `washout` problem with ducted frames, when quad not descending with lowered throttle
 - hot motors,  [1](https://www.youtube.com/watch?v=fU7P90sKScA) [2](https://www.youtube.com/watch?v=omat80ZiGHA) . [Too Much D-Term, Too Little Filtering, or Both](https://oscarliang.com/fpv-drone-motors-get-hot/#Too-Much-D-Term-Too-Little-Filtering-or-Both). d-term oscillations caused by [too much d gain](https://www.youtube.com/watch?v=rYpX6d6_66Q). hot motors might be caused by RC smoothing being too low for the tune
 - [wobbles](https://www.youtube.com/watch?v=YaHpP1YEhX0)
-- propwash - [increase MM](https://www.youtube.com/watch?v=sdfVoUyXRMU), increase dynamic idle. also [throttle control and lower pitch props](https://www.youtube.com/watch?v=O8WygMNakqQ)
+- propwash - [increase master multiplier](https://www.youtube.com/watch?v=sdfVoUyXRMU), [increase dgain, decrease dterm filtering (dterm filter slider to the right)](https://www.youtube.com/watch?v=XkDJqh588xE), increase dynamic idle. also [better throttle control and lower pitch props](https://www.youtube.com/watch?v=O8WygMNakqQ). [UAV Tech - lower delay](https://www.youtube.com/watch?v=Dgq-cgqt_gI). [UAV Tech - P/D balance](https://www.youtube.com/watch?v=TjaD_-jlZ6Y)
 - insufficient filtering coupled with `pidsum_limit = 1000` and/or AIRMODE can cause a flyaway
+- [13inch filters](https://www.youtube.com/watch?v=GNpOuF7zCMw)
+- [frame resonance noise - lower filters, lower mm](https://www.youtube.com/watch?v=baRxtGTq9W8)
+- [low freq frame noise](https://youtu.be/GNpOuF7zCMw?si=ZGqJurkVuNihE0rO&t=520)
 
 ## other tools for log analysis
 
