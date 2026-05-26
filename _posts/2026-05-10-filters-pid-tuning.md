@@ -40,30 +40,31 @@ set pidsum_limit = 1000
 set pidsum_limit_yaw = 1000
 ```
 
-- if MCU has enough compute power, set ESCs to DSHOT600, `set pid_process_denom = 1` and disable gyro low pass 2
+- if MCU has enough compute power, set ESCs to DSHOT600, set pidloop frequency to `set pid_process_denom = 1` (disable gyro low pass 2 if theres not a lot of noise) or to the highest frequency possible. pidloop below 2khz will disable dynamic notches, be aware.
 - `motor_poles` must be set correctly (usually 12 for small motors and 14 for large motors)
 - set blackbox to 2 kHz, debug fft_freq
-
+- tune for lighter weight. quad tuned for heavier weight will fly away if lighter, especially in AIRMODE with pidsum_limit 100%
 
 ## PID and filter tuning process
 
 - https://www.youtube.com/watch?v=FsJNHI2HWlg
 - https://www.youtube.com/watch?v=sqT4MACi3d8
 - https://www.youtube.com/watch?v=ehvQm8Rqrzk
-- if needed, set linear rates, angle strength 50, angle limit 30
+- https://www.youtube.com/watch?v=4lZ8BY_9KBs
+- if needed, set linear rates 150/150, angle strength 50, angle limit 30
 - for tuning filters only (stepresponse tool ignores any movement less than 20 degrees per second): trim logs each time to remove takeoff and landing
 - **the process:**
-  - on the default PIDs, record hover
-  - use PIDtoolbox to adjust the filters. use all the means available: static notches (cutoff is less than the center), dynamic notches, filter weights and q to filter all the noise *while* keeping the delay low, balance filter strength and delay caused by the filters. keep the noise under -40 db (the noise is mostly meaningless below -30). turn off gyro lowpass 1 if there is no noise after 500hz
+  - on the default PIDs, set ff and dmax to zero, iterm gain to 0.2 (also: lower MM for larger rigs, bump MM for underpowered quads)
+  - record hover
+  - use PIDtoolbox to adjust the filters. use all the means available: static notches (cutoff is less than the center), dynamic notches, filter weights and q to filter all the noise *while* keeping the delay low, balance filter strength and delay caused by the filters. keep the noise under -40 db (the noise is mostly meaningless below -30). turn off gyro lowpass 1 if there is no noise after 500hz. there must be no broadband noise. broadband noise comes from electrical issues like missing capacitor or bad gyro/FC/AIO. try flashing ESCs from 24khz to 48khz or 96khz to isolate the problem.
     - adjust
       ```
       set rpm_filter_weights = 100,100,100
       set rpm_filter_fade_range_hz = 50
       set rpm_filter_q = 500
       ```
-  - set ff and dmax to zero, iterm gain to 0.2
-  - in angle mode, record wiggle with **dterm** gain 0.6-1.8 step 0.2, in step response tool find **the best curve without overshoot** (to have a headroom for mm)
-  - in angle mode, record wiggle with **master** multiplier 0.6-1.8 step 0.2, choose **the lowest latency before oscillations begin** in step response tool, compare roll and pitch latency and adjust pitch:roll balance (increase pitch damping/tracking if there is more delay on pitch, until the delay on pitch and roll is about the same)
+  - in angle mode, record wiggle with **dterm** gain 0.6-1.8 step 0.2, in step response tool find **the best curve without overshoot** (to have a headroom for mm). compare roll and pitch latency and adjust pitch:roll balance (increase pitch damping/tracking if there is more delay on pitch, until the delay on pitch and roll is about the same)
+  - in angle mode, record wiggle with **master** multiplier 0.6-1.8 step 0.2, choose **the lowest latency before oscillations begin** in step response tool
   - in acro mode, record **iterm** gain 0.5-2 step 0.5, choose  **the best curve without overshoot or oscillations** in step response tool
   - in acro mode, record **ff** gain 0.5-2 step 0.5, choose the closest following curve without overshoot, lowest latency (shortest period) between setpoint and gyro in the main window plots.
   - iterm https://www.youtube.com/watch?v=Sq_DFjmvVDE
@@ -89,12 +90,13 @@ set pidsum_limit_yaw = 1000
 - [about](https://www.youtube.com/watch?v=7GweG0RnCfc) the `washout` problem with ducted frames, when quad not descending with lowered throttle
 - hot motors,  [1](https://www.youtube.com/watch?v=fU7P90sKScA) [2](https://www.youtube.com/watch?v=omat80ZiGHA) . [Too Much D-Term, Too Little Filtering, or Both](https://oscarliang.com/fpv-drone-motors-get-hot/#Too-Much-D-Term-Too-Little-Filtering-or-Both). d-term oscillations caused by [too much d gain](https://www.youtube.com/watch?v=rYpX6d6_66Q). hot motors might be caused by RC smoothing being too low for the tune
 - [wobbles](https://www.youtube.com/watch?v=YaHpP1YEhX0)
-- propwash - [increase master multiplier](https://www.youtube.com/watch?v=sdfVoUyXRMU), [increase dgain, decrease dterm filtering (dterm filter slider to the right)](https://www.youtube.com/watch?v=XkDJqh588xE), increase dynamic idle. also [better throttle control and lower pitch props](https://www.youtube.com/watch?v=O8WygMNakqQ). [UAV Tech - lower delay](https://www.youtube.com/watch?v=Dgq-cgqt_gI). [UAV Tech - P/D balance](https://www.youtube.com/watch?v=TjaD_-jlZ6Y)
+- propwash - [increase master multiplier](https://www.youtube.com/watch?v=sdfVoUyXRMU), [increase dgain, decrease dterm filtering (dterm filter slider to the right)](https://www.youtube.com/watch?v=XkDJqh588xE), increase dynamic idle. also [better throttle control and lower pitch props](https://www.youtube.com/watch?v=O8WygMNakqQ). [UAV Tech - lower delay](https://www.youtube.com/watch?v=Dgq-cgqt_gI). [UAV Tech - P/D balance](https://www.youtube.com/watch?v=TjaD_-jlZ6Y). [set pidloop frequency higher](https://www.youtube.com/watch?v=53dT3vrh2Ac)
 - insufficient filtering coupled with `pidsum_limit = 1000` and/or AIRMODE can cause a flyaway
 - [13inch filters](https://www.youtube.com/watch?v=GNpOuF7zCMw)
 - [frame resonance noise - lower filters, lower mm](https://www.youtube.com/watch?v=baRxtGTq9W8)
 - [low freq frame noise](https://youtu.be/GNpOuF7zCMw?si=ZGqJurkVuNihE0rO&t=520)
 - if there is a slow bounceback after a roll or a flip, lower I term gain 
+- if the noise floor is high on a heavily loaded quad, try higher PWM frequency (48khz -> 96khz) to get around
 
 ## other tools for log analysis
 
