@@ -24,9 +24,9 @@ How I tune filters and PIDs in Betaflight using PIDtoolbox pro (a musthave, curr
 
 - [ESC tuning](https://www.youtube.com/watch?v=EhYKeZfSQIw&list=PLFPBjpbd5xKT9eCWvtuFJ-qe3BxTDFvad)
 - https://esc-configurator.com or https://am32.ca, or [locally]({% post_url 2025-11-23-bf-local %})
-- for 2,5-inch and smaller set PWM frequency to 48 kHz, for larger quads set it to 24 kHz
+- for 2,5-inch and smaller set PWM frequency to 48 kHz or 96khz, for larger quads set it to 24 kHz
 - set type to 2S+ if it is not a 1S AIO, disable temperature protection
-- set motor timing to 15 degrees (go back to the default 22.5 in case if there are any desyncs)
+- set motor timing to 15 degrees (go back to the default 22.5 in case if there are any desyncs) for a 5 inch, set to default for smaller quads
 - motor settings in am32 must be set close to the actual ones. manual protocol selection `DSHOT`
 
 ## Betaflight preparation
