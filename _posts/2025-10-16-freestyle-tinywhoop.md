@@ -53,9 +53,6 @@ the ELRS receiver on the AIO died after a week or so. ~~Update: using another VT
 
 - the VTX was placed between the battery and the FC and the video feed had white washout pulsations. I moved the VTX to the place under the canopy behind the camera, shortened the VTX and camera wires, moved the VTX GND to the pad near the camera GND, placed the RX below the FC where the VTX was before. now there are no washouts.
 
-## update 6
-
-- try Gemfan D2.2-3, 1.5inch, for ducted quads
 
 ## components
 
