@@ -51,12 +51,15 @@ set pidsum_limit_yaw = 1000
 - https://www.youtube.com/watch?v=sqT4MACi3d8
 - https://www.youtube.com/watch?v=ehvQm8Rqrzk
 - https://www.youtube.com/watch?v=4lZ8BY_9KBs
+- https://www.youtube.com/watch?v=tBI2TjePeWA
+- https://www.youtube.com/watch?v=Ylb8mYi91DI
+- https://www.youtube.com/watch?v=inOe7J6l2lU
 - if needed, set linear rates 150/150, angle strength 50, angle limit 30
 - for tuning filters only (stepresponse tool ignores any movement less than 20 degrees per second): trim logs each time to remove takeoff and landing
 - **the process:**
   - on the default PIDs, set ff and dmax to zero, iterm gain to 0.2 (also: lower MM for larger rigs, bump MM for underpowered quads)
   - record hover
-  - use PIDtoolbox to adjust the filters. use all the means available: static notches (cutoff is less than the center), dynamic notches, filter weights and q to filter all the noise *while* keeping the delay low, balance filter strength and delay caused by the filters. keep the noise under -40 db (the noise is mostly meaningless below -30). turn off gyro lowpass 1 if there is no noise after 500hz. there must be no broadband noise. broadband noise comes from electrical issues like missing capacitor or bad gyro/FC/AIO. try flashing ESCs from 24khz to 48khz or 96khz to isolate the problem.
+  - use PIDtoolbox to adjust the filters. apply  the least amount of filtering (otherwise: high delay -> propwash): dynamic notches, filter weights and q to filter most of the noise *while* keeping the delay low, balance filter strength and delay caused by the filters. ideally keep the noise under -40 db (the noise is mostly meaningless below -30). leave gyro lowpass 2 on if there is noise after 500hz. there must be no broadband noise. broadband noise comes from electrical issues like missing capacitor or bad gyro/FC/AIO. try flashing ESCs from 24khz to 48khz or 96khz to isolate the problem.
     - adjust
       ```
       set rpm_filter_weights = 100,100,100
@@ -65,7 +68,7 @@ set pidsum_limit_yaw = 1000
       ```
   - in angle mode, record wiggle with **dterm** gain 0.6-1.8 step 0.2, in step response tool find **the best curve without overshoot** (to have a headroom for mm). compare roll and pitch latency and adjust pitch:roll balance (increase pitch damping/tracking if there is more delay on pitch, until the delay on pitch and roll is about the same)
   - in angle mode, record wiggle with **master** multiplier 0.6-1.8 step 0.2, choose **the lowest latency before oscillations begin** in step response tool
-  - in acro mode, record **iterm** gain 0.5-2 step 0.5, choose  **the best curve without overshoot or oscillations** in step response tool
+  - (optional) in acro mode, record **iterm** gain 0.5-2 step 0.5, choose  **the best curve without overshoot or oscillations** in step response tool. lower iterm relax cutoff values reduce iterm windup for underpowered quads.
   - in acro mode, record **ff** gain 0.5-2 step 0.5, choose the closest following curve without overshoot, lowest latency (shortest period) between setpoint and gyro in the main window plots.
   - iterm https://www.youtube.com/watch?v=Sq_DFjmvVDE
 
@@ -80,9 +83,10 @@ set pidsum_limit_yaw = 1000
 
 - turn on anti-gravity 5, voltage sag compensation (depends on `vbat_warning_cell_voltage`), [thrust linearization](https://oscarliang.com/fpv-drone-tuning/#Thrust-Linearization)
 - `set motor_output_limit = 95` for a 5-inch to protect the ESCs
+- set igains to 0.5-1.0. the lager the quad, the lower the igains (5 inch to 1.0)
 - do hover, slow rampup punchouts, forward flight, test for propwash (split-s, sharp 180 turns, dives), throttle chops to test antigravity (nose dives - bump up, throbbles - lower), rolls, flips, then analyze in PIDtoolbox
-- lower dterm gain by 0.2 and set dmax to 0.5
 - watch for hot motors or overshoot on sharp moves in logs
+- if there's noize or hot motors at the optimal Dterm value: lower dterm gain by 0.2 and set dmax to 0.5, boost the gain.
 
 
 ## problems
