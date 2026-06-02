@@ -47,18 +47,18 @@ set pidsum_limit_yaw = 1000
 
 ## PID and filter tuning process
 
-- https://www.youtube.com/watch?v=FsJNHI2HWlg
-- https://www.youtube.com/watch?v=sqT4MACi3d8
-- https://www.youtube.com/watch?v=ehvQm8Rqrzk
-- https://www.youtube.com/watch?v=4lZ8BY_9KBs
-- https://www.youtube.com/watch?v=tBI2TjePeWA
-- https://www.youtube.com/watch?v=Ylb8mYi91DI
-- https://www.youtube.com/watch?v=inOe7J6l2lU
+- Brian White and Joshua Bardwell https://www.youtube.com/watch?v=FsJNHI2HWlg
+- tuning workflow https://www.youtube.com/watch?v=sqT4MACi3d8
+- tuning workflow https://www.youtube.com/watch?v=ehvQm8Rqrzk
+- tuning workflow https://www.youtube.com/watch?v=4lZ8BY_9KBs
+- PID fundamentals 1 (must see) https://www.youtube.com/watch?v=tBI2TjePeWA
+- PID fundamentals 2 (must see) https://www.youtube.com/watch?v=Ylb8mYi91DI
+- PID fundamentals 3 (must see) https://www.youtube.com/watch?v=inOe7J6l2lU
 - if needed, set linear rates 150/150, angle strength 50, angle limit 30
 - for tuning filters only (stepresponse tool ignores any movement less than 20 degrees per second): trim logs each time to remove takeoff and landing
 - **the process:**
   - on the default PIDs, set ff and dmax to zero, iterm gain to 0.2 (also: lower MM for larger rigs, bump MM for underpowered quads)
-  - record hover
+  - record hover and wiggle, use both for filter adjustment
   - use PIDtoolbox to adjust the filters. apply  the least amount of filtering (otherwise: high delay -> propwash): dynamic notches, filter weights and q to filter most of the noise *while* keeping the delay low, balance filter strength and delay caused by the filters. ideally keep the noise under -40 db (the noise is mostly meaningless below -30). leave gyro lowpass 2 on if there is noise after 500hz. there must be no broadband noise. broadband noise comes from electrical issues like missing capacitor or bad gyro/FC/AIO. try flashing ESCs from 24khz to 48khz or 96khz to isolate the problem.
     - adjust
       ```
@@ -68,7 +68,7 @@ set pidsum_limit_yaw = 1000
       ```
   - in angle mode, record wiggle with **dterm** gain 0.6-1.8 step 0.2, in step response tool find **the best curve without overshoot** (to have a headroom for mm). compare roll and pitch latency and adjust pitch:roll balance (increase pitch damping/tracking if there is more delay on pitch, until the delay on pitch and roll is about the same)
   - in angle mode, record wiggle with **master** multiplier 0.6-1.8 step 0.2, choose **the lowest latency before oscillations begin** in step response tool
-  - (optional) in acro mode, record **iterm** gain 0.5-2 step 0.5, choose  **the best curve without overshoot or oscillations** in step response tool. lower iterm relax cutoff values reduce iterm windup for underpowered quads.
+  - (optional) in angle mode, record **iterm** gain 0.5-2 step 0.5, choose  **the best curve without overshoot or oscillations** in step response tool. lower iterm relax cutoff values reduce iterm windup for underpowered quads.
   - in acro mode, record **ff** gain 0.5-2 step 0.5, choose the closest following curve without overshoot, lowest latency (shortest period) between setpoint and gyro in the main window plots.
   - iterm https://www.youtube.com/watch?v=Sq_DFjmvVDE
 
@@ -91,8 +91,8 @@ set pidsum_limit_yaw = 1000
 
 ## problems
 
-- [about](https://www.youtube.com/watch?v=7GweG0RnCfc) the `washout` problem with ducted frames, when quad not descending with lowered throttle
-- hot motors,  [1](https://www.youtube.com/watch?v=fU7P90sKScA) [2](https://www.youtube.com/watch?v=omat80ZiGHA) . [Too Much D-Term, Too Little Filtering, or Both](https://oscarliang.com/fpv-drone-motors-get-hot/#Too-Much-D-Term-Too-Little-Filtering-or-Both). d-term oscillations caused by [too much d gain](https://www.youtube.com/watch?v=rYpX6d6_66Q). hot motors might be caused by RC smoothing being too low for the tune
+- [about](https://www.youtube.com/watch?v=7GweG0RnCfc) the `washout` problem with ducted frames, when quad not descending with lowered throttle. also, use props for ducted frames, `gemfan D` series
+- hot motors,  [1](https://www.youtube.com/watch?v=fU7P90sKScA) [2](https://www.youtube.com/watch?v=omat80ZiGHA) . [Too Much D-Term, Too Little Filtering, or Both](https://oscarliang.com/fpv-drone-motors-get-hot/#Too-Much-D-Term-Too-Little-Filtering-or-Both). d-term oscillations caused by [too much d gain](https://www.youtube.com/watch?v=rYpX6d6_66Q). hot motors might be caused by RC smoothing being too low for the tune. 
 - [wobbles](https://www.youtube.com/watch?v=YaHpP1YEhX0)
 - propwash - [increase master multiplier](https://www.youtube.com/watch?v=sdfVoUyXRMU), [increase dgain, decrease dterm filtering (dterm filter slider to the right)](https://www.youtube.com/watch?v=XkDJqh588xE), increase dynamic idle. also [better throttle control and lower pitch props](https://www.youtube.com/watch?v=O8WygMNakqQ). [UAV Tech - lower delay](https://www.youtube.com/watch?v=Dgq-cgqt_gI). [UAV Tech - P/D balance](https://www.youtube.com/watch?v=TjaD_-jlZ6Y). [set pidloop frequency higher](https://www.youtube.com/watch?v=53dT3vrh2Ac)
 - insufficient filtering coupled with `pidsum_limit = 1000` and/or AIRMODE can cause a flyaway
@@ -101,6 +101,8 @@ set pidsum_limit_yaw = 1000
 - [low freq frame noise](https://youtu.be/GNpOuF7zCMw?si=ZGqJurkVuNihE0rO&t=520)
 - if there is a slow bounceback after a roll or a flip, lower I term gain 
 - if the noise floor is high on a heavily loaded quad, try higher PWM frequency (48khz -> 96khz) to get around
+- high noise around motor frequency harmonics might be caused by fake or low quality props
+- big quads require lowering iterm gains https://www.youtube.com/watch?v=M7mcUf05JmY
 
 ## other tools for log analysis
 
@@ -108,17 +110,18 @@ set pidsum_limit_yaw = 1000
 - PIDtoolbox fork using Octave https://github.com/dzikus/PIDscope
 - https://skypulse.ua/pidpulse/
 
-## betaflight chirp tuning
+## betaflight autotune
 
-build the firmware with ` -DUSE_CHIRP`, enable chirp injection (mode 55) on a switch, in this instance it is on aux3
+- autotune can be used to evaluate current tune https://www.youtube.com/watch?v=uKX9W5skYJQ
 
-
-set blackbox debug to chirp
+build the firmware with ` -DUSE_CHIRP`, enable chirp injection (mode 55) on a switch
 
 ```
 set debug_mode = CHIRP
 
 ```
+
+- do: full throttle, rolls, flips, and chirps for each axis until the message `end` appears on the osd
 
 
 ## references

@@ -46,13 +46,16 @@ the ELRS receiver on the AIO died after a week or so. ~~Update: using another VT
 ## update 4
 
 - changed to a bit smaller and lighter gemfan 2023s-3 props. dry weight: 50.3 g
-- hover at 3.15A 30% throttle. 
+- hover at 3.46A 30% throttle. 
 - flight time to 3.4v is around 3-5 minutes at 13 degrees ambient, max current 24A
 
 ## update 5
 
 - the VTX was placed between the battery and the FC and the video feed had white washout pulsations. I moved the VTX to the place under the canopy behind the camera, shortened the VTX and camera wires, moved the VTX GND to the pad near the camera GND, placed the RX below the FC where the VTX was before. now there are no washouts.
 
+## update 6
+
+- gemdan D2-3 hover at 30% throttle, 3.48A
 
 ## components
 
