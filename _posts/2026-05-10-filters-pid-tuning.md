@@ -24,15 +24,19 @@ How I tune filters and PIDs in Betaflight using PIDtoolbox pro (a musthave, curr
 
 - [ESC tuning](https://www.youtube.com/watch?v=EhYKeZfSQIw&list=PLFPBjpbd5xKT9eCWvtuFJ-qe3BxTDFvad)
 - https://esc-configurator.com or https://am32.ca, or [locally]({% post_url 2025-11-23-bf-local %})
-- for 2,5-inch and smaller set PWM frequency to 48 kHz or 96khz, for larger quads set it to 24 kHz
+- set PWM frequency to 48 kHz or 96khz for [more thrust (and less braking force)](https://www.youtube.com/watch?v=v3806Incpvo) and less [overlap with harmonics](https://www.youtube.com/watch?v=quVFUbMaZFo)
 - set type to 2S+ if it is not a 1S AIO, disable temperature protection
-- set motor timing to 15 degrees (go back to the default 22.5 in case if there are any desyncs) for a 5 inch, set to default for smaller quads
+- set motor timing to 15 degrees for better performance and cooler motors (go back to the default 22.5 deg in case if there are any desyncs) for a 5 inch, set to default for smaller quads
 - motor settings in am32 must be set close to the actual ones. manual protocol selection `DSHOT`
 
 ## Betaflight preparation
 
 - backup previous config (`dump` and `diff all showdefaults`), flash the latest version of Betaflight using [online app](https://app.betaflight.com/) or [locally]({% post_url 2025-11-23-bf-local %})
-- load ELRS profile, RC smoothing should fit the flying style. less smoothing will result in hotter motors when the tune is pushed to extremes
+- load RC_LINK profile for the corresponding refresh rate. less smoothing will result in hotter motors when the tune is pushed to extremes
+```
+set rc_smoothing_auto_factor = 30
+set rc_smoothing_auto_factor_throttle = 30
+```
 - enable bidirectional dshot, set correct dynamic idle value is based on the prop size/pitch, [here](https://oscarliang.com/how-to-enable-and-configure-betaflight-dynamic-idle/) and [here](https://youtu.be/1oYoVE4xu1U?si=yH7NVtL8CJaB1tvT&t=798)
 - set PID authority to 100% from 50% default (**do not** change this after PID tuning). 
 ```
@@ -40,7 +44,7 @@ set pidsum_limit = 1000
 set pidsum_limit_yaw = 1000
 ```
 
-- if MCU has enough compute power, set ESCs to DSHOT600, set pidloop frequency to `set pid_process_denom = 1` (disable gyro low pass 2 if theres not a lot of noise) or to the highest frequency possible. pidloop below 2khz will disable dynamic notches, be aware.
+- if MCU has enough compute power, set ESCs to DSHOT600, set pidloop frequency to `set pid_process_denom = 1` (disable gyro low pass 2 if theres not a lot of noise) or to the highest frequency possible. pidloop below 2khz will disable dynamic notches, be aware. 
 - `motor_poles` must be set correctly (usually 12 for small motors and 14 for large motors)
 - set blackbox to 2 kHz, debug fft_freq
 - tune for lighter weight. quad tuned for heavier weight will fly away if lighter, especially in AIRMODE with pidsum_limit 100%
@@ -55,11 +59,11 @@ set pidsum_limit_yaw = 1000
 - PID fundamentals 2 (must see) https://www.youtube.com/watch?v=Ylb8mYi91DI
 - PID fundamentals 3 (must see) https://www.youtube.com/watch?v=inOe7J6l2lU
 - if needed, set linear rates 150/150, angle strength 50, angle limit 30
-- for tuning filters only (stepresponse tool ignores any movement less than 20 degrees per second): trim logs each time to remove takeoff and landing
+- for spectral analyzer tool only (step response tool ignores any movement less than 20 degrees per second): trim logs each time to remove takeoff and landing
 - **the process:**
   - on the default PIDs, set ff and dmax to zero, iterm gain to 0.2 (also: lower MM for larger rigs, bump MM for underpowered quads)
   - record hover and wiggle, use both for filter adjustment
-  - use PIDtoolbox to adjust the filters. apply  the least amount of filtering (otherwise: high delay -> propwash): dynamic notches, filter weights and q to filter most of the noise *while* keeping the delay low, balance filter strength and delay caused by the filters. ideally keep the noise under -40 db (the noise is mostly meaningless below -30). leave gyro lowpass 2 on if there is noise after 500hz. there must be no broadband noise. broadband noise comes from electrical issues like missing capacitor or bad gyro/FC/AIO. try flashing ESCs from 24khz to 48khz or 96khz to isolate the problem.
+  - use PIDtoolbox to adjust the filters. apply  the least amount of filtering (otherwise: high delay -> propwash): dynamic notches, filter weights and q to filter most of the noise *while* keeping the delay low, balance filter strength and delay caused by the filters. ideally keep the noise under -40 db (the noise is mostly meaningless below -30). leave gyro lowpass 2 on if there is noise after 500hz. there must be no broadband noise. broadband noise comes from electrical issues like missing capacitor or bad gyro/FC/AIO. try flashing ESCs from 24khz to 48khz or 96khz to isolate the problem. try changing props to a different model to lower the noise around the motor bands
     - adjust
       ```
       set rpm_filter_weights = 100,100,100
@@ -103,6 +107,7 @@ set pidsum_limit_yaw = 1000
 - if the noise floor is high on a heavily loaded quad, try higher PWM frequency (48khz -> 96khz) to get around
 - high noise around motor frequency harmonics might be caused by fake or low quality props
 - big quads require lowering iterm gains https://www.youtube.com/watch?v=M7mcUf05JmY
+- if `DSHOT_TELEM` error pops up from time to time when arming, `set motor_pwm_protocol = DSHOT300`
 
 ## other tools for log analysis
 
