@@ -33,18 +33,18 @@ How I tune filters and PIDs in Betaflight using PIDtoolbox pro (a musthave, curr
 
 - backup previous config (`dump` and `diff all showdefaults`), flash the latest version of Betaflight using [online app](https://app.betaflight.com/) or [locally]({% post_url 2025-11-23-bf-local %})
 - load RC_LINK profile for the corresponding refresh rate. less smoothing will result in hotter motors when the tune is pushed to extremes
-```Betaflight
+```
 set rc_smoothing_auto_factor = 30
 set rc_smoothing_auto_factor_throttle = 30
 ```
 - enable bidirectional dshot, set correct dynamic idle value is based on the prop size/pitch, [here](https://oscarliang.com/how-to-enable-and-configure-betaflight-dynamic-idle/) and [here](https://youtu.be/1oYoVE4xu1U?si=yH7NVtL8CJaB1tvT&t=798)
 - set PID authority to 100% from 50% default (**do not** change this after PID tuning). 
-```Betaflight
+```
 set pidsum_limit = 1000
 set pidsum_limit_yaw = 1000
 ```
 
-- if MCU has enough compute power, set ESCs to DSHOT600, set pidloop frequency to `set pid_process_denom = 1` (disable gyro low pass 2 if theres not a lot of noise) or to the highest frequency possible. pidloop below 2khz will disable dynamic notches, be aware. 
+- if MCU has enough compute power, set ESCs to DSHOT600, set pidloop frequency to `set pid_process_denom = 1` (disable gyro low pass 2 if theres not a lot of noise above 500Hz) or to the highest frequency possible. pidloop below 2khz will disable dynamic notches, be aware. 
 - `motor_poles` must be set correctly (usually 12 for small motors and 14 for large motors)
 - set blackbox to 2 kHz, debug fft_freq
 - tune for lighter weight. quad tuned for heavier weight will fly away if lighter, especially in AIRMODE with pidsum_limit 100%
@@ -65,13 +65,13 @@ set pidsum_limit_yaw = 1000
   - record hover and wiggle, use both for filter adjustment
   - use PIDtoolbox to adjust the filters. apply  the least amount of filtering (otherwise: high delay -> propwash): dynamic notches, filter weights and q to filter most of the noise *while* keeping the delay low, balance filter strength and delay caused by the filters. ideally keep the noise under -40 db (the noise is mostly meaningless below -30). leave gyro lowpass 2 on if there is noise after 500hz. there must be no broadband noise. broadband noise comes from electrical issues like missing capacitor or bad gyro/FC/AIO. try flashing ESCs from 24khz to 48khz or 96khz to isolate the problem. try changing props to a different model to lower the noise around the motor bands
     - adjust
-      ```Betaflight
+      ```
       set rpm_filter_weights = 100,100,100
       set rpm_filter_fade_range_hz = 50
       set rpm_filter_q = 500
       ```
   - in angle mode, record wiggle with **dterm** gain 0.6-1.8 step 0.2, in step response tool find **the best curve without overshoot** (to have a headroom for mm). compare roll and pitch latency and adjust pitch:roll balance (increase pitch damping/tracking if there is more delay on pitch, until the delay on pitch and roll is about the same)
-  - in angle mode, record wiggle with **master** multiplier 0.6-1.8 step 0.2, choose **the lowest latency before oscillations begin** in step response tool
+  - in angle mode, record wiggle with **master multiplier** 0.6-1.8 step 0.2, choose **the lowest latency before oscillations begin** in step response tool
   - (optional) in angle mode, record **iterm** gain 0.5-2 step 0.5, choose  **the best curve without overshoot or oscillations** in step response tool. lower iterm relax cutoff values reduce iterm windup for underpowered quads.
   - in acro mode, record **ff** gain 0.5-2 step 0.5, choose the closest following curve without overshoot, lowest latency (shortest period) between setpoint and gyro in the main window plots.
   - iterm https://www.youtube.com/watch?v=Sq_DFjmvVDE
@@ -109,7 +109,7 @@ set pidsum_limit_yaw = 1000
 - big quads require lowering iterm gains https://www.youtube.com/watch?v=M7mcUf05JmY
 - if `DSHOT_TELEM` error pops up from time to time when arming, `set motor_pwm_protocol = DSHOT300`
 - tinywhoop loses orientation after setting throttle to zero in acro but keeps steady if to do the same in air mode: 
-```Betaflight
+```
 set pidsum_limit = 1000
 set pidsum_limit_yaw = 1000
 ```
@@ -126,7 +126,7 @@ set pidsum_limit_yaw = 1000
 
 build 2026 firmware with `-DUSE_CHIRP`, enable chirp injection (mode 55) on a switch
 
-```Betaflight
+```
 set debug_mode = CHIRP
 
 ```
