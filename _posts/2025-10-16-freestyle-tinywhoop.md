@@ -59,7 +59,7 @@ the ELRS receiver on the AIO died after a week or so. ~~Update: using another VT
 
 ## components
 
-- 津航电子 (JHEMCU) G474ELRS - 1s-2s, 4 UARTS, 12A bluejay DSHOT300 ESCs, STM32G474: 170MHz core 512KB flash 128KB RAM, 8MB blackbox, BETAFPV 2.4GHz Lite RX (serial) IPEX gen1, no baro - ELRS died
+- 津航电子 (JHEMCU) G474ELRS - 1s-2s, 4 UARTS, 12A bluejay DSHOT300 ESCs, STM32G474: 170MHz core 512KB flash 128KB RAM, 8MB blackbox, BETAFPV 2.4GHz Lite RX (serial) IPEX gen1, no baro - ELRS died, ESCs do not support 96khz
 - 衢州市云端智能科技 (Happymodel) [5.8G Crown LDS antenna RHCP](https://www.happymodel.cn/index.php/2025/08/07/happymodel-5-8g-crown-lds-antenna-rhcp-lhcp-for-micro-fpv-whoops/), [3.5dBi, 5500-6000MHz](https://www.happymodel.cn/wp-content/uploads/2025/08/5.8G-Crown-antenna-RHCP-testing-data.xls.pdf), IPEX gen1
 - 卡德克斯技术 (Caddx) Ant lite (f/2.5 lens). Update: swapped to Caddx Ant (f/1.2 lens), not in the pictures
 - ~~Mobula7 frame (80mm clone) - 45mm props, 80mm base, 47mm ducts~~

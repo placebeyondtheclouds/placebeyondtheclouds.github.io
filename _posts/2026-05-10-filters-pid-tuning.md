@@ -33,13 +33,13 @@ How I tune filters and PIDs in Betaflight using PIDtoolbox pro (a musthave, curr
 
 - backup previous config (`dump` and `diff all showdefaults`), flash the latest version of Betaflight using [online app](https://app.betaflight.com/) or [locally]({% post_url 2025-11-23-bf-local %})
 - load RC_LINK profile for the corresponding refresh rate. less smoothing will result in hotter motors when the tune is pushed to extremes
-```
+```Betaflight
 set rc_smoothing_auto_factor = 30
 set rc_smoothing_auto_factor_throttle = 30
 ```
 - enable bidirectional dshot, set correct dynamic idle value is based on the prop size/pitch, [here](https://oscarliang.com/how-to-enable-and-configure-betaflight-dynamic-idle/) and [here](https://youtu.be/1oYoVE4xu1U?si=yH7NVtL8CJaB1tvT&t=798)
 - set PID authority to 100% from 50% default (**do not** change this after PID tuning). 
-```
+```Betaflight
 set pidsum_limit = 1000
 set pidsum_limit_yaw = 1000
 ```
@@ -65,7 +65,7 @@ set pidsum_limit_yaw = 1000
   - record hover and wiggle, use both for filter adjustment
   - use PIDtoolbox to adjust the filters. apply  the least amount of filtering (otherwise: high delay -> propwash): dynamic notches, filter weights and q to filter most of the noise *while* keeping the delay low, balance filter strength and delay caused by the filters. ideally keep the noise under -40 db (the noise is mostly meaningless below -30). leave gyro lowpass 2 on if there is noise after 500hz. there must be no broadband noise. broadband noise comes from electrical issues like missing capacitor or bad gyro/FC/AIO. try flashing ESCs from 24khz to 48khz or 96khz to isolate the problem. try changing props to a different model to lower the noise around the motor bands
     - adjust
-      ```
+      ```Betaflight
       set rpm_filter_weights = 100,100,100
       set rpm_filter_fade_range_hz = 50
       set rpm_filter_q = 500
@@ -80,7 +80,7 @@ set pidsum_limit_yaw = 1000
 ## (optional) use blackbox explorer to adjust filters
 
 - https://www.youtube.com/watch?v=E3s5XYk3M74
-- UAVTech's workspace for blackbox viewer is [here](https://theuavtech.com/wp-content/uploads/2024/10/UAVtech-BF-BBE-4.0-Version.json)
+- [UAVTech](https://theuavtech.com/blackbox/)'s workspace for the blackbox viewer is [here](https://theuavtech.com/wp-content/uploads/2024/10/UAVtech-BF-BBE-4.0-Version.json)
 
 
 ## after tuning
@@ -108,6 +108,11 @@ set pidsum_limit_yaw = 1000
 - high noise around motor frequency harmonics might be caused by fake or low quality props
 - big quads require lowering iterm gains https://www.youtube.com/watch?v=M7mcUf05JmY
 - if `DSHOT_TELEM` error pops up from time to time when arming, `set motor_pwm_protocol = DSHOT300`
+- tinywhoop loses orientation after setting throttle to zero in acro but keeps steady if to do the same in air mode: 
+```Betaflight
+set pidsum_limit = 1000
+set pidsum_limit_yaw = 1000
+```
 
 ## other tools for log analysis
 
@@ -119,9 +124,9 @@ set pidsum_limit_yaw = 1000
 
 - autotune can be used to evaluate current tune https://www.youtube.com/watch?v=uKX9W5skYJQ
 
-build the firmware with ` -DUSE_CHIRP`, enable chirp injection (mode 55) on a switch
+build 2026 firmware with `-DUSE_CHIRP`, enable chirp injection (mode 55) on a switch
 
-```
+```Betaflight
 set debug_mode = CHIRP
 
 ```
