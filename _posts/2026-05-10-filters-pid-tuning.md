@@ -85,12 +85,12 @@ set pidsum_limit_yaw = 1000
 
 ## after tuning
 
-- turn on anti-gravity 5, voltage sag compensation (depends on `vbat_warning_cell_voltage`), [thrust linearization](https://oscarliang.com/fpv-drone-tuning/#Thrust-Linearization)
+- set the anti-gravity to 5, voltage sag compensation (depends on `vbat_warning_cell_voltage`), [thrust linearization](https://oscarliang.com/fpv-drone-tuning/#Thrust-Linearization)
 - `set motor_output_limit = 95` for a 5-inch to protect the ESCs
-- set igains to 0.5-1.0. the lager the quad, the lower the igains (5 inch to 1.0)
+- set igains to 0.5-1.0. the lager the quad is, the lower the igains (5 inch to 1.0)
 - do hover, slow rampup punchouts, forward flight, test for propwash (split-s, sharp 180 turns, dives), throttle chops to test antigravity (nose dives - bump up, throbbles - lower), rolls, flips, then analyze in PIDtoolbox
 - watch for hot motors or overshoot on sharp moves in logs
-- if there's noize or hot motors at the optimal Dterm value: lower dterm gain by 0.2 and set dmax to 0.5, boost the gain.
+
 
 
 ## problems
@@ -122,7 +122,7 @@ set pidsum_limit_yaw = 1000
 
 ## betaflight autotune
 
-- autotune can be used to evaluate current tune https://www.youtube.com/watch?v=uKX9W5skYJQ
+- autotune can be used to evaluate the current tune https://www.youtube.com/watch?v=uKX9W5skYJQ
 
 build 2026 firmware with `-DUSE_CHIRP`, enable chirp injection (mode 55) on a switch
 
@@ -131,7 +131,7 @@ set debug_mode = CHIRP
 
 ```
 
-- do: full throttle, rolls, flips, and chirps for each axis until the message `end` appears on the osd
+- do: full throttle, rolls, flips. do chirps for each axis until the message `end` appears on the osd
 
 
 ## references
