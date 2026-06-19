@@ -32,7 +32,7 @@ How I tune filters and PIDs in Betaflight using PIDtoolbox pro (a musthave, curr
 ## Betaflight preparation
 
 - backup previous config (`dump` and `diff all showdefaults`), flash the latest version of Betaflight using [online app](https://app.betaflight.com/) or [locally]({% post_url 2025-11-23-bf-local %})
-- load RC_LINK profile for the corresponding refresh rate. less smoothing will result in hotter motors when the tune is pushed to extremes
+- load RC_LINK profile for the corresponding refresh rate. less smoothing will result in hotter motors when the tune is pushed to extremes。 lowering the factor to like 20 at ELRS150Hz gives me stepped setpoint curve on sharp moves like a roll.
 ```
 set rc_smoothing_auto_factor = 30
 set rc_smoothing_auto_factor_throttle = 30
@@ -63,7 +63,7 @@ set pidsum_limit_yaw = 1000
 - **the process:**
   - on the default PIDs, set ff and dmax to zero, iterm gain to 0.2 (also: lower MM for larger rigs, bump MM for underpowered quads)
   - record hover and wiggle, use both for filter adjustment
-  - use PIDtoolbox to adjust the filters. apply  the least amount of filtering (otherwise: high delay -> propwash): dynamic notches, filter weights and q to filter most of the noise *while* keeping the delay low, balance filter strength and delay caused by the filters. ideally keep the noise under -40 db (the noise is mostly meaningless below -30). leave gyro lowpass 2 on if there is noise after 500hz. there must be no broadband noise. broadband noise comes from electrical issues like missing capacitor or bad gyro/FC/AIO. try flashing ESCs from 24khz to 48khz or 96khz to isolate the problem. try changing props to a different model to lower the noise around the motor bands
+  - use PIDtoolbox to adjust the filters. apply  the least amount of filtering (otherwise: high delay -> propwash): dynamic notches, filter weights and q to filter most of the noise *while* keeping the delay low, balance filter strength and delay caused by the filters. ideally keep the noise under -40 db (the noise is mostly meaningless below -30). leave gyro lowpass 2 on if there is noise after 500hz. there must be no broadband noise. broadband noise comes from electrical issues like missing capacitor or bad gyro/FC/AIO. try flashing ESCs from 24khz to 48khz or 96khz to isolate the problem. try changing props to a different model to lower the noise around the motor bands. [dterm lowpass filter tuning](https://youtu.be/E3s5XYk3M74?si=JeIqYoy9830uGgPp&t=1408)
     - adjust
       ```
       set rpm_filter_weights = 100,100,100
@@ -98,7 +98,7 @@ set pidsum_limit_yaw = 1000
 - [about](https://www.youtube.com/watch?v=7GweG0RnCfc) the `washout` problem with ducted frames, when quad not descending with lowered throttle. also, use props for ducted frames, `gemfan D` series
 - hot motors,  [1](https://www.youtube.com/watch?v=fU7P90sKScA) [2](https://www.youtube.com/watch?v=omat80ZiGHA) . [Too Much D-Term, Too Little Filtering, or Both](https://oscarliang.com/fpv-drone-motors-get-hot/#Too-Much-D-Term-Too-Little-Filtering-or-Both). d-term oscillations caused by [too much d gain](https://www.youtube.com/watch?v=rYpX6d6_66Q). hot motors might be caused by RC smoothing being too low for the tune. 
 - [wobbles](https://www.youtube.com/watch?v=YaHpP1YEhX0)
-- propwash - [increase master multiplier](https://www.youtube.com/watch?v=sdfVoUyXRMU), [increase dgain, decrease dterm filtering (dterm filter slider to the right)](https://www.youtube.com/watch?v=XkDJqh588xE), increase dynamic idle. also [better throttle control and lower pitch props](https://www.youtube.com/watch?v=O8WygMNakqQ). [UAV Tech - lower delay](https://www.youtube.com/watch?v=Dgq-cgqt_gI). [UAV Tech - P/D balance](https://www.youtube.com/watch?v=TjaD_-jlZ6Y). [set pidloop frequency higher](https://www.youtube.com/watch?v=53dT3vrh2Ac)
+- propwash - [increase master multiplier](https://www.youtube.com/watch?v=sdfVoUyXRMU), [increase dgain, decrease dterm filtering (dterm filter slider to the right)](https://www.youtube.com/watch?v=XkDJqh588xE), increase dynamic idle. also [better throttle control and lower pitch props](https://www.youtube.com/watch?v=O8WygMNakqQ). [UAV Tech - lower delay](https://www.youtube.com/watch?v=Dgq-cgqt_gI). [UAV Tech - P/D balance](https://www.youtube.com/watch?v=TjaD_-jlZ6Y). [set pidloop frequency higher](https://www.youtube.com/watch?v=53dT3vrh2Ac). [the theory of propwash](https://www.youtube.com/watch?v=1WDcEJ2DHBA)
 - insufficient filtering coupled with `pidsum_limit = 1000` and/or AIRMODE can cause a flyaway
 - [13inch filters](https://www.youtube.com/watch?v=GNpOuF7zCMw)
 - [frame resonance noise - lower filters, lower mm](https://www.youtube.com/watch?v=baRxtGTq9W8)

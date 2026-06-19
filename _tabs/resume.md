@@ -66,7 +66,7 @@ My other [Projects](/projects)
 - wireless and wired networking (including NVIDIA InfiniBand), former MTCNA
 - Helpdesk (Windows/MacOS/Linux, software, data management, programming), Documentation
 - Computer hardware troubleshooting and repair
-- FPV drone building (from scratch) and piloting, Betaflight/ELRS/EdgeTX programming, filters/PID tuning with PIDtoolbox pro
+- FPV quadcopter building and piloting, Betaflight/ELRS/EdgeTX programming, filters/PID tuning with PIDtoolbox pro
 - Raspberry Pi projects
 
 ### Data engineering and deep learning:

@@ -15,7 +15,7 @@ Originally I was flying Meteor75 Pro, which was gradually rebuilt into this: 2-i
 
 ~~The battery is mounted using rubber bands with zip ties, occupying the lower part of the 2S holder and pressing the 1S battery to the frame.~~
 
-Camera - [Caddx Ant](https://caddxfpv.com/collections/caddxfpv-tiny-camera/products/caddx-ant-analog-camera) with f/1.2 lens ~~or [Caddx Ant Lite](https://caddxfpv.com/products/caddxfpv-ant-lite-4-3-fpvcycle-edition) with f/2.5 lens. [the canopy for the Ant Lite](https://www.thingiverse.com/thing:6201941) is 3D printed, needs to be modified for the regular Ant edition. the motors are 1102 22000kv left from the Meteor75. the props are 乾丰 (gemfan) 45mm-3 (1.5mm shaft). 20AVG battery lead. ~~ [a canopy for regular ant camera](https://www.thingiverse.com/thing:5638220),  [the canopy for regular ant camera and external vtx](https://www.thingiverse.com/thing:6940226)
+Camera - [Caddx Ant](https://caddxfpv.com/collections/caddxfpv-tiny-camera/products/caddx-ant-analog-camera) with f/1.2 lens ~~or [Caddx Ant Lite](https://caddxfpv.com/products/caddxfpv-ant-lite-4-3-fpvcycle-edition) with f/2.5 lens. [the canopy for the Ant Lite](https://www.thingiverse.com/thing:6201941) is 3D printed, needs to be modified for the regular Ant edition. the motors are 1102 22000kv left from the Meteor75. the props are 乾丰 (gemfan) 45mm-3 (1.5mm shaft). 20AVG battery lead. ~~ [a canopy for regular ant camera](https://www.thingiverse.com/thing:5638220),  [the canopy for regular ant camera and external vtx](https://www.thingiverse.com/thing:6940226) would fit the mobula8 frame by bending the mounting points on the sides and zip-tying the front mounting point to the hole in the frame between motors 2 and 4.
 
 ~~batteries: batches of 高能 (GNB) 100C 550mAh LiHV 1S A30 and 格氏 (Tattu) 95C 550mAh 1S LiHV (resoldered A30).~~
 
@@ -99,8 +99,13 @@ the ELRS receiver on the AIO died after a week or so. ~~Update: using another VT
 | ![1](/assets/images/rebuild16.jpg) | ![2](/assets/images/rebuild17.jpg) |![3](/assets/images/rebuild18.jpg) |
 | ![4](/assets/images/rebuild19.jpg) | ![5](/assets/images/rebuild20.png) | ![6](/assets/images/rebuild21.png) |
 | ![7](/assets/images/rebuild22.jpg) | ![8](/assets/images/rebuild23.jpg) | ![9](/assets/images/rebuild24.jpg) |
-| ![10](/assets/images/rebuild-25.png) |   ![11](/assets/images/rebuild-26.png) | - |
+| ![10](/assets/images/rebuild25.png) |   ![11](/assets/images/rebuild26.png) | - |
 
+## [new canopy](https://www.thingiverse.com/thing:6940226) 
+
+| - | - | - |
+| ![1](/assets/images/rebuild27.jpg) | ![2](/assets/images/rebuild28.jpg) |![3](/assets/images/rebuild29.jpg) |
+| ![4](/assets/images/rebuild30.jpg) |   - | - |
 
 ## the process
 
@@ -141,7 +146,7 @@ UART4: external ELRS RX
 
 - install the components into the frame, secure what needed with zip ties
 
-- Caddx Ant camera settings (using OSD menu board): AE mode to BLC=3, brightness=35, contrast auto, saturation manual=20
+- Caddx Ant camera settings (using OSD menu board): set to PAL and apply. AE mode to BLC=3, brightness=35, contrast auto, saturation manual=20, save and reboot
 
 - flash betaflight v2025.12, target `JHEG474`, analog OSD. restore the original backup
   - [can be built locally]({% post_url 2025-11-23-bf-local %}). local build command: `make JHEG474 EXTRA_FLAGS=" -D'RELEASE_NAME=2025.12.2' -DCLOUD_BUILD -DUSE_ACRO_TRAINER -DUSE_DSHOT -DUSE_LED_STRIP -DUSE_OSD -DUSE_OSD_SD -DUSE_PINIO -DUSE_SERIALRX -DUSE_SERIALRX_CRSF -DUSE_TELEMETRY -DUSE_TELEMETRY_CRSF -DUSE_VTX" -j`
