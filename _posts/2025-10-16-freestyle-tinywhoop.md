@@ -9,15 +9,15 @@ published: true
 
 Originally I was flying Meteor75 Pro, which was gradually rebuilt into this: 2-inch 2s tinywhoop. The following are my notes on the process.
 
-~~I damaged ESC #2 on the 1S Matrix AIO (Meteor75 Pro), either by running a motor with damaged windings or from a voltage spike in a crash. It's overheating, not giving full power to the motor, and the video feed has white washouts during high throttle. So I'm replacing the AIO with JHEMCU G474ELRS and HGLRC Zeuz nano 350mw VTX. ~~
+~~I damaged ESC #2 on the 1S Matrix AIO (Meteor75 Pro), either by running a motor with damaged windings or from a voltage spike in a crash. It's overheating, not giving full power to the motor, and the video feed has white washouts during high throttle. So I'm replacing the AIO with~~ JHEMCU G474ELRS and HGLRC Zeuz nano 350mw VTX.
 
 ~~Meteor75 frame is scraping the battery and motor screws against the ground, so I am replacing it with a clone of Mobula7 but for 45mm props (80mm base and 47mm ducts instead of 75mm and 43mm respectively). It has 2S battery tray, and with 1S battery the whoop will land on the lower part of the frame without the battery or motor screws touching the ground. Another solution to the problem would be keep the meteor75pro frame and printing [the battery bumper](https://www.thingiverse.com/thing:7056235).~~
 
 ~~The battery is mounted using rubber bands with zip ties, occupying the lower part of the 2S holder and pressing the 1S battery to the frame.~~
 
-Camera - [Caddx Ant](https://caddxfpv.com/collections/caddxfpv-tiny-camera/products/caddx-ant-analog-camera) with f/1.2 lens ~~or [Caddx Ant Lite](https://caddxfpv.com/products/caddxfpv-ant-lite-4-3-fpvcycle-edition) with f/2.5 lens. [the canopy for the Ant Lite](https://www.thingiverse.com/thing:6201941) is 3D printed, needs to be modified for the regular Ant edition. the motors are 1102 22000kv left from the Meteor75. the props are 乾丰 (gemfan) 45mm-3 (1.5mm shaft). 20AVG battery lead. ~~ [a canopy for regular ant camera](https://www.thingiverse.com/thing:5638220),  [the canopy for regular ant camera and external vtx](https://www.thingiverse.com/thing:6940226) would fit the mobula8 frame by bending the mounting points on the sides and zip-tying the front mounting point to the hole in the frame between motors 2 and 4.
+Camera - [Caddx Ant](https://caddxfpv.com/collections/caddxfpv-tiny-camera/products/caddx-ant-analog-camera) with f/1.2 lens ~~or [Caddx Ant Lite](https://caddxfpv.com/products/caddxfpv-ant-lite-4-3-fpvcycle-edition) with f/2.5 lens. [the canopy for the Ant Lite](https://www.thingiverse.com/thing:6201941) is 3D printed, needs to be modified for the regular Ant edition. the motors are 1102 22000kv left from the Meteor75. the props are 乾丰 (gemfan) 45mm-3 (1.5mm shaft). 20AVG battery lead. [a canopy for regular ant camera](https://www.thingiverse.com/thing:5638220), or~~ [the canopy for regular ant camera and external vtx](https://www.thingiverse.com/thing:6940226) would fit the mobula8 frame by bending the mounting points on the sides and zip-tying the front mounting point to the hole in the frame between motors 2 and 4. The holes for the camera must be melt with a soldering iron to move the camera slightly down and back to avoid damaging the lens in a crash.
 
-~~batteries: batches of 高能 (GNB) 100C 550mAh LiHV 1S A30 and 格氏 (Tattu) 95C 550mAh 1S LiHV (resoldered A30).~~
+~~batteries: batches of 高能 (GNB) 100C 550mAh LiHV 1S A30 and 格氏 (Tattu) 95C 550mAh 1S LiHV (resoldered A30).~~ 高能 (GNB) 70C 350mAh LiHV 2S XT30
 
 **Highlights of this build's final configuration**: 
 
@@ -55,7 +55,13 @@ the ELRS receiver on the AIO died after a week or so. ~~Update: using another VT
 
 ## update 6
 
-- gemdan D2-3 hover at 30% throttle, 3.48A
+- [new canopy](https://www.thingiverse.com/thing:6940226) that holds the vtx and the receiver, for the standard screw-mounted camera
+
+## update 7
+
+- gemfan D2-3 hover at 30% throttle, 3.48A
+- GR2 grade 5.8 titanium screws M2x7 for the props. steel 1.6g, tianium 1.2g, not really worth it. also must use loctite
+- dry weight 55.1g, AUP with 350mah battery 73.2g.
 
 ## components
 
@@ -101,11 +107,13 @@ the ELRS receiver on the AIO died after a week or so. ~~Update: using another VT
 | ![7](/assets/images/rebuild22.jpg) | ![8](/assets/images/rebuild23.jpg) | ![9](/assets/images/rebuild24.jpg) |
 | ![10](/assets/images/rebuild25.png) |   ![11](/assets/images/rebuild26.png) | - |
 
-## [new canopy](https://www.thingiverse.com/thing:6940226) 
+## [new canopy](https://www.thingiverse.com/thing:6940226)
 
 | - | - | - |
 | ![1](/assets/images/rebuild27.jpg) | ![2](/assets/images/rebuild28.jpg) |![3](/assets/images/rebuild29.jpg) |
-| ![4](/assets/images/rebuild30.jpg) |   - | - |
+| ![4](/assets/images/rebuild30.jpg) |  ![D2 props and titanium screws](/assets/images/rebuild31.jpg)  | - |
+
+
 
 ## the process
 
