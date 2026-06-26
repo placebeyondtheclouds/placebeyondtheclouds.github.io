@@ -383,17 +383,15 @@ filters are super important. [tuning for performance](https://www.youtube.com/wa
 
 # master
 set gyro_lpf1_static_hz = 0
-set dyn_notch_count = 4
-set dyn_notch_q = 300
-set dyn_notch_min_hz = 110
+set dyn_notch_q = 350
+set dyn_notch_max_hz = 500
 set gyro_lpf1_dyn_min_hz = 0
-set acc_trim_pitch = 1
-set acc_trim_roll = 5
-set acc_calibration = -17,-45,37,1
 
-set rpm_filter_weights = 100,80,40
+set dyn_notch_count = 3
+
+set rpm_filter_weights = 100,50,50
 set rpm_filter_q = 400
-set rpm_filter_min_hz = 180
+set rpm_filter_min_hz = 200
 set rpm_filter_fade_range_hz = 0
 ```
 
@@ -401,41 +399,41 @@ set rpm_filter_fade_range_hz = 0
 
 
 ```
-profile 3
-
 # profile 3
-set profile_name = tune
-set dterm_lpf1_dyn_min_hz = 82
-set dterm_lpf1_dyn_max_hz = 165
-set dterm_lpf1_static_hz = 82
-set dterm_lpf2_static_hz = 165
+set profile_name = tune2
+set dterm_lpf1_dyn_min_hz = 108
+set dterm_lpf1_dyn_max_hz = 217
+set dterm_lpf1_static_hz = 108
+set dterm_lpf2_static_hz = 217
 set vbat_sag_compensation = 100
-set iterm_relax_type = GYRO
-set p_pitch = 56
-set i_pitch = 100
-set d_pitch = 57
-set f_pitch = 119
-set p_roll = 53
-set i_roll = 95
-set d_roll = 50
-set f_roll = 115
+set pidsum_limit = 1000
+set pidsum_limit_yaw = 1000
+set p_pitch = 64
+set i_pitch = 115
+set d_pitch = 65
+set f_pitch = 103
+set p_roll = 56
+set i_roll = 100
+set d_roll = 52
+set f_roll = 89
 set p_yaw = 100
 set i_yaw = 100
 set f_yaw = 143
-set d_max_roll = 50
-set d_max_pitch = 57
+set d_max_roll = 52
+set d_max_pitch = 65
+set d_max_advance = 0
 set thrust_linear = 20
 set feedforward_averaging = OFF
-set feedforward_smooth_factor = 30
 set feedforward_jitter_factor = 9
-set dyn_idle_min_rpm = 80
+set dyn_idle_min_rpm = 60
 set simplified_pids_mode = RP
-set simplified_master_multiplier = 120
+set simplified_master_multiplier = 125
 set simplified_d_gain = 140
 set simplified_d_max_gain = 0
-set simplified_feedforward_gain = 120
-set simplified_dterm_filter = OFF
-set simplified_dterm_filter_multiplier = 110
+set simplified_feedforward_gain = 60
+set simplified_pitch_d_gain = 110
+set simplified_pitch_pi_gain = 110
+set simplified_dterm_filter_multiplier = 145
 ```
 
 - motors (important) and battery:
@@ -461,30 +459,30 @@ set force_battery_cell_count = 2
 
 ```
 set osd_warn_bitmask = 270335
-set osd_rssi_dbm_alarm = -90
+set osd_rssi_dbm_alarm = -102
 set osd_cap_alarm = 350
 set osd_alt_alarm = 120
-set osd_vbat_pos = 6611
-set osd_rssi_pos = 6592
-set osd_link_quality_pos = 6629
-set osd_link_tx_power_pos = 6597
-set osd_rssi_dbm_pos = 6624
+set osd_vbat_pos = 4563
+set osd_rssi_pos = 4544
+set osd_link_quality_pos = 4581
+set osd_link_tx_power_pos = 4549
+set osd_rssi_dbm_pos = 4576
 set osd_rsnr_pos = 448
 set osd_tim_1_pos = 385
-set osd_tim_2_pos = 14839
-set osd_remaining_time_estimate_pos = 6584
-set osd_flymode_pos = 6643
+set osd_tim_2_pos = 12791
+set osd_remaining_time_estimate_pos = 4536
+set osd_flymode_pos = 4595
 set osd_anti_gravity_pos = 341
 set osd_g_force_pos = 375
-set osd_throttle_pos = 6579
+set osd_throttle_pos = 4531
 set osd_vtx_channel_pos = 4128
 set osd_crosshairs_pos = 237
 set osd_ah_sbar_pos = 238
 set osd_ah_pos = 110
-set osd_current_pos = 6635
-set osd_mah_drawn_pos = 6616
+set osd_current_pos = 4587
+set osd_mah_drawn_pos = 4568
 set osd_wh_drawn_pos = 341
-set osd_motor_diag_pos = 341
+set osd_motor_diag_pos = 428
 set osd_craft_name_pos = 394
 set osd_pilot_name_pos = 341
 set osd_gps_speed_pos = 227
@@ -496,28 +494,29 @@ set osd_home_dist_pos = 76
 set osd_flight_dist_pos = 407
 set osd_compass_bar_pos = 42
 set osd_altitude_pos = 247
-set osd_pid_roll_pos = 341
-set osd_pid_pitch_pos = 341
-set osd_pid_yaw_pos = 341
-set osd_debug_pos = 385
+set osd_pid_roll_pos = 320
+set osd_pid_pitch_pos = 288
+set osd_pid_yaw_pos = 352
+set osd_debug_pos = 320
+set osd_debug2_pos = 352
 set osd_power_pos = 341
 set osd_pidrate_profile_pos = 341
 set osd_warnings_pos = 14729
-set osd_avg_cell_voltage_pos = 14796
+set osd_avg_cell_voltage_pos = 12748
 set osd_pit_ang_pos = 341
 set osd_rol_ang_pos = 341
 set osd_battery_usage_pos = 393
-set osd_disarmed_pos = 14603
+set osd_disarmed_pos = 12555
 set osd_nheading_pos = 397
 set osd_up_down_reference_pos = 252
-set osd_ready_mode_pos = 14508
+set osd_ready_mode_pos = 12460
 set osd_nvario_pos = 278
 set osd_esc_tmp_pos = 54
 set osd_esc_rpm_pos = 288
 set osd_esc_rpm_freq_pos = 341
 set osd_rtc_date_time_pos = 0
 set osd_adjustment_range_pos = 341
-set osd_flip_arrow_pos = 14574
+set osd_flip_arrow_pos = 12526
 set osd_core_temp_pos = 4150
 set osd_log_status_pos = 341
 set osd_stick_overlay_left_pos = 258
