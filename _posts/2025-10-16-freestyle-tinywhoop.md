@@ -61,13 +61,25 @@ the ELRS receiver on the AIO died after a week or so. ~~Update: using another VT
 
 - gemfan D2-3 hover at 30% throttle, 3.48A
 - GR2 grade 5.8 titanium screws M2x7 for the props. steel 1.6g, tianium 1.2g, not really worth it. also must use loctite
-- dry weight 55.1g, AUP with 350mah battery 73.2g.
+- dry weight 55.1g, AUW (all-up weight) with 350mah battery 73.2g.
+
+## update 8
+
+- switched to 3D. put #1 and #4 props upside down, in Bluejay changed motors direction to `forward/reverse`, in BF turned on 3D and added `3d disable` mode
+```
+feature 3D
+set 3d_deadband_throttle = 10
+aux 4 29 1 1300 2100 0 0
+```
+results: very difficult to fly, very high power consumption. rolled back the changes
+
 
 ## components
 
-- 津航电子 (JHEMCU) G474ELRS - 1s-2s, 4 UARTS, 12A bluejay DSHOT300 ESCs, STM32G474: 170MHz core 512KB flash 128KB RAM, 8MB blackbox, BETAFPV 2.4GHz Lite RX (serial) IPEX gen1, no baro - ELRS died, ESCs do not support 96khz
-- 衢州市云端智能科技 (Happymodel) [5.8G Crown LDS antenna RHCP](https://www.happymodel.cn/index.php/2025/08/07/happymodel-5-8g-crown-lds-antenna-rhcp-lhcp-for-micro-fpv-whoops/), [3.5dBi, 5500-6000MHz](https://www.happymodel.cn/wp-content/uploads/2025/08/5.8G-Crown-antenna-RHCP-testing-data.xls.pdf), IPEX gen1
-- 卡德克斯技术 (Caddx) Ant lite (f/2.5 lens). Update: swapped to Caddx Ant (f/1.2 lens), not in the pictures
+- 津航电子 (JHEMCU) G474ELRS - 1s-2s, 4 UARTS, 12A bluejay DSHOT300 ESCs, STM32G474: 170MHz core 512KB flash 128KB RAM, 8MB blackbox, BETAFPV 2.4GHz Lite RX (serial) IPEX gen1, no baro - ELRS died, the ESCs do not support 96khz (motors won't start)
+- ~~衢州市云端智能科技 (Happymodel) [5.8G Crown LDS antenna RHCP](https://www.happymodel.cn/index.php/2025/08/07/happymodel-5-8g-crown-lds-antenna-rhcp-lhcp-for-micro-fpv-whoops/), [3.5dBi, 5500-6000MHz](https://www.happymodel.cn/wp-content/uploads/2025/08/5.8G-Crown-antenna-RHCP-testing-data.xls.pdf), IPEX gen1~~
+- 卡德克斯技术 ~~(Caddx) Ant lite (f/2.5 lens).~~ 
+- 卡德克斯技术 Caddx Ant nano (f/1.2 lens, 0.001lux, 14mm screw mount, not possible to rotate the image)
 - ~~Mobula7 frame (80mm clone) - 45mm props, 80mm base, 47mm ducts~~
 - ~~ZENCHANSI 棕熊 W007 400mw vtx~~
 - 化骨龙航模 (HGLRC) [Zeuz nano 350mw VTX](https://hglrc.freshdesk.com/support/solutions/articles/61000307667-zeus-350mw-vtx). [review](https://www.multirotorguide.com/reviews/review-hglrc-zeus-vtx-nano/).
@@ -75,7 +87,7 @@ the ELRS receiver on the AIO died after a week or so. ~~Update: using another VT
 - ~~乾丰 (gemfan) 45mm-3 props (1.5mm shaft)~~
 - 220uF 16v capacitor
 - ~~20AWG wires for the battery lead, A30 connector~~
-- added: cyclone EP1 ELRS 2.4ghz nano rx (IPEX gen1), whip antenna 
+- cyclone EP1 ELRS 2.4ghz nano rx (IPEX gen1), whip antenna 
 
 ## components (mobula8 85mm frame)
 
@@ -85,7 +97,8 @@ the ELRS receiver on the AIO died after a week or so. ~~Update: using another VT
 - ~~高能 (GNB) 100C 550mAh LiHV 2S XT30, 18mmX12mmX69mm (GNB5502S100AHV), 29g~~
 - 高能 (GNB) 70C 350mAh LiHV 2S XT30, 16mmX12mmX49mm (GNB3502S70AHV), 18g
 - 18AWG leads, XT30 male connector
-- 乾丰 (Gemfan) [2023S props](https://www.gemfanhobby.com/2023s-hurricane-pc-3-blade.html) (50.8mm, pitch 2inch, 3-blade, 1.5mm shaft only)
+- ~~乾丰 (Gemfan) [2023S props](https://www.gemfanhobby.com/2023s-hurricane-pc-3-blade.html) (50.8mm, pitch 2.3inch, 3-blade, 1.5mm shaft only)~~
+- 乾丰 (Gemfan) [D2-3 props](https://www.gemfanhobby.com/d2-ducted-pc-3-blade-15mm.html)  (50.8mm, 2 inch pitch, t-mount)
 
 ## pictures
 
