@@ -356,8 +356,10 @@ then inside the harness use command `/connect` and choose our provider `llama.cp
 
 ## performance
 
-P40 gives me 130 tokens per second on prompt processing and 25 token per second on token generation (depending on the current amount of tokens in the context, with this context window and model)
+P40 gives me 130 tokens per second on prompt processing and 25 tokens per second on token generation (depending on the current amount of tokens present in the context, with this context window and model). this is fair for a PoC, and this setup is scalable to any other more powerful hardware that is supported by llama.cpp.
 
 ## references
 
 - https://github.com/VooDisss/opencode-privacy-fix
+- https://github.com/anomalyco/opencode
+- https://github.com/ggml-org/llama.cpp
