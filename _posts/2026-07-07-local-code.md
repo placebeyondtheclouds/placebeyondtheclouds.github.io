@@ -7,7 +7,7 @@ category: tutorial
 published: true
 ---
 
-I believe that neutering LLMs with guardrails is detrimental to the model's performance, hurts the model usability in a broader sense and makes the model pretty much useless for certain specific tasks such as cybersecurity. The simplest thing to somewhat mitigate this is to run an uncensored model locally. Running locally also gives us more capabilities and more control over the LLM. Another aspect is that running inference locally keeps the data and metadata private. So I stringed together an instance of llama.cpp running an uncensored model and a coding harness. The following is my runbook.
+I believe that neutering LLMs with guardrails is detrimental to the model's performance, hurts the model usability in a broader sense and makes the model pretty much useless for certain specific tasks such as cybersecurity. The simplest thing to somewhat mitigate this is to run an uncensored model locally. Running locally also gives us more capabilities and more control over the LLM. Another aspect is that running inference locally keeps the data and metadata private. So I stringed together an instance of llama.cpp running an uncensored model and a coding harness. The harness and the inference engine run in docker containers, that allows for a certain level of isolation from the host system, and also flexibility of deployment. The image for inference container can be build on a dev machine and then transferred to and deployed on a machine without internet access. The inference engine can be used by other software as well, like Continue in VSCode or open-webui. The following is my runbook.
 
 ## my setup
 
@@ -356,7 +356,7 @@ then inside the harness use command `/connect` and choose our provider `llama.cp
 
 ## performance
 
-P40 gives me 130 tokens per second on prompt processing and 25 tokens per second on token generation (depending on the current amount of tokens present in the context, with this context window and model). this is fair for a PoC, and this setup is scalable to any other more powerful hardware that is supported by llama.cpp.
+P40 gives me 130 tokens per second on prompt processing and 25 tokens per second on token generation (depending on the current amount of tokens present in the context, with this context window and model). this is fair for a PoC, and this setup is scalable to bigger models and any other more powerful hardware that is supported by llama.cpp. The performance is suitable for simple tasks. scaling nodes with llama.cpp is not viable because it would be relatively slow `pipeline parallelism`. the better option for multi-node is `tensor parallelism` with vLLM/SGLang/TRT-LLM.
 
 ## references
 
