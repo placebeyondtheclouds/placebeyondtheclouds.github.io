@@ -15,7 +15,9 @@ Ubuntu VM for the dev environment, [Debian LXC with an NVIDIA P40 and docker]({%
 
 ## the model
 
-I used https://modelheretic.com/ to find an uncensored model that would fit my hardware, I decided to go with [Huihui-Qwen3.6-35B-A3B-Claude-4.7-Opus-abliterated-ggml-model-Q4_K](https://huggingface.co/huihui-ai/Huihui-Qwen3.6-35B-A3B-Claude-4.7-Opus-abliterated-MTP-GGUF). llama.cpp can download models from Huggingface, but I would like to separate these processes and copy the model weights manually.
+I used https://modelheretic.com/ to find an uncensored model that would fit my hardware, I decided to go with [Huihui-Qwen3.6-35B-A3B-Claude-4.7-Opus-abliterated-ggml-model-Q4_K](https://huggingface.co/huihui-ai/Huihui-Qwen3.6-35B-A3B-Claude-4.7-Opus-abliterated-MTP-GGUF). [there are uncensored models on Huggingface](https://huggingface.co/models?search=uncensored). there are models fine tuned for cyber, like the [whiterabbit](https://huggingface.co/DeepHat/DeepHat-V1-7B). there is [a model fine tuned on CVEs](https://huggingface.co/build-small-hackathon/OpenMythos), but it needs more VRAM.
+
+llama.cpp can download models from Huggingface, but I would like to separate these processes and copy the model weights manually.
 
 also need to [generate new token on Huggingface](https://huggingface.co/settings/tokens/new?tokenType=read) to bypass the download speed limits.
 
@@ -45,7 +47,8 @@ pip install "httpx[socks]"
 
 ## the inference engine
 
-`git clone https://github.com/ggml-org/llama.cpp.git` . sure there are simpler methods to start llama.cpp, but i need convenient config files, more control, more flexibility and isolation, so I went with a setup like this.
+`git clone https://github.com/ggml-org/llama.cpp.git` . sure there are simpler methods to run llama.cpp, but I must compile it from the source code myself, i need convenient config files, more control, more flexibility and isolation, so I went with a setup like this. the complexity is compensated by the ease and flexibility of deployment. this setup can be modified for being completely self sustained, with the bind mounts removed and the weights baked into the image. this kind of image can be built locally and then transferred to a remote machine without internet access and the container deployment controlled by the remote docker daemon with `DOCKER_HOST="ssh://$USER@inference" docker ...`
+
 
 `nano .env` (modify LLAMA_PORT, LLAMA_MODEL_PATH, CMAKE_CUDA_ARCHITECTURES and LLAMA_CTX_SIZE):
 
