@@ -7,7 +7,7 @@ category: tutorial
 published: true
 ---
 
-I believe that neutering LLMs with guardrails is detrimental to the model's performance, hurts the model usability in a broader sense and makes the model pretty much useless for certain specific tasks such as cybersecurity. The simplest thing to somewhat mitigate this is to run an uncensored model locally. Running locally also gives us more capabilities and more control over the LLM. Another aspect is that running inference locally keeps the data and metadata private. So I stringed together an instance of llama.cpp running an uncensored model and a coding harness. The harness and the inference engine run in docker containers, that allows for a certain level of isolation from the host system, and also flexibility of deployment. The image for inference container can be build on a dev machine and then transferred to and deployed on a machine without internet access. The inference engine can be used by other software as well, like Continue in VSCode or open-webui. The following is my runbook.
+I believe that neutering LLMs with guardrails is detrimental to the model's performance, hurts the model usability in a broader sense and makes the model pretty much useless for certain specific tasks such as cybersecurity. The simplest thing to somewhat mitigate this is to run an uncensored model locally. Running locally also gives us more capabilities and more control over the LLM. Another aspect is that running inference locally keeps the data and metadata private. So I stringed together an instance of llama.cpp running an uncensored model and a coding harness. The harness and the inference engine run in docker containers, that allows for a certain level of isolation from the host system, and also flexibility of deployment. The harness is running in a project directory and can not access anything outside of it. The image for inference container can be build on a dev machine and then transferred to and deployed on a machine without internet access. The inference engine can be used by other software as well, like Continue in VSCode or open-webui. The following is my runbook.
 
 ## my setup
 
@@ -15,7 +15,7 @@ Ubuntu VM for the dev environment, [Debian LXC with an NVIDIA P40 and docker]({%
 
 ## the model
 
-I used [modelheretic.com](https://modelheretic.com/) to find an uncensored model that would fit my hardware, I decided to go with [Huihui-Qwen3.6-35B-A3B-Claude-4.7-Opus-abliterated-ggml-model-Q4_K](https://huggingface.co/huihui-ai/Huihui-Qwen3.6-35B-A3B-Claude-4.7-Opus-abliterated-MTP-GGUF), which is already in GGUF format. there are also regular models fine tuned for cyber, like the [formerly known as the whiterabbit](https://huggingface.co/DeepHat/DeepHat-V1-7B), 
+I used [modelheretic.com](https://modelheretic.com/) to find an uncensored model that would fit my hardware, I decided to go with [Huihui-Qwen3.6-35B-A3B-Claude-4.7-Opus-abliterated-ggml-model-Q4_K](https://huggingface.co/huihui-ai/Huihui-Qwen3.6-35B-A3B-Claude-4.7-Opus-abliterated-MTP-GGUF) and [Qwen3.6-27B-Heretic-Uncensored-FINETUNE-NEO-CODE-Di-IMatrix-MAX-GGUF](https://huggingface.co/DavidAU/Qwen3.6-27B-Heretic-Uncensored-FINETUNE-NEO-CODE-Di-IMatrix-MAX-GGUF)  which are already in GGUF format. there are also regular models fine tuned for cyber, like the [formerly known as the whiterabbit](https://huggingface.co/DeepHat/DeepHat-V1-7B), 
 [CyberSecQwen-4B](https://huggingface.co/lablab-ai-amd-developer-hackathon/CyberSecQwen-4B), [Foundation-Sec-8B-Reasoning](https://huggingface.co/fdtn-ai/Foundation-Sec-8B-Reasoning), [VulnLLM-R-7B](https://huggingface.co/Virtue-AI-HUB/VulnLLM-R-7B) etc. there is [a model fine tuned on CVEs](https://huggingface.co/build-small-hackathon/OpenMythos), but it needs more VRAM. and [there are other uncensored models fine tuned for cyber](https://huggingface.co/models?search=abliterated+cyber). also, safetensors must be [converted to GGUF]({% post_url 2025-02-14-hf-to-ollama %}) with appropriate quantization.
 
 llama.cpp can download models from Huggingface, but I would like to separate these processes and copy the model weights manually.
@@ -42,6 +42,10 @@ pip install "httpx[socks]"
  HF_TOKEN=xxxxxxxxxxxxxxxxxxxxxxxxx hf download huihui-ai/Huihui-Qwen3.6-35B-A3B-Claude-4.7-Opus-abliterated-MTP-GGUF \
   Huihui-Qwen3.6-35B-A3B-Claude-4.7-Opus-abliterated-ggml-model-Q4_K.gguf \
   --include "*Q4_K*.gguf" --local-dir ./models --repo-type model --revision main
+
+ HF_TOKEN=xxxxxxxxxxxxxxxxxxxxxxxxx hf download DavidAU/Qwen3.6-27B-Heretic-Uncensored-FINETUNE-NEO-CODE-Di-IMatrix-MAX-GGUF \
+  Qwen3.6-27B-NEO-CODE-HERE-2T-OT-Q4_K_M.gguf \
+  --local-dir ./models --repo-type model --revision main
 ```
 
 
@@ -73,7 +77,7 @@ CMAKE_CUDA_ARCHITECTURES=61
 # Runtime settings. These defaults favor stability on a Tesla P40 with 24 GB
 # VRAM and 32 GB system RAM.
 LLAMA_N_GPU_LAYERS=auto
-LLAMA_CTX_SIZE=40960
+LLAMA_CTX_SIZE=102400
 LLAMA_FLASH_ATTN=off
 LLAMA_N_PARALLEL=1
 LLAMA_BATCH_SIZE=256
@@ -297,8 +301,6 @@ then `nano $HOME/.cache/opencode-home/.config/opencode/opencode.json` with the f
 ```json
 {
   "$schema": "https://opencode.ai/config.json",
-  "autoupdate": false,
-  "share": "disabled",
   "default_agent": "plan",
   "provider": {
     "llamacpp": {
@@ -310,12 +312,27 @@ then `nano $HOME/.cache/opencode-home/.config/opencode/opencode.json` with the f
       },
       "models": {
         "/models/Huihui-Qwen3.6-35B-A3B-Claude-4.7-Opus-abliterated-ggml-model-Q4_K.gguf": {
-          "name": "Qwen via llama.cpp",
+          "name": "Qwen3.6-35B via llama.cpp",
           "limit": {
-            "context": 32768,
-            "output": 8192
+            "context": 102400,
+            "output": 32768
           }
-        }
+        },
+        "/models/Qwen3.6-27B-NEO-CODE-HERE-2T-OT-Q4_K_M.gguf": {
+          "name": "Qwen3.6-27B via llama.cpp",
+          "limit": {
+            "context": 102400,
+            "output": 32768
+          },
+          "options": {
+            "temperature": 0.6,
+            "topP": 0.95,
+            "topK": 20,
+            "minP": 0.0,
+            "presencePenalty": 0.0,
+            "repetitionPenalty": 1.0
+          }
+        },
       }
     }
   },
@@ -335,6 +352,8 @@ ssh -N inference -L 172.17.0.1:8081:localhost:8081
 ```
 
 a container started with `docker run` without the network parameter will connect to the first bridge network, which is `docker0`
+
+**the keypart:**
 
 `cd` into a directory with a project we want to work on with an uncensored model, then run
 
