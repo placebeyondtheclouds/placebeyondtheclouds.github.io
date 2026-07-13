@@ -7,7 +7,7 @@ category: tutorial
 published: true
 ---
 
-I believe that neutering LLMs with guardrails is detrimental to the model's performance, hurts the model usability in a broader sense and makes the model pretty much useless for certain specific tasks such as cybersecurity. The simplest thing to somewhat mitigate this is to run an uncensored model locally. Running locally also gives us more capabilities and more control over the LLM. Another aspect is that running inference locally keeps the data and metadata private. So I stringed together an instance of llama.cpp running an uncensored model and a coding harness. The harness and the inference engine run in docker containers, that allows for a certain level of isolation from the host system, and also flexibility of deployment. The harness is running in a project directory and can not access anything outside of it. The image for inference container can be build on a dev machine and then transferred to and deployed on a machine without internet access. The inference engine can be used by other software as well, like Continue in VSCode or open-webui. The following is my runbook.
+I believe that neutering LLMs with guardrails is detrimental to the model's performance, hurts the model usability in a broader sense and makes the model pretty much useless for certain specific tasks such as cybersecurity. The simplest thing to somewhat mitigate this is to run an uncensored model locally. Running locally also gives us more capabilities and more control over the LLM. Another aspect is that running inference locally keeps the data and metadata private. So I stringed together an instance of llama.cpp running an uncensored model and a coding harness. The harness and the inference engine run in docker containers, that allows for a certain level of isolation from the host system, and also flexibility of deployment. The harness is running in a rootless docker container with project directory mounted as a bind volume and can not access the filesystem outside of it. The image for inference container can be build on a dev machine and then transferred to and deployed on a machine without internet access. The inference engine can be used by other software as well, like open-webui. The following is my runbook.
 
 ## my setup
 
@@ -15,7 +15,7 @@ Ubuntu VM for the dev environment, [Debian LXC with an NVIDIA P40 and docker]({%
 
 ## the model
 
-I used [modelheretic.com](https://modelheretic.com/) to find an uncensored model that would fit my hardware, I decided to go with [Huihui-Qwen3.6-35B-A3B-Claude-4.7-Opus-abliterated-ggml-model-Q4_K](https://huggingface.co/huihui-ai/Huihui-Qwen3.6-35B-A3B-Claude-4.7-Opus-abliterated-MTP-GGUF) and [Qwen3.6-27B-Heretic-Uncensored-FINETUNE-NEO-CODE-Di-IMatrix-MAX-GGUF](https://huggingface.co/DavidAU/Qwen3.6-27B-Heretic-Uncensored-FINETUNE-NEO-CODE-Di-IMatrix-MAX-GGUF)  which are already in GGUF format. there are also regular models fine tuned for cyber, like the [formerly known as the whiterabbit](https://huggingface.co/DeepHat/DeepHat-V1-7B), 
+I used [modelheretic.com](https://modelheretic.com/) to find an uncensored model that would fit my hardware, I decided to go with a MoE [Huihui-Qwen3.6-35B-A3B-Claude-4.7-Opus-abliterated-ggml-model-Q4_K](https://huggingface.co/huihui-ai/Huihui-Qwen3.6-35B-A3B-Claude-4.7-Opus-abliterated-MTP-GGUF) and dense [Qwen3.6-27B-Heretic-Uncensored-FINETUNE-NEO-CODE-Di-IMatrix-MAX-GGUF](https://huggingface.co/DavidAU/Qwen3.6-27B-Heretic-Uncensored-FINETUNE-NEO-CODE-Di-IMatrix-MAX-GGUF)  which are already in GGUF format. there are also regular models fine tuned for cyber, like the [formerly known as the whiterabbit](https://huggingface.co/DeepHat/DeepHat-V1-7B), 
 [CyberSecQwen-4B](https://huggingface.co/lablab-ai-amd-developer-hackathon/CyberSecQwen-4B), [Foundation-Sec-8B-Reasoning](https://huggingface.co/fdtn-ai/Foundation-Sec-8B-Reasoning), [VulnLLM-R-7B](https://huggingface.co/Virtue-AI-HUB/VulnLLM-R-7B) etc. there is [a model fine tuned on CVEs](https://huggingface.co/build-small-hackathon/OpenMythos), but it needs more VRAM. and [there are other uncensored models fine tuned for cyber](https://huggingface.co/models?search=abliterated+cyber). also, safetensors must be [converted to GGUF]({% post_url 2025-02-14-hf-to-ollama %}) with appropriate quantization.
 
 llama.cpp can download models from Huggingface, but I would like to separate these processes and copy the model weights manually.
@@ -77,7 +77,7 @@ CMAKE_CUDA_ARCHITECTURES=61
 # Qwen3.6 35B-A3B MoE tuning for a Tesla P40 with 24 GB VRAM. Lower
 # LLAMA_N_CPU_MOE is faster but consumes more VRAM.
 LLAMA_N_GPU_LAYERS=999
-LLAMA_N_CPU_MOE=6
+LLAMA_N_CPU_MOE=5
 LLAMA_CTX_SIZE=204800
 LLAMA_FLASH_ATTN=on
 LLAMA_CACHE_TYPE_K=q8_0
@@ -294,7 +294,6 @@ docker compose up -d --build
 I use the official docker image of https://github.com/anomalyco/opencode
 
 ```bash
-mkdir -p "$HOME/.local/share/opencode" "$HOME/.config/opencode"
 mkdir -p \
   "$HOME/.cache/opencode-home/.config/opencode" \
   "$HOME/.cache/opencode-home/.local/share/opencode" \
