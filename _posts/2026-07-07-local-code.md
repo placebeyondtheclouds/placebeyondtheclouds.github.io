@@ -350,10 +350,8 @@ then `nano $HOME/.cache/opencode-home/.config/opencode/opencode.json` with the f
 
 ## using the agent
 
-because I run the inference engine on another machine, i need to forward the remote port with llama.cpp service to my dev VM with
-```bash
-ssh -N inference -L 127.0.0.1:8081:localhost:8081
-```
+
+
 
 
 add rootless docker
@@ -363,7 +361,7 @@ dockerd-rootless-setuptool.sh install --force
 systemctl --user enable --now docker
 ```
 
-then solve the container network connectivity to the loopback. in:
+because I run the inference engine on another machine, i need to forward the remote port with llama.cpp service to my dev VM. for that wo work we need to solve the container network connectivity with the loopback. in:
 
 ```bash
 systemctl --user edit docker
@@ -383,6 +381,11 @@ docker pull ghcr.io/anomalyco/opencode:1.17.18
 ```
 
 **the keypart:**
+
+forward the port to the local dev machine:
+```bash
+ssh -N inference -L 127.0.0.1:8081:localhost:8081
+```
 
 `cd` into a directory with a project we want to work on with an uncensored model, then run
 
