@@ -352,41 +352,59 @@ then `nano $HOME/.cache/opencode-home/.config/opencode/opencode.json` with the f
 
 because I run the inference engine on another machine, i need to forward the remote port with llama.cpp service to my dev VM with
 ```bash
-ip -4 addr show docker0
-# my first docker bridge ip is 172.17.0.1 so:
-sudo ufw allow in on docker0 from 172.17.0.0/16 to 172.17.0.1 port 8081 proto tcp
-ssh -N inference -L 172.17.0.1:8081:localhost:8081
+ssh -N inference -L 127.0.0.1:8081:localhost:8081
 ```
 
-a container started with `docker run` without the network parameter will connect to the first bridge network, which is `docker0`
+
+add rootless docker
+
+```bash
+dockerd-rootless-setuptool.sh install --force
+systemctl --user enable --now docker
+```
+
+then solve the container network connectivity to the loopback. in:
+
+```bash
+systemctl --user edit docker
+```
+
+add:
+```
+[Service]
+Environment=DOCKERD_ROOTLESS_ROOTLESSKIT_DISABLE_HOST_LOOPBACK=false
+```
+
+then
+```bash
+systemctl --user daemon-reload
+systemctl --user restart docker
+docker pull ghcr.io/anomalyco/opencode:1.17.18
+```
 
 **the keypart:**
 
 `cd` into a directory with a project we want to work on with an uncensored model, then run
 
 ```bash
-docker run -it --rm \
-  --add-host=host.docker.internal:host-gateway \
-  --user "$(id -u):$(id -g)" \
-  -e HOME=/home/opencode \
-  -e XDG_CONFIG_HOME=/home/opencode/.config \
-  -e XDG_DATA_HOME=/home/opencode/.local/share \
-  -e XDG_STATE_HOME=/home/opencode/.local/state \
-  -e XDG_CACHE_HOME=/home/opencode/.cache \
+docker --context rootless run -it --rm \
+  --add-host=host.docker.internal:10.0.2.2 \
+  -e HOME=/root \
   -e OPENCODE_DISABLE_MODELS_FETCH=true \
   -e OPENCODE_DISABLE_SHARE=true \
   -e OPENCODE_DISABLE_AUTOUPDATE=true \
   -v "$PWD:/workspace" \
   -w /workspace \
-  -v "$HOME/.cache/opencode-home:/home/opencode" \
-  ghcr.io/anomalyco/opencode
+  -v "$HOME/.cache/opencode-home:/root" \
+  ghcr.io/anomalyco/opencode:1.17.18
 ```
+
 
 then inside the harness use command `/connect` and choose our provider `llama.cpp` and the model to be default for this session. then start with `/init`. when returning later, choose the latest `/session`. use tab to switch between plan and build modes
 
 ## performance
 
-P40 gives me 130 tokens per second on prompt processing and 25 tokens per second on token generation (depending on the current amount of tokens present in the context, with this context window and model). this is fair for a PoC, and this setup is scalable to bigger models and any other more powerful hardware that is supported by llama.cpp. The performance is suitable for simple tasks. scaling nodes with llama.cpp is not viable because it would be relatively slow `pipeline parallelism`. the better option for multi-node is `tensor parallelism` with vLLM/SGLang/TRT-LLM.
+P40 gives me 130 tokens per second on prompt processing and 25 tokens per second on token generation (while offloading 5 eperts to CPU memory, and depending on the current amount of tokens present in the context, with this context window and model). this is fair for a PoC, and this setup is scalable to bigger models and any other more powerful hardware that is supported by llama.cpp. The performance is suitable for simple tasks. scaling nodes with llama.cpp is not viable because it would be relatively slow `pipeline parallelism`. the better option for multi-node is `tensor parallelism` with vLLM/SGLang/TRT-LLM.
 
 ## references
 
