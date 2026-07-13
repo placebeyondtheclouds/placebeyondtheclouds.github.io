@@ -74,21 +74,25 @@ LLAMA_CPP_REF=master
 # Tesla P40: 61; RTX 4090: 89; RTX 3090/3080: 86; A100: 80.
 CMAKE_CUDA_ARCHITECTURES=61
 
-# Runtime settings. These defaults favor stability on a Tesla P40 with 24 GB
-# VRAM and 32 GB system RAM.
-LLAMA_N_GPU_LAYERS=auto
-LLAMA_CTX_SIZE=102400
-LLAMA_FLASH_ATTN=off
+# Qwen3.6 35B-A3B MoE tuning for a Tesla P40 with 24 GB VRAM. Lower
+# LLAMA_N_CPU_MOE is faster but consumes more VRAM.
+LLAMA_N_GPU_LAYERS=999
+LLAMA_N_CPU_MOE=6
+LLAMA_CTX_SIZE=204800
+LLAMA_FLASH_ATTN=on
+LLAMA_CACHE_TYPE_K=q8_0
+LLAMA_CACHE_TYPE_V=q8_0
 LLAMA_N_PARALLEL=1
 LLAMA_BATCH_SIZE=256
 LLAMA_UBATCH_SIZE=128
 LLAMA_MMAP=false
-#LLAMA_SPEC_TYPE=draft-mtp
-#LLAMA_SPEC_DRAFT_N_MAX=6
+#LLAMA_SPEC_TYPE=off
+#LLAMA_SPEC_DRAFT_N_MAX=4
 
 # Refresh persisted /llama-bin from the image on each start.
 LLAMA_SYNC_BINARIES=1
 LLAMA_SHM_SIZE=32g
+
 
 ```
 
@@ -122,11 +126,14 @@ services:
       LLAMA_ARG_HOST: "0.0.0.0"
       LLAMA_ARG_PORT: "8080"
 
-      # Conservative Tesla P40 / 24 GB VRAM defaults for large CUDA models.
-      # Increase these only after a short OpenAI-compatible completion is stable.
+      # Keep attention/router work on the GPU while selectively moving MoE
+      # experts to system RAM. Lower N_CPU_MOE is faster but uses more VRAM.
       LLAMA_ARG_N_GPU_LAYERS: "${LLAMA_N_GPU_LAYERS}"
+      LLAMA_ARG_N_CPU_MOE: "${LLAMA_N_CPU_MOE}"
       LLAMA_ARG_CTX_SIZE: "${LLAMA_CTX_SIZE}"
       LLAMA_ARG_FLASH_ATTN: "${LLAMA_FLASH_ATTN}"
+      LLAMA_ARG_CACHE_TYPE_K: "${LLAMA_CACHE_TYPE_K}"
+      LLAMA_ARG_CACHE_TYPE_V: "${LLAMA_CACHE_TYPE_V}"
       LLAMA_ARG_N_PARALLEL: "${LLAMA_N_PARALLEL}"
       LLAMA_ARG_BATCH: "${LLAMA_BATCH_SIZE}"
       LLAMA_ARG_UBATCH: "${LLAMA_UBATCH_SIZE}"
@@ -314,14 +321,14 @@ then `nano $HOME/.cache/opencode-home/.config/opencode/opencode.json` with the f
         "/models/Huihui-Qwen3.6-35B-A3B-Claude-4.7-Opus-abliterated-ggml-model-Q4_K.gguf": {
           "name": "Qwen3.6-35B via llama.cpp",
           "limit": {
-            "context": 102400,
+            "context": 204800,
             "output": 32768
           }
         },
         "/models/Qwen3.6-27B-NEO-CODE-HERE-2T-OT-Q4_K_M.gguf": {
           "name": "Qwen3.6-27B via llama.cpp",
           "limit": {
-            "context": 102400,
+            "context": 204800,
             "output": 32768
           },
           "options": {
