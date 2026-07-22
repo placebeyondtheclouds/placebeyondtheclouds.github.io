@@ -87,7 +87,7 @@ results: very difficult to fly, very high power consumption. rolled back the cha
 - ~~乾丰 (gemfan) 45mm-3 props (1.5mm shaft)~~
 - 220uF 16v capacitor
 - ~~20AWG wires for the battery lead, A30 connector~~
-- cyclone EP1 ELRS 2.4ghz nano rx (IPEX gen1), whip antenna 
+- cyclone EP1 ELRS 2.4ghz nano rx (LORA=SX1281, PA+LNA=AT2401C, SOC=ESP8285, IPEX gen1), whip antenna 
 
 ## components (mobula8 85mm frame)
 
