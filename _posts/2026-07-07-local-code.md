@@ -9,6 +9,10 @@ published: true
 
 I believe that neutering LLMs with guardrails is detrimental to the model's performance, hurts the model usability in a broader sense and makes the model pretty much useless for certain specific tasks such as cybersecurity. The simplest thing to somewhat mitigate this is to run an uncensored model locally. Running locally also gives us more capabilities and more control over the LLM. Another aspect is that running inference locally keeps the data and metadata private. So I stringed together an instance of llama.cpp running an uncensored model and a coding harness. The harness and the inference engine run in docker containers, that allows for a certain level of isolation from the host system, and also flexibility of deployment. The harness is running in a rootless docker container with project directory mounted as a bind volume and can not access the filesystem outside of it. The image for inference container can be build on a dev machine and then transferred to and deployed on a machine without internet access. The inference engine can be used by other software as well, like open-webui. The following is my runbook. **The models in this example are too small and are not suitable for doing complex tasks, there are very few usecases for a setup like this.**
 
+## todo
+
+- [x] optimized llama.cpp docker deployment
+
 ## my setup
 
 Ubuntu VM for the dev environment, [Debian LXC with an NVIDIA P40 and docker]({% post_url 2024-12-7-gpu-home-server %}) for running the inference. Also would need a Python virtual environment (through conda or venv) to download the model using hf cli.
@@ -55,98 +59,18 @@ pip install "httpx[socks]"
 `git clone https://github.com/ggml-org/llama.cpp.git` . sure there are simpler methods to run llama.cpp, but I must compile it from the source code myself, i need convenient config files, more control, more flexibility and isolation, so I went with a setup like this. the complexity is compensated by the ease and flexibility of deployment. this setup can be modified for being completely self sustained, with the bind mounts removed and the weights baked into the image. this kind of image can be built locally and then transferred to a remote machine like `docker save llama-cpp:local | ssh $USER@inference docker load` without internet access and the container deployment controlled by the remote docker daemon with `DOCKER_HOST="ssh://$USER@inference" docker ...`
 
 
-`nano .env` (modify LLAMA_PORT, LLAMA_MODEL_PATH, CMAKE_CUDA_ARCHITECTURES and LLAMA_CTX_SIZE):
 
-```
-# Host port to expose llama-server on.
-LLAMA_PORT=8081
-
-# Host directory containing GGUF model weights. This is mounted as /models:ro.
-LLAMA_MODELS_DIR=./models
-
-# Path inside the container, not the host path.
-LLAMA_MODEL_PATH=/models/Huihui-Qwen3.6-35B-A3B-Claude-4.7-Opus-abliterated-ggml-model-Q4_K.gguf
-
-# Build settings.
-CUDA_VERSION=12.6.3
-UBUNTU_VERSION=24.04
-LLAMA_CPP_REF=master
-# Tesla P40: 61; RTX 4090: 89; RTX 3090/3080: 86; A100: 80.
-CMAKE_CUDA_ARCHITECTURES=61
-
-# Qwen3.6 35B-A3B MoE tuning for a Tesla P40 with 24 GB VRAM. Lower
-# LLAMA_N_CPU_MOE is faster but consumes more VRAM.
-LLAMA_N_GPU_LAYERS=999
-LLAMA_N_CPU_MOE=5
-LLAMA_CTX_SIZE=204800
-LLAMA_FLASH_ATTN=on
-LLAMA_CACHE_TYPE_K=q8_0
-LLAMA_CACHE_TYPE_V=q8_0
-LLAMA_N_PARALLEL=1
-LLAMA_BATCH_SIZE=256
-LLAMA_UBATCH_SIZE=128
-LLAMA_MMAP=false
-#LLAMA_SPEC_TYPE=off
-#LLAMA_SPEC_DRAFT_N_MAX=4
-
-# Refresh persisted /llama-bin from the image on each start.
-LLAMA_SYNC_BINARIES=1
-LLAMA_SHM_SIZE=32g
-
-
-```
-
-`nano docker-compose.yml`, no need to edit anything here:
+`nano docker-compose.yml`:
 ```
 services:
   llama-cpp:
-    build:
-      context: .
-      dockerfile: Dockerfile
-      args:
-        CUDA_VERSION: "${CUDA_VERSION}"
-        UBUNTU_VERSION: "${UBUNTU_VERSION}"
-        LLAMA_CPP_REPO: "https://github.com/ggml-org/llama.cpp.git"
-        LLAMA_CPP_REF: "${LLAMA_CPP_REF}"
-        # NVIDIA Tesla P40 is Pascal / sm_61. Override for other GPUs.
-        CMAKE_CUDA_ARCHITECTURES: "${CMAKE_CUDA_ARCHITECTURES}"
-    image: local/llama.cpp:cuda${CUDA_VERSION}
+    build: .
     container_name: llama-cpp
     volumes:
-      - llama-bin:/llama-bin
-      - ${LLAMA_MODELS_DIR}:/models:ro
+      - ./models:/models:ro
       - /etc/localtime:/etc/localtime:ro
     ports:
-      - "127.0.0.1:${LLAMA_PORT}:8080"
-    environment:
-      LLAMA_SYNC_BINARIES: "${LLAMA_SYNC_BINARIES}"
-
-      # Model and server binding. LLAMA_MODEL_PATH is the path inside the container.
-      LLAMA_ARG_MODEL: "${LLAMA_MODEL_PATH}"
-      LLAMA_ARG_HOST: "0.0.0.0"
-      LLAMA_ARG_PORT: "8080"
-
-      # Keep attention/router work on the GPU while selectively moving MoE
-      # experts to system RAM. Lower N_CPU_MOE is faster but uses more VRAM.
-      LLAMA_ARG_N_GPU_LAYERS: "${LLAMA_N_GPU_LAYERS}"
-      LLAMA_ARG_N_CPU_MOE: "${LLAMA_N_CPU_MOE}"
-      LLAMA_ARG_CTX_SIZE: "${LLAMA_CTX_SIZE}"
-      LLAMA_ARG_FLASH_ATTN: "${LLAMA_FLASH_ATTN}"
-      LLAMA_ARG_CACHE_TYPE_K: "${LLAMA_CACHE_TYPE_K}"
-      LLAMA_ARG_CACHE_TYPE_V: "${LLAMA_CACHE_TYPE_V}"
-      LLAMA_ARG_N_PARALLEL: "${LLAMA_N_PARALLEL}"
-      LLAMA_ARG_BATCH: "${LLAMA_BATCH_SIZE}"
-      LLAMA_ARG_UBATCH: "${LLAMA_UBATCH_SIZE}"
-      LLAMA_ARG_MMAP: "${LLAMA_MMAP}"
-
-      # Speculative decoding can trigger CUDA backend crashes on some
-      # model/build/driver combinations. Set LLAMA_SPEC_TYPE=draft-mtp to opt in.
-      #LLAMA_ARG_SPEC_TYPE: "${LLAMA_SPEC_TYPE}"
-      #LLAMA_ARG_SPEC_DRAFT_N_MAX: "${LLAMA_SPEC_DRAFT_N_MAX}"
-
-      # Optional diagnostics.
-      NVIDIA_VISIBLE_DEVICES: "${NVIDIA_VISIBLE_DEVICES:-all}"
-      NVIDIA_DRIVER_CAPABILITIES: "${NVIDIA_DRIVER_CAPABILITIES:-compute,utility}"
+      - 127.0.0.1:8081:8080
     deploy:
       resources:
         reservations:
@@ -155,133 +79,57 @@ services:
               count: all
               capabilities: [gpu]
     ipc: host
-    shm_size: "${LLAMA_SHM_SIZE}"
-    extra_hosts:
-      - host.docker.internal:host-gateway
     healthcheck:
-      test:
-        [
-          "CMD-SHELL",
-          "curl -fsS http://127.0.0.1:8080/health >/dev/null || exit 1",
-        ]
+      test: [CMD, curl, -f, http://localhost:8080/health]
       interval: 30s
       timeout: 10s
       retries: 20
       start_period: 60s
     restart: unless-stopped
-
-
-volumes:
-  llama-bin:
-
 ```
 
-`nano Dockerfile`, no need to edit anything as well:
+`nano Dockerfile`, no need to edit anything except for the architecture:
 ```Dockerfile
-FROM nvidia/cuda:12.6.3-devel-ubuntu24.04 AS builder
-
-ARG DEBIAN_FRONTEND=noninteractive
+FROM nvidia/cuda:12.6.3-devel-ubuntu24.04 AS build
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
-    pciutils \
-    build-essential \
-    cmake \
-    curl \
-    libcurl4-openssl-dev \
-    ca-certificates \
-    git \
+      build-essential cmake libcurl4-openssl-dev \
  && rm -rf /var/lib/apt/lists/*
 
-WORKDIR /src
-
-COPY llama.cpp /src/llama.cpp
-
-RUN cmake /src/llama.cpp -B /src/llama.cpp/build \
-      -DBUILD_SHARED_LIBS=OFF \
-      -DGGML_CUDA=ON \
- && cmake --build /src/llama.cpp/build \
-      --config Release \
-      -j"$(nproc)" \
-      --clean-first \
-      --target llama-cli llama-mtmd-cli llama-server llama-gguf-split \
- && mkdir -p /opt/llama.cpp/bin \
- && cp /src/llama.cpp/build/bin/llama-* /opt/llama.cpp/bin/
-
+COPY llama.cpp /src
+# DCMAKE_CUDA_ARCHITECTURES Tesla P40: 61; RTX 4090: 89; RTX 3090/3080: 86; A100: 80.
+RUN cmake -S /src -B /src/build -DGGML_CUDA=ON -DBUILD_SHARED_LIBS=OFF -DCMAKE_CUDA_ARCHITECTURES=61 \
+ && cmake --build /src/build -j"$(nproc)" --target llama-server
 
 FROM nvidia/cuda:12.6.3-runtime-ubuntu24.04
 
-ARG DEBIAN_FRONTEND=noninteractive
-
-RUN apt-get update && apt-get install -y --no-install-recommends \
-    pciutils \
-    curl \
-    libcurl4 \
-    libgomp1 \
-    ca-certificates \
-    bash \
+RUN apt-get update && apt-get install -y --no-install-recommends curl libcurl4 libgomp1 \
  && rm -rf /var/lib/apt/lists/*
 
-COPY --from=builder /opt/llama.cpp/bin /opt/llama.cpp/bin
-COPY entrypoint.sh /entrypoint.sh
-
-RUN chmod +x /entrypoint.sh \
- && mkdir -p /llama.cpp /models
-
-ENV PATH="/llama.cpp:${PATH}" \
-    LLAMA_BIN_DIR="/llama.cpp" \
-    LLAMA_SERVER_BIN="/llama.cpp/llama-server" \
-    LLAMA_HOST="0.0.0.0" \
-    LLAMA_PORT="8080"
-
-VOLUME ["/llama.cpp"]
+COPY --from=build /src/build/bin/llama-server /usr/local/bin/llama-server
+COPY --chmod=755 entrypoint.sh /entrypoint.sh
 
 EXPOSE 8080
-
 ENTRYPOINT ["/entrypoint.sh"]
-
 ```
 
-`nano entrypoint.sh`, can be optimized, for sure:
+`nano entrypoint.sh`:
 ```bash
-#!/usr/bin/env bash
-set -euo pipefail
-
-mkdir -p /llama-bin
-
-# The named volume mounted at /llama-bin persists the built llama.cpp binaries.
-# Default behavior: refresh it from the image on every container start so a
-# rebuilt image updates the persisted volume too. Set LLAMA_SYNC_BINARIES=0 to
-# copy only when the volume is empty.
-if [[ "${LLAMA_SYNC_BINARIES:-1}" == "1" ]] || [[ ! -x /llama-bin/llama-server ]]; then
-  cp -a /opt/llama.cpp/bin/. /llama-bin/
-  cp -a /opt/llama.cpp/LLAMA_CPP_COMMIT /llama-bin/ 2>/dev/null || true
-  chmod +x /llama-bin/llama-* 2>/dev/null || true
-fi
-
-export PATH="/llama-bin:${PATH}"
-export LD_LIBRARY_PATH="/llama-bin:${LD_LIBRARY_PATH:-}"
-
-if [[ "${LLAMA_ARG_N_GPU_LAYERS:-}" == "auto" ]] || [[ "${LLAMA_ARG_N_GPU_LAYERS:-}" == "" ]]; then
-  unset LLAMA_ARG_N_GPU_LAYERS
-fi
-
-case "${LLAMA_ARG_SPEC_TYPE:-}" in
-  ""|0|off|false|none|disabled)
-    unset LLAMA_ARG_SPEC_TYPE
-    unset LLAMA_ARG_SPEC_DRAFT_N_MAX
-    ;;
-esac
-
-if [[ "$#" -eq 0 ]]; then
-  set -- /llama-bin/llama-server
-fi
-
-# Allow docker compose command: ["--model", "/models/model.gguf", ...]
-if [[ "${1#-}" != "$1" ]]; then
-  set -- /llama-bin/llama-server "$@"
-fi
-
-exec "$@"
+#!/bin/sh
+exec llama-server \
+  --models-dir /models \
+  --host 0.0.0.0 \
+  --port 8080 \
+  --n-gpu-layers 999 \
+  --n-cpu-moe 6 \
+  --ctx-size 204800 \
+  --flash-attn on \
+  --cache-type-k q8_0 \
+  --cache-type-v q8_0 \
+  --parallel 1 \
+  --batch-size 256 \
+  --ubatch-size 128 \
+  --no-mmap
 ```
 
 start the stack
