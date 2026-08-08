@@ -11,7 +11,7 @@ I believe that neutering LLMs with guardrails is detrimental to the model's perf
 
 ## todo
 
-- [x] optimized llama.cpp docker deployment
+- [x] optimize llama.cpp's docker deployment
 
 ## my setup
 
@@ -19,7 +19,8 @@ Ubuntu VM for the dev environment, [Debian LXC with an NVIDIA P40 and docker]({%
 
 ## the model
 
-I used [modelheretic.com](https://modelheretic.com/) to find an uncensored model that would fit my hardware, I decided to go with a MoE [Huihui-Qwen3.6-35B-A3B-Claude-4.7-Opus-abliterated-ggml-model-Q4_K](https://huggingface.co/huihui-ai/Huihui-Qwen3.6-35B-A3B-Claude-4.7-Opus-abliterated-MTP-GGUF) and dense [Qwen3.6-27B-Heretic-Uncensored-FINETUNE-NEO-CODE-Di-IMatrix-MAX-GGUF](https://huggingface.co/DavidAU/Qwen3.6-27B-Heretic-Uncensored-FINETUNE-NEO-CODE-Di-IMatrix-MAX-GGUF)  which are already in GGUF format. there are also regular models fine tuned for cyber, like the [formerly known as the whiterabbit](https://huggingface.co/DeepHat/DeepHat-V1-7B), 
+I used [modelheretic.com](https://modelheretic.com/) to find an uncensored model that would fit my hardware, I decided to go with a MoE [Huihui-Qwen3.6-35B-A3B-Claude-4.7-Opus-abliterated-ggml-model-Q4_K](https://huggingface.co/huihui-ai/Huihui-Qwen3.6-35B-A3B-Claude-4.7-Opus-abliterated-MTP-GGUF) and dense [Qwen3.6-27B-Heretic-Uncensored-FINETUNE-NEO-CODE-Di-IMatrix-MAX-GGUF](https://huggingface.co/DavidAU/Qwen3.6-27B-Heretic-Uncensored-FINETUNE-NEO-CODE-Di-IMatrix-MAX-GGUF) and 
+[Qwen3.6-27B-Fable-Fusion-711-Uncensored-Heretic-NM-DAU-NEO-MAX-MTP-GGUF](https://huggingface.co/DavidAU/Qwen3.6-27B-Fable-Fusion-711-Uncensored-Heretic-NM-DAU-NEO-MAX-MTP-GGUF) which are already in GGUF format. there are also regular models fine tuned for cyber, like the [formerly known as the whiterabbit](https://huggingface.co/DeepHat/DeepHat-V1-7B), 
 [CyberSecQwen-4B](https://huggingface.co/lablab-ai-amd-developer-hackathon/CyberSecQwen-4B), [Foundation-Sec-8B-Reasoning](https://huggingface.co/fdtn-ai/Foundation-Sec-8B-Reasoning), [VulnLLM-R-7B](https://huggingface.co/Virtue-AI-HUB/VulnLLM-R-7B) etc. there is [a model fine tuned on CVEs](https://huggingface.co/build-small-hackathon/OpenMythos), but it needs more VRAM. and [there are other uncensored models fine tuned for cyber](https://huggingface.co/models?search=abliterated+cyber). also, safetensors must be [converted to GGUF]({% post_url 2025-02-14-hf-to-ollama %}) with appropriate quantization.
 
 llama.cpp can download models from Huggingface, but I would like to separate these processes and copy the model weights manually.
@@ -50,6 +51,10 @@ pip install "httpx[socks]"
  HF_TOKEN=xxxxxxxxxxxxxxxxxxxxxxxxx hf download DavidAU/Qwen3.6-27B-Heretic-Uncensored-FINETUNE-NEO-CODE-Di-IMatrix-MAX-GGUF \
   Qwen3.6-27B-NEO-CODE-HERE-2T-OT-Q4_K_M.gguf \
   --local-dir ./models --repo-type model --revision main
+
+
+ HF_TOKEN=xxxxxxxxxxxxxxxxxxxxxxxxx hf download hf://DavidAU/Qwen3.6-27B-Fable-Fusion-711-Uncensored-Heretic-NM-DAU-NEO-MAX-MTP-GGUF/Qwen3.6-27B-Fable-Fus-711-UnHeretic-NM-DAU-NEO-MAX-NEO-MTP-Q4_K_M.gguf \
+  --local-dir ./models
 ```
 
 
@@ -113,7 +118,7 @@ EXPOSE 8080
 ENTRYPOINT ["/entrypoint.sh"]
 ```
 
-`nano entrypoint.sh`:
+`nano entrypoint.sh`, the last two flags are for MTP mode with MTP models. multi-user inference i.e. when `-np` > 1 is incompatible with MTP:
 ```bash
 #!/bin/sh
 exec llama-server \
@@ -129,12 +134,29 @@ exec llama-server \
   --parallel 1 \
   --batch-size 256 \
   --ubatch-size 128 \
-  --no-mmap
+  --no-mmap \
+  --spec-type draft-mtp \
+  --spec-draft-n-max 3
+
 ```
 
 start the stack
 ```bash
 docker compose up -d --build
+```
+
+test with:
+
+```bash
+curl http://127.0.0.1:8081/v1/chat/completions \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer sk-no-key-required" \
+  -d '{
+    "model": "Qwen3.6-27B-Fable-Fus-711-UnHeretic-NM-DAU-NEO-MAX-NEO-MTP-Q4_K_M",
+    "messages": [
+      {"role": "user", "content": "What is 2+2?"}
+    ]
+  }' | python3 -m json.tool
 ```
 
 ## the harness on the dev machine
@@ -165,14 +187,14 @@ then `nano $HOME/.cache/opencode-home/.config/opencode/opencode.json` with the f
         "apiKey": "sk-no-key-required"
       },
       "models": {
-        "/models/Huihui-Qwen3.6-35B-A3B-Claude-4.7-Opus-abliterated-ggml-model-Q4_K.gguf": {
+        "Huihui-Qwen3.6-35B-A3B-Claude-4.7-Opus-abliterated-ggml-model-Q4_K": {
           "name": "Qwen3.6-35B via llama.cpp",
           "limit": {
             "context": 204800,
             "output": 32768
           }
         },
-        "/models/Qwen3.6-27B-NEO-CODE-HERE-2T-OT-Q4_K_M.gguf": {
+        "Qwen3.6-27B-NEO-CODE-HERE-2T-OT-Q4_K_M": {
           "name": "Qwen3.6-27B via llama.cpp",
           "limit": {
             "context": 204800,
@@ -187,11 +209,26 @@ then `nano $HOME/.cache/opencode-home/.config/opencode/opencode.json` with the f
             "repetitionPenalty": 1.0
           }
         },
+        "Qwen3.6-27B-Fable-Fus-711-UnHeretic-NM-DAU-NEO-MAX-NEO-MTP-Q4_K_M": {
+          "name": "Qwen3.6-27B-MTP via llama.cpp",
+          "limit": {
+            "context": 102400,
+            "output": 32768
+          },
+          "options": {
+            "temperature": 0.6,
+            "topP": 0.95,
+            "topK": 20,
+            "minP": 0.0,
+            "presencePenalty": 0.0,
+            "repetitionPenalty": 1.0
+          }
+        },
       }
     }
   },
-  "model": "/models/Huihui-Qwen3.6-35B-A3B-Claude-4.7-Opus-abliterated-ggml-model-Q4_K.gguf",
-  "small_model": "/models/Huihui-Qwen3.6-35B-A3B-Claude-4.7-Opus-abliterated-ggml-model-Q4_K.gguf"
+  "model": "Qwen3.6-27B-Fable-Fus-711-UnHeretic-NM-DAU-NEO-MAX-NEO-MTP-Q4_K_M",
+  "small_model": "Qwen3.6-27B-Fable-Fus-711-UnHeretic-NM-DAU-NEO-MAX-NEO-MTP-Q4_K_M"
 }
 ```
 
@@ -234,6 +271,11 @@ forward the port to the local dev machine:
 ssh -N inference -L 127.0.0.1:8081:localhost:8081
 ```
 
+find the newest image
+```bash
+skopeo list-tags docker://ghcr.io/anomalyco/opencode
+```
+
 `cd` into a directory with a project we want to work on with an uncensored model, then run
 
 ```bash
@@ -246,9 +288,10 @@ docker --context rootless run -it --rm \
   -v "$PWD:/workspace" \
   -w /workspace \
   -v "$HOME/.cache/opencode-home:/root" \
-  ghcr.io/anomalyco/opencode:1.17.18
+  ghcr.io/anomalyco/opencode:1.18.14
 ```
 
+for a particular project remove `-rm` and add `--name projectname` for persistence, and then `docker --context rootless start -ai projectname`.
 
 then inside the harness use command `/connect` and choose our provider `llama.cpp` and the model to be default for this session. then start with `/init`. when returning later, choose the latest `/session`. use tab to switch between plan and build modes
 
