@@ -26,7 +26,7 @@ curl -fL \
 ```
 
 replace 
-```jinja
+```
 {%- if message.role == "system" or message.role == "developer" %}
     {%- if not loop.first %}
         {{- raise_exception('System message must be at the beginning.') }}
@@ -35,7 +35,7 @@ replace
 
 with
 
-```jinja
+```
 {%- if message.role == "system" or message.role == "developer" %}
     {# The initial system/developer message was rendered above. #}
 ```
