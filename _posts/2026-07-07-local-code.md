@@ -2,7 +2,7 @@
 layout: post
 title:  "A code agent with a local uncensored LLM"
 lang: en
-tags: [llm, agent, local]
+tags: [llm, agent, local-ai]
 category: tutorial
 published: true
 ---

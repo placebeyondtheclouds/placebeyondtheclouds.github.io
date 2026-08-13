@@ -2,7 +2,7 @@
 layout: post
 title:  "How to convert Huggingface safetensors to Ollama model"
 lang: en
-tags: [en, ollama, huggingface, gguf, quantization, safetensors]
+tags: [en, ollama, huggingface, gguf, quantization, safetensors, local-ai]
 category: tutorial
 published: true
 ---
