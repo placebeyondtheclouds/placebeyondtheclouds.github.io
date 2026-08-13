@@ -40,7 +40,7 @@ with
     {# The initial system/developer message was rendered above. #}
 ```
 
-and put the file to the `models/` directory
+and put the file to the `models` directory
 
 ## the inference engine
 
