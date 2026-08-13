@@ -26,11 +26,15 @@ curl -fL \
 ```
 
 replace 
+
 ```
 {%- if message.role == "system" or message.role == "developer" %}
     {%- if not loop.first %}
         {{- raise_exception('System message must be at the beginning.') }}
     {%- endif %}
+
+#other code here
+{%- endif %}
 ```
 
 with
@@ -38,6 +42,9 @@ with
 ```
 {%- if message.role == "system" or message.role == "developer" %}
     {# The initial system/developer message was rendered above. #}
+    
+#other code here
+{%- endif %}
 ```
 
 and put the file to the `models` directory
