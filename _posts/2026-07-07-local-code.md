@@ -57,7 +57,7 @@ pip install "httpx[socks]"
   --local-dir ./models
 ```
 
-also need to downoad and modify the Jinja template for the model:
+also need to download and modify the Jinja template for the model:
 
 ```bash
 curl -fL \
@@ -256,7 +256,7 @@ dockerd-rootless-setuptool.sh install --force
 systemctl --user enable --now docker
 ```
 
-because I run the inference engine on another machine, i need to forward the remote port with llama.cpp service to my dev VM. for that wo work we need to solve the container network connectivity with the loopback. in:
+because I run the inference engine on another machine, i need to forward the remote port with llama.cpp service to my dev VM. for that to work we need to solve the container network connectivity with the loopback. in:
 
 ```bash
 systemctl --user edit docker
@@ -453,6 +453,7 @@ docker --context rootless run --rm \
   --version
 ```
 
+enable the host loopback the same way as above if not enabled yet.
 
 forward the port to the local dev machine as before:
 ```bash
@@ -479,7 +480,7 @@ for a particular project remove `-rm` and add `--name projectname` for persisten
 
 ## performance
 
-P40 gives me 130 tokens per second on prompt processing and 25 tokens per second on token generation (while offloading 5 eperts to CPU memory, and depending on the current amount of tokens present in the context, with this context window and model). this is fair for a PoC, and this setup is scalable to bigger models and any other more powerful hardware that is supported by llama.cpp. The performance is suitable for simple tasks. scaling nodes with llama.cpp is not viable because it would be relatively slow `pipeline parallelism`. the better option for multi-node is `tensor parallelism` with vLLM/SGLang/TRT-LLM.
+the speed is relatively slow, but this is fair for a PoC, and this setup is scalable with bigger models and any other more powerful hardware that is supported by llama.cpp. The current performance is suitable for simple tasks. scaling nodes with llama.cpp is not viable because it would be relatively slow `pipeline parallelism`. the better option for multi-node is `tensor parallelism` with vLLM/SGLang/TRT-LLM.
 
 ## references
 
