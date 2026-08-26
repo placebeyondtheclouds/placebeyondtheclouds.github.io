@@ -31,6 +31,7 @@ dense:
 - [Qwen3.6-27B-Heretic-Uncensored-FINETUNE-NEO-CODE-Di-IMatrix-MAX-GGUF](https://huggingface.co/DavidAU/Qwen3.6-27B-Heretic-Uncensored-FINETUNE-NEO-CODE-Di-IMatrix-MAX-GGUF) 
 - [Qwen3.6-27B-Fable-Fusion-711-Uncensored-Heretic-NM-DAU-NEO-MAX-MTP-GGUF](https://huggingface.co/DavidAU/Qwen3.6-27B-Fable-Fusion-711-Uncensored-Heretic-NM-DAU-NEO-MAX-MTP-GGUF)
 - [Qwen3.8-27B-Heretic-Abliterated-Uncensored-GGUF](https://huggingface.co/0bserverx/Qwen3.8-27B-Heretic-Abliterated-Uncensored-GGUF)
+- [Qwen3.8-27B-Uncensored-Cyber-GGUF](https://huggingface.co/philbert440/Qwen3.8-27B-Uncensored-Cyber-GGUF)
 
 there are also models finetuned for cyber, like the [formerly known as the whiterabbit](https://huggingface.co/DeepHat/DeepHat-V1-7B), 
 [CyberSecQwen-4B](https://huggingface.co/lablab-ai-amd-developer-hackathon/CyberSecQwen-4B), [Foundation-Sec-8B-Reasoning](https://huggingface.co/fdtn-ai/Foundation-Sec-8B-Reasoning), [VulnLLM-R-7B](https://huggingface.co/Virtue-AI-HUB/VulnLLM-R-7B) etc. there is [a model fine tuned on CVEs](https://huggingface.co/build-small-hackathon/OpenMythos), but it needs more VRAM. and [there are other uncensored models fine tuned for cyber](https://huggingface.co/models?search=abliterated+cyber). these models are in safetensors format and must be [converted to GGUF]({% post_url 2025-02-14-hf-to-ollama %}) with appropriate quantization.
@@ -71,203 +72,20 @@ pip install "httpx[socks]"
   --local-dir ./models
 ```
 
-also need to download and modify the Jinja template for codex to be able to work with the model. i used [unsloth's Qwen3.8-27B template](https://huggingface.co/unsloth/Qwen3.8-27B/resolve/main/chat_template.jinja). there are two problems with the original template: exception when codex tries to call a tool and uncontrollable reasoning during context compaction that goes around the set the context window limits and leads to exceeding them.
+~~also need to download and modify the Jinja template for codex to be able to work with the model. i used [unsloth's Qwen3.8-27B template](https://huggingface.co/unsloth/Qwen3.8-27B/resolve/main/chat_template.jinja). there are two problems with the original template: exception when codex tries to call a tool and uncontrollable reasoning during context compaction that goes around the set the context window limits and leads to exceeding them.~~
 
-`nano qwen3.8-codex.jinja`:
-{% raw %}
+there is a better template at https://huggingface.co/peculiar-ragdoll/Qwen-Sharp-Chat-Templates . the system prompt in `chat_template.jinja` must be deleted to avoid refusals with uncensored models.
+
+```bash
+ HF_TOKEN=xxxxxxxxxxxxxxxxxxxxxxxxx hf download hf://peculiar-ragdoll/Qwen-Sharp-Chat-Templates/chat_template.jinja --local-dir ./models
 ```
-{%- set image_count = namespace(value=0) %}
-{%- set video_count = namespace(value=0) %}
-{%- macro render_content(content, do_vision_count, is_system_content=false) %}
-    {%- if content is string %}
-        {{- content }}
-    {%- elif content is iterable and content is not mapping %}
-        {%- for item in content %}
-            {%- if 'image' in item or 'image_url' in item or item.type == 'image' %}
-                {%- if is_system_content %}
-                    {{- raise_exception('System message cannot contain images.') }}
-                {%- endif %}
-                {%- if do_vision_count %}
-                    {%- set image_count.value = image_count.value + 1 %}
-                {%- endif %}
-                {%- if add_vision_id %}
-                    {{- 'Picture ' ~ image_count.value ~ ': ' }}
-                {%- endif %}
-                {{- '<|vision_start|><|image_pad|><|vision_end|>' }}
-            {%- elif 'video' in item or item.type == 'video' %}
-                {%- if is_system_content %}
-                    {{- raise_exception('System message cannot contain videos.') }}
-                {%- endif %}
-                {%- if do_vision_count %}
-                    {%- set video_count.value = video_count.value + 1 %}
-                {%- endif %}
-                {%- if add_vision_id %}
-                    {{- 'Video ' ~ video_count.value ~ ': ' }}
-                {%- endif %}
-                {{- '<|vision_start|><|video_pad|><|vision_end|>' }}
-            {%- elif 'text' in item %}
-                {{- item.text }}
-            {%- else %}
-                {{- raise_exception('Unexpected item type in content.') }}
-            {%- endif %}
-        {%- endfor %}
-    {%- elif content is none or content is undefined %}
-        {{- '' }}
-    {%- else %}
-        {{- raise_exception('Unexpected content type.') }}
-    {%- endif %}
-{%- endmacro %}
-{%- if not messages %}
-    {{- raise_exception('No messages provided.') }}
-{%- endif %}
-{%- set sysns = namespace(text='') %}
-{%- for message in messages %}
-    {%- if message.role == 'system' or message.role == 'developer' %}
-        {%- set sys_content = render_content(message.content, false, true)|trim %}
-        {%- if sys_content %}
-            {%- set sysns.text = sysns.text + ('\n' if sysns.text else '') + sys_content %}
-        {%- endif %}
-    {%- endif %}
-{%- endfor %}
-{%- set merged_system = sysns.text %}
-{%- set reasoning_instructions = '' %}
-{%- if enable_thinking is undefined or enable_thinking is true %}
-    {%- set resolved_reasoning_effort = reasoning_effort|default('xhigh') %}
-    {%- if resolved_reasoning_effort == 'high' %}
-        {%- set resolved_reasoning_effort = 'xhigh' %}
-    {%- endif %}
-    {%- if resolved_reasoning_effort not in ('xhigh', 'medium', 'low') %}
-        {{- raise_exception('Unexpected reasoning effort ' ~ reasoning_effort ~ '. Supported types are xhigh (default), medium, and low.') }}
-    {%- endif %}
-    {%- if resolved_reasoning_effort == 'xhigh' %}
-        {%- set reasoning_instructions = 'Reasoning effort is set to xhigh. Please think carefully through the task, validate key assumptions, consider plausible alternatives, and prioritize correctness, consistency, and clarity in the final answer.' %}
-    {%- elif resolved_reasoning_effort == 'low' %}
-        {%- set reasoning_instructions = 'Reasoning effort is set to low. Keep your thinking brief and focused, moving directly to the conclusion without unnecessary elaboration.' %}
-    {%- endif %}
-{%- endif %}
-{%- if tools and tools is iterable and tools is not mapping %}
-    {{- '<|im_start|>system\n' }}
-    {%- if reasoning_instructions %}
-        {{- reasoning_instructions + '\n\n' }}
-    {%- endif %}
-    {{- "# Tools\n\nYou have access to the following functions:\n\n<tools>" }}
-    {%- for tool in tools %}
-        {{- "\n" }}
-        {{- tool | tojson }}
-    {%- endfor %}
-    {{- "\n</tools>" }}
-    {{- '\n\nIf you choose to call a function ONLY reply in the following format with NO suffix:\n\n<tool_call>\n<function=example_function_name>\n<parameter=example_parameter_1>\nvalue_1\n</parameter>\n<parameter=example_parameter_2>\nThis is the value for the second parameter\nthat can span\nmultiple lines\n</parameter>\n</function>\n</tool_call>\n\n<IMPORTANT>\nReminder:\n- Function calls MUST follow the specified format: an inner <function=...></function> block must be nested within <tool_call></tool_call> XML tags\n- Required parameters MUST be specified\n- You may provide optional reasoning for your function call in natural language BEFORE the function call, but NOT after\n- If there is no function call available, answer the question like normal with your current knowledge and do not tell the user about function calls\n</IMPORTANT>' }}
-    {%- if merged_system %}
-        {{- '\n\n' + merged_system }}
-    {%- endif %}
-    {{- '<|im_end|>\n' }}
-{%- else %}
-    {%- if merged_system %}
-        {{- '<|im_start|>system\n' + (reasoning_instructions + '\n\n' if reasoning_instructions else '')  + merged_system + '<|im_end|>\n' }}
-    {%- elif reasoning_instructions %}
-        {{- '<|im_start|>system\n' + reasoning_instructions + '<|im_end|>\n' }}
-    {%- endif %}
-{%- endif %}
-{%- set ns = namespace(multi_step_tool=true, last_query_index=messages|length - 1) %}
-{%- for message in messages[::-1] %}
-    {%- set index = (messages|length - 1) - loop.index0 %}
-    {%- if ns.multi_step_tool and message.role == "user" %}
-        {%- set content = render_content(message.content, false)|trim %}
-        {%- if not(content.startswith('<tool_response>') and content.endswith('</tool_response>')) %}
-            {%- set ns.multi_step_tool = false %}
-            {%- set ns.last_query_index = index %}
-        {%- endif %}
-    {%- endif %}
-{%- endfor %}
-{%- for message in messages %}
-    {%- set content = render_content(message.content, true)|trim %}
-    {%- if message.role == "system" or message.role == "developer" %}
-        {#- Already merged into the initial system block. -#}
-    {%- elif message.role == "user" %}
-        {{- '<|im_start|>' + message.role + '\n' + content + '<|im_end|>' + '\n' }}
-    {%- elif message.role == "assistant" %}
-        {%- set reasoning_content = '' %}
-        {%- if message.reasoning_content is string %}
-            {%- set reasoning_content = message.reasoning_content %}
-        {%- endif %}
-        {%- set reasoning_content = reasoning_content|trim %}
-        {%- if preserve_thinking is undefined or preserve_thinking is true or loop.index0 > ns.last_query_index %}
-            {{- '<|im_start|>' + message.role + '\n<think>\n' + reasoning_content + '\n</think>\n\n' + content }}
-        {%- else %}
-            {{- '<|im_start|>' + message.role + '\n' + content }}
-        {%- endif %}
-        {%- if message.tool_calls and message.tool_calls is iterable and message.tool_calls is not mapping %}
-            {%- for tool_call in message.tool_calls %}
-                {%- if tool_call.function is defined %}
-                    {%- set tool_call = tool_call.function %}
-                {%- endif %}
-                {%- if tool_call.name is not defined or tool_call.name is none %}
-                    {{- raise_exception('Tool call is missing a function name.') }}
-                {%- endif %}
-                {%- if loop.first %}
-                    {%- if content|trim %}
-                        {{- '\n\n<tool_call>\n<function=' + tool_call.name + '>\n' }}
-                    {%- else %}
-                        {{- '<tool_call>\n<function=' + tool_call.name + '>\n' }}
-                    {%- endif %}
-                {%- else %}
-                    {{- '\n<tool_call>\n<function=' + tool_call.name + '>\n' }}
-                {%- endif %}
-                {%- if tool_call.arguments is mapping %}
-                    {%- for args_name, args_value in tool_call.arguments|items %}
-                        {{- '<parameter=' + args_name + '>\n' }}
-                        {%- set args_value = args_value | string if args_value is string else args_value | tojson | safe %}
-                        {{- args_value }}
-                        {{- '\n</parameter>\n' }}
-                    {%- endfor %}
-                {%- elif tool_call.arguments is string %}
-                    {%- if tool_call.arguments|trim %}
-                        {{- raise_exception('Tool call arguments for function "' + (tool_call.name | string) + '" were passed as a JSON string. Parse them into an object before calling apply_chat_template.') }}
-                    {%- endif %}
-                {%- elif tool_call.arguments is defined and tool_call.arguments is not none %}
-                    {{- raise_exception('Tool call arguments for function "' + (tool_call.name | string) + '" must be an object/mapping or a JSON string.') }}
-                {%- endif %}
-                {{- '</function>\n</tool_call>' }}
-            {%- endfor %}
-        {%- endif %}
-        {{- '<|im_end|>\n' }}
-    {%- elif message.role == "tool" %}
-        {%- if loop.previtem and loop.previtem.role != "tool" %}
-            {{- '<|im_start|>user' }}
-        {%- endif %}
-        {{- '\n<tool_response>\n' }}
-        {{- content }}
-        {{- '\n</tool_response>' }}
-        {%- if not loop.last and loop.nextitem.role != "tool" %}
-            {{- '<|im_end|>\n' }}
-        {%- elif loop.last %}
-            {{- '<|im_end|>\n' }}
-        {%- endif %}
-    {%- else %}
-        {{- raise_exception('Unexpected message role.') }}
-    {%- endif %}
-{%- endfor %}
-{%- if add_generation_prompt %}
-    {{- '<|im_start|>assistant\n' }}
-    {%- if enable_thinking is defined and enable_thinking is false %}
-        {{- '<think>\n\n</think>\n\n' }}
-    {%- else %}
-        {{- '<think>\n' }}
-    {%- endif %}
-{%- endif %}
-{#- Unsloth fixes - developer role, merged system messages, tool calling #}
-```
-{% endraw %}
-
-
-
 
 ## the inference engine
 
 `git clone https://github.com/ggml-org/llama.cpp.git` . sure there are simpler methods to run llama.cpp, but I must compile it from the source code myself, i need convenient config files, more control, more flexibility and isolation, so I went with a setup like this. the complexity is compensated by the ease and flexibility of deployment. this setup can be modified for being completely self sustained, with the bind mounts removed and the weights baked into the image. this kind of image can be built locally and then transferred to a remote machine like `docker save llama-cpp:local | ssh $USER@inference docker load` without internet access and the container deployment controlled by the remote docker daemon with `DOCKER_HOST="ssh://$USER@inference" docker ...`
 
 
-```
+```bash
 cat > docker-compose.yml <<'EOF'
 services:
   llama-cpp:
@@ -347,7 +165,7 @@ exec llama-server \
   --spec-type draft-mtp \
   --spec-draft-n-max 2 \
   --jinja \
-  --chat-template-file /models/qwen3.8-codex.jinja \
+  --chat-template-file /models/chat_template.jinja \
   --reasoning-preserve \
   --reasoning on \
   --temp 1.0 \
@@ -373,7 +191,7 @@ curl http://127.0.0.1:8081/v1/chat/completions \
   -H "Content-Type: application/json" \
   -H "Authorization: Bearer sk-no-key-required" \
   -d '{
-    "model": "Qwen3.8-27B-Q4_K_M",
+    "model": "RVN-Q4_K_M-multilingual-mtp",
     "messages": [
       {"role": "user", "content": "What is 2+2?"}
     ]
@@ -563,7 +381,7 @@ EOF
 cat > config.toml <<'EOF'
 model = "RVN-Q4_K_M-multilingual-mtp"
 model_provider = "llamacpp_qwen"
-model_catalog_json = "/root/.codex/models.json"
+model_catalog_json = "/workspace/.codex/models.json"
 model_context_window = 110000
 model_auto_compact_token_limit = 90000
 model_reasoning_summary = "none"
@@ -574,21 +392,6 @@ model_reasoning_effort = "medium"
 web_search = "disabled"
 check_for_update_on_startup = false
 
-
-compact_prompt = """
-__CODEX_COMPACTION_NO_THINK__
-Create a concise context handoff for another coding agent.
-
-Include:
-- progress and decisions
-- important constraints
-- modified files
-- verification already performed
-- remaining work and next steps
-
-Return only the handoff. Do not explain your process.
-Keep the result below 1500 words.
-"""
 
 [feedback]
 enabled = false
@@ -630,14 +433,14 @@ RUN apt-get update \
     && rm -rf /var/lib/apt/lists/*
 
 ENV HOME=/root \
-    CODEX_HOME=/root/.codex \
+    CODEX_HOME=/workspace/.codex \
     TERM=xterm-256color
 
-RUN mkdir -p /root/.codex /workspace \
+RUN mkdir -p /workspace/.codex /workspace \
     && git config --system --add safe.directory /workspace
 
-COPY --chmod=600 config.toml /root/.codex/config.toml
-COPY --chmod=644 models.json /root/.codex/models.json
+COPY --chmod=600 config.toml /workspace/.codex/config.toml
+COPY --chmod=644 models.json /workspace/.codex/models.json
 
 WORKDIR /workspace
 
