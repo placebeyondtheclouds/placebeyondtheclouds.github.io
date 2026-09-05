@@ -381,7 +381,7 @@ EOF
 cat > config.toml <<'EOF'
 model = "RVN-Q4_K_M-multilingual-mtp"
 model_provider = "llamacpp_qwen"
-model_catalog_json = "/workspace/.codex/models.json"
+model_catalog_json = "/root/.codex/models.json"
 model_context_window = 110000
 model_auto_compact_token_limit = 90000
 model_reasoning_summary = "none"
