@@ -433,14 +433,14 @@ RUN apt-get update \
     && rm -rf /var/lib/apt/lists/*
 
 ENV HOME=/root \
-    CODEX_HOME=/workspace/.codex \
+    CODEX_HOME=/root/.codex \
     TERM=xterm-256color
 
-RUN mkdir -p /workspace/.codex /workspace \
+RUN mkdir -p /root/.codex /workspace \
     && git config --system --add safe.directory /workspace
 
-COPY --chmod=600 config.toml /workspace/.codex/config.toml
-COPY --chmod=644 models.json /workspace/.codex/models.json
+COPY --chmod=600 config.toml /root/.codex/config.toml
+COPY --chmod=644 models.json /root/.codex/models.json
 
 WORKDIR /workspace
 
@@ -482,7 +482,7 @@ docker --context rootless run --rm -it --init \
   --mount "type=bind,src=$(pwd -P),dst=/workspace" \
   --workdir /workspace \
   --env HOME=/root \
-  --env CODEX_HOME=/workspace/.codex \
+  --env CODEX_HOME=/root/.codex \
   localhost/codex-qwen-llamacpp:0.147.0-alpha.6.5
 ```
 
