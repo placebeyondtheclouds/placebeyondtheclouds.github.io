@@ -292,21 +292,42 @@ servo 0 1000 2000 1500 100 8
 this maps LED_STRIP pad (it is also possible to use the SDA pad) resource to the first servo (servo0). servo0 is activated with AUX5 (`8` here, count from 1 with 1-4 being the stick axes, 5 being AUX1 and so on). mode value 2000 on the CH10 (toggle on the radio) sets LED_STRIP pad to HIGH (3.3V). this will tell the video channel switcher to switch to VIDEO2 (runcam). the other state is LOW, which means the fpv camera (VIDEO1) will be connected to the FC by default.
 
 
+
+
+
+
 ## radio setup
 
 - ADC Filter OFF
 - send radio's RTC data to the flight controller to have correct time in blackbox files and on the OSD: go to special functions, add `ON Lua bfbkgd On` and turn the checkmark on
-- ch5 inverted, SB - arm
+- ch5 inverted (G3) - arm, SB up
 - ch6 inverted, SA inverted (change the weight(mixes) to -100%)  - left 3-pos: air (low) / acro (mid) / angle(high)
 - ch7 - aux3 - turtle mode
 - ch8 (aux4 is 3 in vtx CLI command), S2 - VTX power control
-- ch9 - SW5 toggle, no group (aux5 servo0) - switch between the cameras + chirp
-- ch10, SW6 toggle, no group (aux6) - Runcam button
-- CH11 (aux7) - bat profile switching
+- ch9 - SW5 toggle, no group (aux5 servo0) - switch between the cameras
+- ch10, L21, no group (aux6) - Runcam button, SW6
+- CH11 SD (aux7) - beeper
 - CH12 - S1 - (aux8) - OSD profile switching  
 - add special function `SW5up ply trk ready`, `SW6down ply trk recsrt`
 - add logical switch `L04 a>x tpwr 0mw`, add special function `L04 playval tpwr - enable`
 - add logical switch `L05 a<x rxbt 3.4V AND SB1up delay 1`, add special function `L05 playval rxbt 5 enable`
+
+set arm channel properly on 3-pos SB (CH5 source set to G3):
+
+```
+SBup Adjust G3 -1024 v
+!SBup Adjust G3 0 v
+```
+
+
+automatic start/stop of recording on arm/disarm (CH10 source set to L21):
+
+```
+L20 |delta|>=x CH5 100 ---
+L21 OR L20 SW6down ---
+```
+L20 duration=0.3
+
 
 ## ESCs configuration
 
@@ -400,9 +421,8 @@ aux 1 0 2 1900 2100 0 0
 aux 2 1 1 1900 2100 0 0
 aux 3 13 6 1900 2100 0 0
 aux 4 28 1 900 1100 0 0
-aux 5 35 2 1700 2100 0 0
+aux 5 35 2 1900 2100 0 0
 aux 6 40 5 1850 2100 0 0
-aux 7 55 2 1700 2100 0 0
 ```
 
 
@@ -453,7 +473,7 @@ the radio reporting current VTX power level with audio messages can be set up li
 adjrange 0 0 7 900 2100 29 7 0 0
 ```
 
-- in-flight battery profile switching. I use SW4 toggle on CH11 (AUX7 in BF)
+- (not using) in-flight battery profile switching. I use SW4 toggle on CH11 (AUX7 in BF)
 
 
 ```
