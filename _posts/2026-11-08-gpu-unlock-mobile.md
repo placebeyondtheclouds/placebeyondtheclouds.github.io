@@ -2,7 +2,7 @@
 layout: post
 title:  "Unlock RTX 4050 for +30% boost on hashcat"
 lang: en
-tags: [gpu_unlock, hashcat, runbook]
+tags: [gpu_unlock, hashcat, runbook, Ubuntu]
 category: tutorial
 published: true
 ---
@@ -52,7 +52,7 @@ sed -i 's/AD107(0x28a0),/AD107(0x28a0), AD107(0x28a1),/' kernel/gpu_unlock/recip
 
 then `make install`, `sudo nano /etc/default/grub` and add `gpu_unlock.targets=all` to GRUB_CMDLINE_LINUX_DEFAULT, `sudo update-grub`, `sudo shutdown -P now`.
 
-if it loads successfully, it would freeze the display on the first load (i had to input LUKS password blindly) and then continues to load. can be verified with
+if it loads successfully, the display would freeze on the first initialization (i had to input my LUKS password blindly) and then continues to load. can be verified with
 
 ```bash
 sudo journalctl -k -b --no-pager | grep -i "gpu_unlock: unlocked"
