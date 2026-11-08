@@ -1,13 +1,13 @@
 ---
 layout: post
-title:  "Unlock RTX 4050 for +30% boost on hashcat"
+title:  "Unlock RTX 4050 for +30% boost in hashcat"
 lang: en
 tags: [gpu_unlock, hashcat, runbook, Ubuntu]
 category: tutorial
 published: true
 ---
 
-It is possible to unlock full speed for tensor cores in consumer series of Nvidia GPUs using a kernel module. My laptop's GPU is not yet fully supported by the unlock mod, but I tried it and the mod works. A little modification is needed before installing the mod.
+It is possible to unlock the tensor cores to their full speed in consumer series of NVIDIA GPUs using a kernel module. The original implementation is [https://github.com/Zagitta/gpu-unlock](https://github.com/Zagitta/gpu-unlock). My laptop's GPU is not yet fully supported by the unlock mod, but I tried it and the mod works. A little modification is needed before installing the mod.
 
 
 ### install
